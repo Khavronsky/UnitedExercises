@@ -1,11 +1,61 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+    <!-- Text styles -->
+
+    <style name="TextStyle">
+        <item name="android:textSize">20sp</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">@color/gray5</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="ToolbarTheme" parent="ThemeOverlay.AppCompat.ActionBar">
+        <item name="android:textColorPrimary">@color/gray5</item>
+        <item name="colorControlNormal">@color/gray5</item>
+        <item name="background">@color/app_bar</item>
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
+
+    <style name="PopupTheme" parent="ThemeOverlay.AppCompat.ActionBar">
+        <item name="android:colorBackground">@color/app_bar</item>
+        <item name="android:textColorPrimary">@color/gray5</item>
+    </style>
+    <style name="EditText" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:colorBackground">@color/app_bar</item>
+        <item name="android:textColorPrimary">@color/gray3</item>
+        <item name="colorAccent">@color/gray2</item>
+    </style>
+    <!--Floating label text style-->
+
+    <style name="HintTextStyle" parent="Theme.AppCompat.Light">
+        <item name="android:textColor">@color/red</item>
+    </style>
+
+    <!--Input field style-->
+
+    <style name="EditTextStyle" parent="Theme.AppCompat.Light">
+        <item name="colorControlNormal">@color/gray1</item>
+        <item name="colorControlActivated">@color/gray2</item>
     </style>
 
 </resources>

@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">UnitedExercises</string>
+    <string name="save">save</string>
+    <string name="cancel">cancel</string>
+
+    <string-array name="intensity_types">
+        <item>Низкая</item>
+        <item>Средняя</item>
+        <item>Высокая</item>
+    </string-array>
 </resources>
+

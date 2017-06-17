@@ -1,6 +1,178 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#3F51B5</color>
+    <color name="razminka">#f3b121</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="colorAccent1">#c8ec3434</color>
+    <color name="ddd">#b57bfd8c</color>
+
+
+    <color name="borderColorExample">#E7E9EB</color>
+    <color name="borderLineColorExample">#989b9698</color>
+
+    <color name="itemTopColorExample">#006D71</color>
+    <color name="itemBottomColorExample">#009AA0</color>
+    <color name="itemSelectedTopColorExample">#019CA2</color>
+    <color name="itemSelectedBottomColorExample">#89D8DA</color>
+
+    <color name="itemTopColor2Example">#044b7b</color>
+    <color name="itemBottomColor2Example">#0048a0</color>
+    <color name="itemSelectedTopColor2Example">#729ebc</color>
+    <color name="itemSelectedBottomColor2Example">#a7b9ce</color>
+
+
+    <color name="meshOneColorExample">#F0F1F2</color>
+    <color name="meshTwoColorExample">#E7E9EB</color>
+
+    <color name="punctireLineAverageColorExample">#006F74</color>
+    <color name="punctireLineSelectedColorExample">#5cdfe1e4</color>
+    <color name="punctirLineColorIntExample">#DFE1E4</color>
+
+    <color name="fontAllColorExample">#000000</color>
+    <color name="fontAverageColorExample">#006F74</color>
+
+    <color name="triangleColorExample">#009BA1</color>
+
+
+    <color name="selectedColumnShadowLayerColorExample">#43000000</color>
+
+    <color name="colorCenterDelimeterExample">#b7b9bc</color>
+
+
+    <color name="test">#66d3d922</color>
+    <color name="myViewBackgroundInfo">#FAFAFA</color>
+    <color name="det_stat_text_color_name">#6B6D70</color>
+    <color name="det_stat_text_color_value">#262A31</color>
+
+
+    <color name="transparent">#00000000</color>
+    <color name="circle_background">#4da5a9b4</color>
+    <color name="circle_background_no_alpha">#D2D5D9</color>
+    <color name="circle_white_background">#80ffffff</color>
+    <color name="circle_white_background_no_alpha">#F2F3F4</color>
+
+    <color name="foodheader">#f4f8fb</color>
+    <color name="foodchild">#FEFEFF</color>
+    <color name="app_bar">#dddfe2</color>
+    <color name="action_bar">#FAFAFA</color>
+    <color name="bg">#e7e9eb</color>
+    <color name="bg2">#80fafafa</color>
+    <color name="white">#FAFAFA</color>
+    <color name="white_80">#FAFAFA</color>
+    <color name="BGProgressBar">#c3000000</color>
+    <color name="gray0">#DADDE3</color>
+    <color name="gray1">#ced1d6</color>
+    <color name="gray2">#a5a9b4</color>
+    <color name="gray3">#6b7485</color>
+    <color name="gray4">#4e5768</color>
+    <color name="gray5">#262a31</color>
+    <color name="red">#ff0000</color>
+
+    <color name="new_burn2">#f6b321</color>
+
+
+    <color name="gold1">#fffb9c</color>
+    <color name="gold2">#dac978</color>
+    <color name="gold35">#BBA279</color>
+    <color name="gold3">#a58144</color>
+    <color name="steps">#009ba1</color>
+    <color name="aerobic">#1ab18c</color>
+    <color name="running">#0170b6</color>
+    <color name="steps1">#8ad9db</color>
+    <color name="steps2">#006569</color>
+    <color name="caloric_balance">#ffbb8d</color>
+    <color name="burned_calories">#ffce43</color>
+    <color name="weight">#dac878</color>
+    <color name="pressure">#e05f5d</color>
+    <color name="km">#257f0c</color>
+    <color name="km1">#4f9d41</color>
+    <color name="km2">#93d680</color>
+    <color name="sleep">@color/sleep_deep</color>
+    <color name="sleep1">@color/sleep_active</color>
+    <color name="sleep2">@color/water1</color>
+
+    <color name="smart_alarm">#7853ad</color>
+    <color name="smart_alarm_line">#8f7853ad</color>
+    <color name="smart_alarm_light">#a37853ad</color>
+
+    <color name="sleep_deep">#7a96de</color>
+    <color name="sleep_light">@color/water</color>
+    <color name="sleep_active">#3b42a0</color>
+
+    <color name="shadow">#4bacadaf</color>
+    <color name="v3goldPressed">#E1D38D</color>
+    <color name="v3goldNormal">#E3D9A8</color>
+
+    <color name="light_grey">#80f9f9f9</color>
+
+    <color name="bmi">#fcd12b</color>
+    <color name="water">#2db4e5</color>
+
+    <color name="water1">#95dffa</color>
+    <color name="burn">#e89f00</color>
+    <color name="balance">#9f4b36</color>
+    <color name="new_balance">#d77922</color>
+
+    <color name="new_balance_my_track_end">#a03937</color>
+
+    <color name="new_burn">#f6b321</color>
+    <color name="balancefood">#9f4b36</color>
+    <color name="new_sleep">#3b42a0</color>
+    <color name="food">#9f3a3a</color>
+    <color name="food1">#ed998e</color>
+
+    <color name="tutorial">#101115</color>
+    <color name="menu_rigth_border_color">#cc262a31</color>
+    <color name="menu_selected_item_bottom_border_color">#33ffffff</color>
+    <color name="menu_selected_item_top_border_color">#80000000</color>
+    <color name="purpose_steps_hint_text_color">#33009ba1</color>
+    <color name="purpose_sleep_hint_text_color">#333b42a0</color>
+    <color name="bmi_gradien_3">#4d257f0c</color>
+    <color name="bmi_gradien_4">#4dfcd12b</color>
+    <color name="bmi_gradien_6">#4db8560f</color>
+    <color name="search_device_active_button">#66a5a9b4</color>
+    <color name="login_text_background">#60ffffff</color>
+    <color name="sleep_more_noactive_button">#4d3b42a0</color>
+
+    <color name="statistic_steps_icon">#4d009ba1</color>
+    <color name="statistic_distance_icon">#4d257f0c</color>
+    <color name="statistic_sleep_icon">#4d3b42a0</color>
+    <color name="statistic_sleep_control_background">#4dffffff</color>
+    <color name="statistic_balance_icon">#4dd77922</color>
+    <color name="statistic_graph_background">#4dffffff</color>
+
+    <color name="water_add_save_button_from_food">#9995dffa</color>
+
+    <color name="pulse">#df5f5d</color>
+    <color name="pulse1">#f4abc0</color>
+    <color name="bp_counter">#8a000000</color>
+    <color name="bp_green">#c8e9be</color>
+    <color name="bp_pulse_transparent">#eeaead</color>
+    <color name="bp_bmi_transparent">#fbe794</color>
+    <color name="bp_automatic_footer_text_color">#262626</color>
+
+    <color name="bp_pulse_transparent_external">#4ddf5f5d</color>
+    <color name="bp_sleep_transparent_external">#4d7996de</color>
+    <color name="bp_stick_color">#f5aac0</color>
+
+
+    <!--new login page fragment-->
+    <color name="press32">#52dddfe2</color>
+    <color name="new_login_page_facebook_background">#3b5999</color>
+    <color name="new_login_page_vk_background">#4c6e95</color>
+
+
+    <!--new start screen-->
+    <color name="stsc1">#9cd4dae4</color>
+    <color name="stsc2">#fafafa</color>
+    <color name="stsc3">#45d7c575</color>
+    <color name="stsc4">#00dac878</color>
+    <color name="stsc5">#1f7a8291</color>
+    <color name="stsc6">#00e7e9eb</color>
+    <color name="stsc7">#1c72bad4</color>
+    <color name="stsc8">#00fafafa</color>
+    <!--white-->
+    <color name="stsc9">#26e7e9eb</color>
+
 </resources>
