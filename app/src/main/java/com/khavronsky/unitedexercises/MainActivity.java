@@ -1,6 +1,7 @@
 package com.khavronsky.unitedexercises;
 
 import com.khavronsky.unitedexercises.create_new_exercises.new_cardio_exercise.CreateCardioExerciseActivity;
+import com.khavronsky.unitedexercises.create_new_exercises.new_power_exercise.CreatePowerExerciseActivity;
 import com.khavronsky.unitedexercises.exercise_performance.ExercisePerformActivity;
 
 import android.content.Intent;
@@ -35,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(this, CreateCardioExerciseActivity.class));
                 break;
             case R.id.btn3:
+                startActivity(new Intent(this, CreatePowerExerciseActivity.class));
                 break;
         }
     }

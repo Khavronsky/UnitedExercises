@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:background="@color/bg"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/layout_toolbar" />
+
+    <View
+        android:id="@+id/actionBaShadowView"
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:layout_below="@+id/toolbar"
+        android:layout_marginTop="-1dp"
+        android:background="@drawable/bottom_shadow_dark" />
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/toolbar"
+        app:theme="@style/EditText">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp"
+            android:theme="@style/EditTextStyle">
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                app:errorTextAppearance="@style/HintTextStyle">
+
+                <EditText
+                    android:id="@+id/ex_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Название упражнения"
+                    android:inputType="text"
+                    android:textSize="16sp"
+                    android:textColor="@color/gray2" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+
+                app:errorTextAppearance="@style/HintTextStyle">
+
+                <EditText
+                    android:id="@+id/ex_sets"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Число подходов"
+                    android:inputType="number"
+                    android:textSize="16sp" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                app:errorEnabled="false"
+                app:errorTextAppearance="@style/HintTextStyle">
+
+                <EditText
+                    android:id="@+id/ex_repeats"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Повторений в подходе"
+                    android:inputType="number"
+                    android:textSize="16sp" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                app:errorEnabled="false"
+                app:errorTextAppearance="@style/HintTextStyle">
+
+                <EditText
+                    android:id="@+id/ex_weight"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Вес за подход"
+                    android:inputType="number"
+                    android:textSize="16sp" />
+            </android.support.design.widget.TextInputLayout>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:textSize="14sp"
+                android:fontFamily="sans-serif-light"
+                android:textStyle="normal"
+                android:textColor="#6b7485"
+                android:lineSpacingExtra="6sp"
+                android:text="ONETRAK считает калории только для упражнений из раздела «Кардио», так как оценка сожженных калорий от выполнения силовых упражнений зависит от ряда факторов: насколько энергично вы выполняли упражнение, сколько отдыхали между подходами и тд. Вы можете найти «Силовые тренировки» в разделе «кардио», но следует помнить,что эта оценка может иметь погрешности. Если у вас есть данные о количестве сожженных калорий для того или иного вида активности (например,  с ЧСС-датчика), вы можете добавить их как новую тренировку в раздел «Мои упражнения» и далее использовать в своем дневнике."
+                />
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+
+</RelativeLayout>

@@ -23,6 +23,8 @@
             android:screenOrientation="portrait" />
         <activity android:name=".create_new_exercises.new_cardio_exercise.CreateCardioExerciseActivity"
             android:screenOrientation="portrait" />
+        <activity android:name=".create_new_exercises.new_power_exercise.CreatePowerExerciseActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>
