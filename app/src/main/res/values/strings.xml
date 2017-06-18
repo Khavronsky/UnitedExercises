@@ -8,5 +8,14 @@
         <item>Средняя</item>
         <item>Высокая</item>
     </string-array>
+
+    <string-array name="calc_calories">
+        <item>Калорий в час на 1 кг веса</item>
+        <item>Значение MET</item>
+    </string-array>
+    <string-array name="type_of_intensity">
+        <item>Не указывать</item>
+        <item>Указывать тип интенсивности</item>
+    </string-array>
 </resources>
 

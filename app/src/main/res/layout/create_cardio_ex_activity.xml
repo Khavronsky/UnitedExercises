@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:background="@color/bg"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/layout_toolbar" />
+
+    <View
+        android:id="@+id/actionBaShadowView"
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:layout_below="@+id/toolbar"
+        android:layout_marginTop="-1dp"
+        android:background="@drawable/bottom_shadow_dark" />
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/toolbar"
+        app:theme="@style/EditText">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp"
+            android:theme="@style/EditTextStyle">
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                app:errorTextAppearance="@style/HintTextStyle">
+
+                <EditText
+                    android:id="@+id/ex_cardio_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Название упражнения"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:textColor="@color/gray5"
+                    android:textSize="16sp" />
+            </android.support.design.widget.TextInputLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:orientation="vertical"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:text="Принцип расчета калорий"
+                    android:textColor="@color/gray2"
+                    android:textSize="12sp"
+                    android:textStyle="normal" />
+
+                <Spinner
+                    android:id="@+id/ex_cardio_count_method"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:layout_weight="1" />
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginStart="4dp"
+                    android:background="@color/gray1">
+
+                </FrameLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:orientation="vertical"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:text="Интенсивность"
+                    android:textColor="@color/gray2"
+                    android:textSize="12sp"
+                    android:textStyle="normal" />
+
+                <Spinner
+                    android:id="@+id/ex_cardio_Intensity_type"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:layout_weight="1" />
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginStart="4dp"
+                    android:background="@color/gray1">
+
+                </FrameLayout>
+            </LinearLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/ex_cardio_burned_per_hour_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:focusable="false"
+                    app:errorTextAppearance="@style/HintTextStyle">
+
+                    <EditText
+                        android:id="@+id/ex_cardio_burned_per_hour"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:focusable="false"
+                        android:cursorVisible="false"
+                        android:inputType="number"
+                        android:textSize="16sp"
+                        app:errorTextAppearance="@style/HintTextStyle" />
+
+                </android.support.design.widget.TextInputLayout>
+
+                <LinearLayout
+                    android:id="@+id/ex_cardio_intensity_fields"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <android.support.design.widget.TextInputLayout
+                        android:id="@+id/ex_cardio_low_intensity_layout"
+
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:focusable="false"
+                        app:errorTextAppearance="@style/HintTextStyle">
+
+                        <EditText
+                            android:id="@+id/ex_cardio_low_intensity"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:focusable="false"
+                            android:cursorVisible="false"
+                            android:hint="Низкая нагрузка (значение МЕТ)"
+                            android:inputType="number"
+                            android:textSize="16sp" />
+
+                    </android.support.design.widget.TextInputLayout>
+
+                    <android.support.design.widget.TextInputLayout
+                        android:id="@+id/ex_cardio_middle_intensity_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:focusable="false"
+                        app:errorEnabled="false"
+                        app:errorTextAppearance="@style/HintTextStyle">
+
+                        <EditText
+                            android:id="@+id/ex_cardio_middle_intensity"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:focusable="false"
+                            android:cursorVisible="false"
+                            android:hint="Средняя нагрузка (значение МЕТ)"
+                            android:inputType="number"
+                            android:textSize="16sp" />
+                    </android.support.design.widget.TextInputLayout>
+
+                    <android.support.design.widget.TextInputLayout
+                        android:id="@+id/ex_cardio_high_intensity_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:focusable="false"
+                        app:errorEnabled="false"
+                        app:errorTextAppearance="@style/HintTextStyle">
+
+                        <EditText
+                            android:id="@+id/ex_cardio_high_intensity"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:focusable="false"
+                            android:cursorVisible="false"
+                            android:hint="Высокая нагрузка (значение МЕТ)"
+                            android:inputType="number"
+                            android:textSize="16sp" />
+                    </android.support.design.widget.TextInputLayout>
+
+                </LinearLayout>
+            </FrameLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:lineSpacingExtra="6sp"
+                android:text="MET (от англ. Metabolic Equivalent of Task) - метаболический эквивалент задачи или количество энергии, которое человек потребляет в течение 1 минуты пребывания в сидячем положении. Различные виды активности требуют различного МЕТ. Для более точного подсчета сожженных калорий, при добавлении нового упражнения, указывайте значения МЕТ для разных типов интенсивности его выполнения."
+                android:textColor="#6b7485"
+                android:textSize="14sp"
+                android:textStyle="normal" />
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+
+</RelativeLayout>
