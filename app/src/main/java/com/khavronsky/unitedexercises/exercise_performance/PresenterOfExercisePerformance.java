@@ -1,7 +1,7 @@
 package com.khavronsky.unitedexercises.exercise_performance;
 
 
-import com.khavronsky.unitedexercises.AbstractPresenter;
+import com.khavronsky.unitedexercises.import_from_grand_project.AbstractPresenter;
 import com.khavronsky.unitedexercises.exercises_models.CardioExerciseModel;
 import com.khavronsky.unitedexercises.exercises_models.ModelOfExercisePerformance;
 import com.khavronsky.unitedexercises.exercises_models.PowerExerciseModel;
@@ -34,6 +34,7 @@ public class PresenterOfExercisePerformance extends AbstractPresenter<PresenterO
                 .setDuration(50)
                 .setNote("Заметка о самочуствии во время осуществления мадагаскарского жима");
     }
+
     private ModelOfExercisePerformance createFakeData2() {
         return new ModelOfExercisePerformance(
                 new CardioExerciseModel()

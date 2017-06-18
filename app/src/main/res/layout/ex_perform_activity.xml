@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.khavronsky.unitedexercises.exercise_performance.custom_views.collapsing_card.CustomCollapsingView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/my_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:id="@+id/fragment_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+        </FrameLayout>
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/ex_performance_add_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="24dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="24dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="8dp"
+                android:fontFamily="sans-serif-medium"
+                android:gravity="center_horizontal"
+                android:lineSpacingExtra="6sp"
+                android:text="ДОБАВИТЬ УПРАЖНЕНИЕ"
+                android:textColor="@color/gold3"
+                android:textSize="14sp"
+                android:textStyle="normal" />
+        </android.support.v7.widget.CardView>
+
+    </LinearLayout>
+</com.khavronsky.unitedexercises.exercise_performance.custom_views.collapsing_card.CustomCollapsingView>

@@ -4,7 +4,7 @@
               android:layout_height="wrap_content"
               android:gravity="center_horizontal"
               android:orientation="horizontal">
-    <com.khavronsky.exerciseprototype.custom_views.BaseNumberPicker
+    <com.khavronsky.unitedexercises.import_from_grand_project.BaseNumberPicker
 
         android:id="@+id/integer"
         android:layout_width="wrap_content"

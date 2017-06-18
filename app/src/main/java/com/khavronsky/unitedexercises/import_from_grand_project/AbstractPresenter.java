@@ -1,4 +1,4 @@
-package com.khavronsky.unitedexercises;
+package com.khavronsky.unitedexercises.import_from_grand_project;
 
 import android.support.annotation.Nullable;
 import android.support.annotation.UiThread;

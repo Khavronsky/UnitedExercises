@@ -6,16 +6,16 @@
     android:layout_height="match_parent"
     android:background="#ffffff">
 
-    <com.khavronsky.exerciseprototype.custom_views.collapsing_card.InnerCollapsedCard
+    <com.khavronsky.unitedexercises.exercise_performance.custom_views.collapsing_card.InnerCollapsedCard
         android:id="@+id/collapsed_card"
         android:layout_width="match_parent"
         android:layout_height="164dp"
         android:background="#ffffff"
-        app:layout_behavior="com.khavronsky.exerciseprototype.custom_views.collapsing_card.CollapsedCardBehavior"
+        app:layout_behavior="com.khavronsky.unitedexercises.exercise_performance.custom_views.collapsing_card.CollapsedCardBehavior"
         app:layout_collapseMode="parallax"
         app:layout_scrollFlags="scroll|enterAlways">
 
-    </com.khavronsky.exerciseprototype.custom_views.collapsing_card.InnerCollapsedCard>
+    </com.khavronsky.unitedexercises.exercise_performance.custom_views.collapsing_card.InnerCollapsedCard>
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/collapsing_view_app_bar"
@@ -71,12 +71,12 @@
 
             </android.support.v7.widget.Toolbar>
             <!--Скрытая view для выравнивания CollapsingToolbarLayout-->
-            <com.khavronsky.exerciseprototype.custom_views.collapsing_card.InnerCollapsedCard
+            <com.khavronsky.unitedexercises.exercise_performance.custom_views.collapsing_card.InnerCollapsedCard
                 android:layout_width="match_parent"
                 android:layout_height="220dp"
                 android:visibility="invisible">
 
-            </com.khavronsky.exerciseprototype.custom_views.collapsing_card.InnerCollapsedCard>
+            </com.khavronsky.unitedexercises.exercise_performance.custom_views.collapsing_card.InnerCollapsedCard>
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
 
