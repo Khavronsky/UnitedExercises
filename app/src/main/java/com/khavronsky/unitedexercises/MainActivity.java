@@ -3,6 +3,7 @@ package com.khavronsky.unitedexercises;
 import com.khavronsky.unitedexercises.create_new_exercises.new_cardio_exercise.CreateCardioExerciseActivity;
 import com.khavronsky.unitedexercises.create_new_exercises.new_power_exercise.CreatePowerExerciseActivity;
 import com.khavronsky.unitedexercises.exercise_performance.ExercisePerformActivity;
+import com.khavronsky.unitedexercises.exercises_catalogs.ExerciseCatalogActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -26,7 +27,10 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.btn3)
     AppCompatButton mBtn3;
 
-    @OnClick({R.id.btn1, R.id.btn2, R.id.btn3})
+    @BindView(R.id.btn4)
+    AppCompatButton mBtn4;
+
+    @OnClick({R.id.btn1, R.id.btn2, R.id.btn3, R.id.btn4})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn1:
@@ -38,6 +42,9 @@ public class MainActivity extends AppCompatActivity {
             case R.id.btn3:
                 startActivity(new Intent(this, CreatePowerExerciseActivity.class));
                 break;
+            case R.id.btn4:
+                startActivity(new Intent(this, ExerciseCatalogActivity.class));
+                break;
         }
     }
 
@@ -47,8 +54,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-
-
     }
 
 

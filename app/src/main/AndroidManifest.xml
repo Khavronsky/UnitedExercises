@@ -25,6 +25,8 @@
             android:screenOrientation="portrait" />
         <activity android:name=".create_new_exercises.new_power_exercise.CreatePowerExerciseActivity"
             android:screenOrientation="portrait" />
+        <activity android:name= ".exercises_catalogs.ExerciseCatalogActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

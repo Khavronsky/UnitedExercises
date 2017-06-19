@@ -5,7 +5,7 @@ import android.support.v4.app.DialogFragment;
 import android.view.View.OnClickListener;
 
 public abstract class BaseDialogFragment extends DialogFragment implements OnClickListener {
-	IDialogFragment callback = null;
+	public IDialogFragment callback = null;
 
     public void setCallback(final IDialogFragment callback){
     	this.callback = callback;

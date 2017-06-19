@@ -34,4 +34,12 @@
         android:background="#d32f2f"
         android:text="Кукуюшки"/>
 
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/btn4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:background="#c0ca33"
+        android:text="Ляськи-масяськи"/>
+
 </LinearLayout>
