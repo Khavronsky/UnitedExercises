@@ -33,6 +33,8 @@ import butterknife.Unbinder;
 
 public class CardioExPerformFragment extends Fragment implements IDialogFragment, TextWatcher {
 
+    //region fields
+
     public final static String FRAGMENT_TAG = ExerciseModel.ExerciseType.CARDIO.getTag();
 
     @BindView(R.id.ex_cardio_perform_start_time)
@@ -64,6 +66,8 @@ public class CardioExPerformFragment extends Fragment implements IDialogFragment
     ModelOfExercisePerformance mModelOfExercisePerformance;
 
     private IExerciseListener mListener;
+
+    //endregion
 
     public static CardioExPerformFragment newInstance(ModelOfExercisePerformance modelOfExercisePerformance) {
 

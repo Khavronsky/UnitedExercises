@@ -2,6 +2,7 @@ package com.khavronsky.unitedexercises.create_new_exercises.new_power_exercise;
 
 import com.khavronsky.unitedexercises.R;
 import com.khavronsky.unitedexercises.exercises_models.PowerExerciseModel;
+import com.khavronsky.unitedexercises.import_from_grand_project.IDialogFragment;
 import com.khavronsky.unitedexercises.import_from_grand_project.IntNumPickerFragment;
 
 import android.os.Bundle;
@@ -13,13 +14,21 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class CreatePowerExerciseActivity extends AppCompatActivity implements View.OnClickListener {
+public class CreatePowerExerciseActivity extends AppCompatActivity implements View.OnClickListener,
+        IDialogFragment {
+
+    private final static String SETS = "sets";
+
+    private final static String REPEATS = "repeats";
+
+    private final static String WEIGHT = "weight";
 
     TextWatcher mTextWatcher;
 
@@ -38,9 +47,14 @@ public class CreatePowerExerciseActivity extends AppCompatActivity implements Vi
     @BindView(R.id.ex_weight)
     EditText mExWeight;
 
+    @BindView(R.id.focusable_layout)
+    LinearLayout mFocusableLayout;
+
     private PowerExerciseModel mPowerExerciseModel;
 
     private IntNumPickerFragment mIntNumPickerDialog;
+
+    private String pickerOnScreen = "";
 
     public void setPowerExerciseModel(final PowerExerciseModel powerExerciseModel) {
         mPowerExerciseModel = powerExerciseModel;
@@ -48,23 +62,66 @@ public class CreatePowerExerciseActivity extends AppCompatActivity implements Vi
 
     @OnClick({R.id.ex_sets, R.id.ex_repeats, R.id.ex_weight})
     public void onViewClicked(View view) {
+        mExTitle.clearFocus();
         switch (view.getId()) {
             case R.id.ex_sets:
+                pickerOnScreen = SETS;
+                showIntPicker(1, 20, mPowerExerciseModel.getSets(), 1);
                 break;
             case R.id.ex_repeats:
+                pickerOnScreen = REPEATS;
+                showIntPicker(1, 50, mPowerExerciseModel.getRepeats(), 1);
                 break;
             case R.id.ex_weight:
+                //поменять на floatPicker??????
+                pickerOnScreen = WEIGHT;
+                showIntPicker(1, 500, mPowerExerciseModel.getWeight(), 1);
                 break;
         }
     }
 
-//    void showIntPicker(int min, int max, int currentVal, int onePointVal) {
-//        if (mIntNumPickerDialog == null) {
-//            mIntNumPickerDialog = IntNumPickerFragment.newInstance(min, max, currentVal, onePointVal);
-//            mIntNumPickerDialog.setCallback(this);
-//            mIntNumPickerDialog.show(getSupportFragmentManager(), "picker");
-//        }
-//    }
+    //region IDialogFragment implementation
+    @Override
+    public void doButtonClick1(final Object o) {
+        if (mIntNumPickerDialog != null) {
+            mIntNumPickerDialog.dismiss();
+            switch (pickerOnScreen) {
+                case SETS:
+//                    ((PowerExerciseModel) mModelOfExercisePerformance.getExercise()).setSets((int) o);
+                    mExSets.setText(String.valueOf(o));
+                    break;
+                case REPEATS:
+//                    ((PowerExerciseModel) mModelOfExercisePerformance.getExercise()).setRepeats((int) o);
+                    mExRepeats.setText(String.valueOf(o));
+                    break;
+                case WEIGHT:
+//                    ((PowerExerciseModel) mModelOfExercisePerformance.getExercise()).setWeight((int) o);
+                    mExWeight.setText(String.valueOf(o));
+                    break;
+            }
+            mIntNumPickerDialog = null;
+        }
+        pickerOnScreen = null;
+    }
+
+    @Override
+    public void doButtonClick2() {
+
+    }
+
+    @Override
+    public void doByDismissed() {
+
+    }
+    //endregion
+
+    void showIntPicker(int min, int max, int currentVal, int onePointVal) {
+        if (mIntNumPickerDialog == null) {
+            mIntNumPickerDialog = IntNumPickerFragment.newInstance(min, max, currentVal, onePointVal);
+            mIntNumPickerDialog.setCallback(this);
+            mIntNumPickerDialog.show(getSupportFragmentManager(), "picker");
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +129,8 @@ public class CreatePowerExerciseActivity extends AppCompatActivity implements Vi
 
         setContentView(R.layout.create_power_ex_activity);
         ButterKnife.bind(this);
+        mFocusableLayout.setFocusableInTouchMode(true);
+
         setToolbar();
         setEditText(mPowerExerciseModel);
         setPowerExerciseModel(new PowerExerciseModel());

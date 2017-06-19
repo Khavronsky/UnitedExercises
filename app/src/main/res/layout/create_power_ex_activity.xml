@@ -27,6 +27,7 @@
         app:theme="@style/EditText">
 
         <LinearLayout
+            android:id="@+id/focusable_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -36,7 +37,8 @@
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
+                android:focusable="false"
+                app:errorEnabled="false"
                 app:errorTextAppearance="@style/HintTextStyle">
 
                 <EditText
@@ -53,13 +55,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-
+                android:focusable="false"
+                app:errorEnabled="false"
                 app:errorTextAppearance="@style/HintTextStyle">
 
                 <EditText
                     android:id="@+id/ex_sets"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:cursorVisible="false"
+                    android:focusable="false"
                     android:hint="Число подходов"
                     android:inputType="number"
                     android:textSize="16sp" />
@@ -69,6 +74,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
+                android:focusable="false"
                 app:errorEnabled="false"
                 app:errorTextAppearance="@style/HintTextStyle">
 
@@ -76,6 +82,8 @@
                     android:id="@+id/ex_repeats"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:cursorVisible="false"
+                    android:focusable="false"
                     android:hint="Повторений в подходе"
                     android:inputType="number"
                     android:textSize="16sp" />
@@ -85,6 +93,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
+                android:focusable="false"
                 app:errorEnabled="false"
                 app:errorTextAppearance="@style/HintTextStyle">
 
@@ -92,6 +101,8 @@
                     android:id="@+id/ex_weight"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:cursorVisible="false"
+                    android:focusable="false"
                     android:hint="Вес за подход"
                     android:inputType="number"
                     android:textSize="16sp" />
