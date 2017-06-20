@@ -1,6 +1,7 @@
 package com.khavronsky.unitedexercises.exercises_catalogs;
 
 import com.khavronsky.unitedexercises.R;
+import com.khavronsky.unitedexercises.exercises_catalogs.ExerciseSearch.SearchDialog;
 import com.khavronsky.unitedexercises.exercises_catalogs.ex_cat_adapters.VPAdapterOfMainExerciseScreen;
 
 import android.os.Bundle;
@@ -58,7 +59,7 @@ public class ExerciseCatalogActivity extends AppCompatActivity implements View.O
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mToolbar.setTitle("Кардио упражнение");
         setSupportActionBar(mToolbar);
-        mToolbar.inflateMenu(R.menu.menu);
+        mToolbar.inflateMenu(R.menu.search_menu);
         mToolbar.setNavigationOnClickListener(this);
         mToolbar.setNavigationIcon(R.drawable.arrow_back);
     }
@@ -71,15 +72,17 @@ public class ExerciseCatalogActivity extends AppCompatActivity implements View.O
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu, menu);
+        getMenuInflater().inflate(R.menu.search_menu, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.save) {
-                Toast.makeText(this, "SAVE", Toast.LENGTH_SHORT).show();
+        if (id == R.id.search) {
+                Toast.makeText(this, "SEARCH", Toast.LENGTH_SHORT).show();
+            SearchDialog searchDialog = new SearchDialog();
+            searchDialog.show(getFragmentManager(),"searchDialog");
             return true;
         }
         return super.onOptionsItemSelected(item);
