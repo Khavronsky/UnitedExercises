@@ -22,6 +22,7 @@ public class PresenterOfExercisePerformance extends AbstractPresenter<PresenterO
         }
     }
 
+    //region FAKE DATA
     private ModelOfExercisePerformance createFakeData() {
         return new ModelOfExercisePerformance(
                 new PowerExerciseModel()
@@ -62,6 +63,7 @@ public class PresenterOfExercisePerformance extends AbstractPresenter<PresenterO
                 .setDuration(70)
                 .setNote("Заметка о самочуствии во время осуществления мадагаскарского жима");
     }
+    //endregion
 
     public void setData(ModelOfExercisePerformance modelOfExercisePerformance) {
         this.modelOfExercisePerformance = modelOfExercisePerformance;

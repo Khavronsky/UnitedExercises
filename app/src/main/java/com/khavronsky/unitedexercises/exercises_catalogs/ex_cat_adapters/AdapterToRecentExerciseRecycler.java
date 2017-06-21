@@ -2,8 +2,10 @@ package com.khavronsky.unitedexercises.exercises_catalogs.ex_cat_adapters;
 
 
 import com.khavronsky.unitedexercises.R;
+import com.khavronsky.unitedexercises.exercise_performance.ExercisePerformActivity;
 import com.khavronsky.unitedexercises.exercises_models.CustomExModel;
 
+import android.content.Intent;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -77,6 +79,7 @@ public class AdapterToRecentExerciseRecycler
         @Override
         public void onClick(final View v) {
             Toast.makeText(v.getContext(), "show exercise", Toast.LENGTH_SHORT).show();
+            v.getContext().startActivity(new Intent(v.getContext(), ExercisePerformActivity.class));
         }
 
         void setText(String title, String subTitle) {

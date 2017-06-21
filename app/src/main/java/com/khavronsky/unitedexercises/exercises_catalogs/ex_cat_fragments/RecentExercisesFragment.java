@@ -2,6 +2,7 @@ package com.khavronsky.unitedexercises.exercises_catalogs.ex_cat_fragments;
 
 import com.khavronsky.unitedexercises.R;
 import com.khavronsky.unitedexercises.exercises_catalogs.ex_cat_adapters.AdapterToRecentExerciseRecycler;
+import com.khavronsky.unitedexercises.exercises_catalogs.ex_cat_presenters.RecentExPresenter;
 import com.khavronsky.unitedexercises.exercises_models.CustomExModel;
 
 import android.os.Bundle;
@@ -14,18 +15,29 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class RecentExercisesFragment extends Fragment {
+public class RecentExercisesFragment extends Fragment implements RecentExPresenter.IView {
 
     @BindView(R.id.recent_exercise_not_found)
     TextView emptyCustExList;
 
+    private RecentExPresenter mRecentExPresenter;
 
+    private RecyclerView recyclerView;
+
+    @Override
+    public void onCreate(@Nullable final Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (mRecentExPresenter == null) {
+            mRecentExPresenter = new RecentExPresenter();
+        }
+        mRecentExPresenter.attachView(this);
+
+    }
 
     @Nullable
     @Override
@@ -33,39 +45,25 @@ public class RecentExercisesFragment extends Fragment {
             @Nullable final Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.recent_exercises_fragment, container, false);
         ButterKnife.bind(this, view);
-        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recent_exercise_custom_list);
-        AdapterToRecentExerciseRecycler adapterToCustomExerciseRecycler = new AdapterToRecentExerciseRecycler
-                (createCustomExecList(), getFragmentManager());
-//        emptyCustExList.setVisibility(View.GONE);
+        recyclerView = (RecyclerView) view.findViewById(R.id.recent_exercise_custom_list);
+
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
+//        emptyCustExList.setVisibility(View.GONE);
 //        recyclerView.setVisibility(View.VISIBLE);
         recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(adapterToCustomExerciseRecycler);
+        mRecentExPresenter.loadData();
         return view;
     }
 
-    private List<CustomExModel> createCustomExecList() {
-
-        return new ArrayList<CustomExModel>() {
-            {
-                add(new CustomExModel() {
-                    {
-                        this.setExTitle("SuperExercise")
-                                .setExSubTitle("SuperSubtitle")
-                                .setActive(true)
-                                .setId(1);
-                    }
-                });
-
-                add(new CustomExModel() {
-                    {
-                        this.setExTitle("PuperExercise")
-                                .setExSubTitle("PuperSubtitle")
-                                .setActive(true)
-                                .setId(2);
-                    }
-                });
-            }
-        };
+    @Override
+    public void show(final List<CustomExModel> exModelList) {
+        AdapterToRecentExerciseRecycler adapterToCustomExerciseRecycler = new AdapterToRecentExerciseRecycler
+                (exModelList, getFragmentManager());
+        recyclerView.setAdapter(adapterToCustomExerciseRecycler);
+    }
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mRecentExPresenter.detachView();
     }
 }

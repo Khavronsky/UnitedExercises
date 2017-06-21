@@ -2,11 +2,13 @@ package com.khavronsky.unitedexercises.exercises_catalogs.ExerciseSearch;
 
 
 import com.khavronsky.unitedexercises.R;
+import com.khavronsky.unitedexercises.exercise_performance.ExercisePerformActivity;
 import com.khavronsky.unitedexercises.import_from_grand_project.RecyclerItemClickListener;
 
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.FragmentManager;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
@@ -107,8 +109,9 @@ public class SearchDialog extends DialogFragment
                 new RecyclerItemClickListener(
                         getActivity(), (view, position) -> {
                     String item = ((RVAdapter) recyclerView.getAdapter()).getItem(position);
-                    searchEditText.setText(item);
-                    searchEditText.setSelection(searchEditText.getText().length());
+//                    searchEditText.setText(item);
+//                    searchEditText.setSelection(searchEditText.getText().length());
+                    startActivity(new Intent(getActivity(), ExercisePerformActivity.class));
                 })
         );
 
