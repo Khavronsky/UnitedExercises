@@ -1,11 +1,11 @@
 package com.khavronsky.unitedexercises.exercises_models;
 
 
-import android.os.Parcel;
-import android.os.Parcelable;
 import android.support.annotation.IntDef;
 
-public class CardioExerciseModel extends ExerciseModel implements Parcelable {
+import java.io.Serializable;
+
+public class CardioExerciseModel extends ExerciseModel implements Serializable {
 
     private final static ExerciseType type = ExerciseType.CARDIO;
 
@@ -97,44 +97,5 @@ public class CardioExerciseModel extends ExerciseModel implements Parcelable {
     public CardioExerciseModel setDefValue(final float defValue) {
         this.defValue = defValue;
         return this;
-    }
-
-    /**
-     * P A R C E L A B L E   I M P L E M E N T A T I O N
-     * */
-
-
-
-    public static final Creator<CardioExerciseModel> CREATOR = new Creator<CardioExerciseModel>() {
-        @Override
-        public CardioExerciseModel createFromParcel(final Parcel source) {
-            return new CardioExerciseModel();
-        }
-
-        @Override
-        public CardioExerciseModel[] newArray(final int size) {
-            return new CardioExerciseModel[size];
-        }
-    };
-
-    protected CardioExerciseModel(final Parcel in) {
-        super(in);
-        this.high = in.readInt();
-        this.middle = in.readInt();
-        this.low = in.readInt();
-        this.defValue = in.readInt();
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(final Parcel dest, final int flags) {
-        dest.writeFloat(high);
-        dest.writeFloat(middle);
-        dest.writeFloat(low);
-        dest.writeFloat(defValue);
     }
 }

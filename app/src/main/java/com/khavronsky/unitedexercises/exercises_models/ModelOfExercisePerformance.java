@@ -1,26 +1,33 @@
 package com.khavronsky.unitedexercises.exercises_models;
 
 
-import android.os.Parcel;
-import android.os.Parcelable;
+import java.io.Serializable;
 
-public class ModelOfExercisePerformance implements Parcelable{
+public class ModelOfExercisePerformance implements Serializable {
+
+    //region FIELDS
     private ExerciseModel mExercise;
+
     private Long mStartTime;
+
     private int mDuration;
+
     private String mNote;
+
     private float currentKcalPerHour;
+    //endregion
 
     public float getCurrentKcalPerHour() {
         return currentKcalPerHour;
     }
 
-    public void setCurrentKcalPerHour(final float currentKcalPerHour) {
-        this.currentKcalPerHour = currentKcalPerHour;
-    }
-
     public ModelOfExercisePerformance(final ExerciseModel exercise) {
         mExercise = exercise;
+    }
+
+    public ModelOfExercisePerformance setCurrentKcalPerHour(final float currentKcalPerHour) {
+        this.currentKcalPerHour = currentKcalPerHour;
+        return this;
     }
 
     public ExerciseModel getExercise() {
@@ -53,33 +60,4 @@ public class ModelOfExercisePerformance implements Parcelable{
         mNote = note;
         return this;
     }
-
-    /**
-     * P A R C E L A B L E   I M P L E M E N T A T I O N
-     * */
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(final Parcel dest, final int flags) {
-        dest.writeString(mNote);
-    }
-
-    protected ModelOfExercisePerformance(Parcel in) {
-        mNote = in.readString();
-    }
-
-    public static final Creator<ModelOfExercisePerformance> CREATOR = new Creator<ModelOfExercisePerformance>() {
-        @Override
-        public ModelOfExercisePerformance createFromParcel(Parcel in) {
-            return new ModelOfExercisePerformance(in);
-        }
-
-        @Override
-        public ModelOfExercisePerformance[] newArray(int size) {
-            return new ModelOfExercisePerformance[size];
-        }
-    };
 }

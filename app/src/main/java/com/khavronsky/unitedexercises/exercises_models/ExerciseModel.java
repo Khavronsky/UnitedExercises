@@ -1,14 +1,24 @@
 package com.khavronsky.unitedexercises.exercises_models;
 
 
-import android.os.Parcel;
-import android.os.Parcelable;
+import java.io.Serializable;
 
-public abstract class ExerciseModel implements Parcelable {
+public abstract class ExerciseModel implements Serializable {
 
+    //region FIELDS
     private static final String CARDIO_TAG = "Cardio";
 
     private static final String POWER_TAG = "Power";
+
+    private String title;
+
+    private ExerciseType type;
+
+    private boolean customExercise;
+
+    private boolean active = true;
+
+    //endregion
 
     public enum ExerciseType {
         CARDIO(CARDIO_TAG),
@@ -25,15 +35,7 @@ public abstract class ExerciseModel implements Parcelable {
         }
     }
 
-    private String title;
-
-    private ExerciseType type;
-
-    private boolean customExercise;
-
-    protected ExerciseModel() {
-    }
-
+    //region title set/get
     public ExerciseModel setTitle(final String title) {
         this.title = title;
         return this;
@@ -42,7 +44,9 @@ public abstract class ExerciseModel implements Parcelable {
     public String getTitle() {
         return title;
     }
+    //endregion
 
+    //region type set/get
     void setType(ExerciseType type) {
         this.type = type;
     }
@@ -50,7 +54,9 @@ public abstract class ExerciseModel implements Parcelable {
     public ExerciseType getType() {
         return type;
     }
+    //endregion
 
+    //region customExercise set/get
     public ExerciseModel setCustomExercise(final boolean customExercise) {
         this.customExercise = customExercise;
         return this;
@@ -59,9 +65,17 @@ public abstract class ExerciseModel implements Parcelable {
     public boolean isCustomExercise() {
         return customExercise;
     }
+    //endregion
 
-    public ExerciseModel(final Parcel in) {
-        title = in.readString();
-        customExercise = in.readByte() != 0;
+    //region active set/get
+    public ExerciseModel setActive(final boolean active) {
+        this.active = active;
+        return this;
     }
+
+    public boolean isActive() {
+        return active;
+    }
+    //endregion
+
 }

@@ -72,7 +72,7 @@ public class CardioExPerformFragment extends Fragment implements IDialogFragment
     public static CardioExPerformFragment newInstance(ModelOfExercisePerformance modelOfExercisePerformance) {
 
         Bundle args = new Bundle();
-        args.putParcelable("model", modelOfExercisePerformance);
+        args.putSerializable("model", modelOfExercisePerformance);
         CardioExPerformFragment fragment = new CardioExPerformFragment();
         fragment.setArguments(args);
         return fragment;
@@ -92,7 +92,7 @@ public class CardioExPerformFragment extends Fragment implements IDialogFragment
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
             @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.cardio_ex_perform_fragment, container, false);
-        mModelOfExercisePerformance = getArguments().getParcelable("model");
+        mModelOfExercisePerformance = (ModelOfExercisePerformance) getArguments().getSerializable("model");
         unbinder = ButterKnife.bind(this, v);
         init(v);
         return v;
@@ -103,7 +103,8 @@ public class CardioExPerformFragment extends Fragment implements IDialogFragment
         mExCardioPerformDuration.setText(String.valueOf(
                 mModelOfExercisePerformance
                         .getDuration()));
-        if (((CardioExerciseModel)mModelOfExercisePerformance.getExercise()).getIntensityType() == CardioExerciseModel.TYPE_SPECIFY) {
+        if (((CardioExerciseModel) mModelOfExercisePerformance.getExercise()).getIntensityType()
+                == CardioExerciseModel.TYPE_SPECIFY) {
             setSpinners();
         } else {
             mCountCalMethod.setVisibility(View.GONE);
@@ -194,11 +195,13 @@ public class CardioExPerformFragment extends Fragment implements IDialogFragment
                 .createFromResource(getContext(), R.array.intensity_types, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mCountCalMethod.setAdapter(adapter);
+        mCountCalMethod.setSelection(
+                getSpinnerSelection((CardioExerciseModel) mModelOfExercisePerformance.getExercise()));
         mCountCalMethod.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(final AdapterView<?> parent, final View view, final int position,
                     final long id) {
-                switch (position){
+                switch (position) {
                     case 0:
                         mModelOfExercisePerformance.setCurrentKcalPerHour(((CardioExerciseModel)
                                 mModelOfExercisePerformance.getExercise()).getLow());
@@ -220,6 +223,16 @@ public class CardioExPerformFragment extends Fragment implements IDialogFragment
             public void onNothingSelected(final AdapterView<?> parent) {
             }
         });
+    }
+
+    private int getSpinnerSelection(final CardioExerciseModel exercise) {
+        if (exercise.getMiddle() == mModelOfExercisePerformance.getCurrentKcalPerHour()) {
+            return 1;
+        }
+        if (exercise.getHigh() == mModelOfExercisePerformance.getCurrentKcalPerHour()) {
+            return 2;
+        }
+        return 0;
     }
 
     public interface IExerciseListener {
