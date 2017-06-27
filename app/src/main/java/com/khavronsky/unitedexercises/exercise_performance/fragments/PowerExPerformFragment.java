@@ -74,7 +74,7 @@ public class PowerExPerformFragment extends Fragment implements IDialogFragment,
     //region creation&initialization
     public static PowerExPerformFragment newInstance(ModelOfExercisePerformance modelOfExercisePerformance) {
         Bundle args = new Bundle();
-        args.putParcelable("model", modelOfExercisePerformance);
+        args.putSerializable("model", modelOfExercisePerformance);
         PowerExPerformFragment fragment = new PowerExPerformFragment();
         fragment.setArguments(args);
         return fragment;

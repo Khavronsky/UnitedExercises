@@ -1,4 +1,4 @@
-package com.khavronsky.unitedexercises;
+package com.khavronsky.unitedexercises.get_data;
 
 
 import com.khavronsky.unitedexercises.exercises_models.CardioExerciseModel;
@@ -11,15 +11,20 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Random;
 
+import static com.khavronsky.unitedexercises.exercises_models.CardioExerciseModel.METHOD_CAL_PER_HOUR;
+import static com.khavronsky.unitedexercises.exercises_models.CardioExerciseModel.METHOD_MET_VALUES;
 import static com.khavronsky.unitedexercises.exercises_models.CardioExerciseModel.TYPE_NOT_SPECIFY;
+import static com.khavronsky.unitedexercises.exercises_models.CardioExerciseModel.TYPE_SPECIFY;
 
 public class FakeData {
 
+    //region FIELDS
     private static List<ExerciseModel> sDefaultCatalog;
 
     private static List<ExerciseModel> sCustomCatalog;
 
     private static List<ModelOfExercisePerformance> sExercisePerformances;
+    //endregion
 
     static {
         createDefCatalog();
@@ -32,16 +37,16 @@ public class FakeData {
         sDefaultCatalog = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
             sDefaultCatalog.add(new CardioExerciseModel()
-                    .setCountCalMethod(i % 2 == 0 ? CardioExerciseModel.METHOD_CAL_PER_HOUR
-                            : CardioExerciseModel.METHOD_MET_VALUES)
+                    .setCountCalMethod(i % 2 == 0 ? METHOD_CAL_PER_HOUR
+                            : METHOD_MET_VALUES)
                     .setIntensityType(
-                            i % 3 == 0 ? TYPE_NOT_SPECIFY : CardioExerciseModel.TYPE_SPECIFY)
+                            i % 3 == 0 ? TYPE_NOT_SPECIFY : TYPE_SPECIFY)
                     .setDefValue(i * random.nextInt(3))
                     .setLow(random.nextInt(5))
                     .setMiddle(random.nextInt(5) + 5)
                     .setHigh(random.nextInt(5) + 10)
                     .setCustomExercise(false)
-                    .setTitle("Default cardio exercise " + i)
+                    .setTitle(i + " Default cardio exercise ")
             );
         }
         for (int i = 0; i < 10; i++) {
@@ -60,16 +65,16 @@ public class FakeData {
         sCustomCatalog = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
             sCustomCatalog.add(new CardioExerciseModel()
-                    .setCountCalMethod(i % 2 == 0 ? CardioExerciseModel.METHOD_CAL_PER_HOUR
-                            : CardioExerciseModel.METHOD_MET_VALUES)
+                    .setCountCalMethod(i % 2 == 0 ? METHOD_CAL_PER_HOUR
+                            : METHOD_MET_VALUES)
                     .setIntensityType(
-                            i % 3 == 0 ? TYPE_NOT_SPECIFY : CardioExerciseModel.TYPE_SPECIFY)
+                            i % 3 == 0 ? TYPE_NOT_SPECIFY : TYPE_SPECIFY)
                     .setDefValue(i * random.nextInt(3))
                     .setLow(random.nextInt(5))
                     .setMiddle(random.nextInt(5) + 5)
                     .setHigh(random.nextInt(5) + 10)
                     .setCustomExercise(true)
-                    .setTitle("Custom cardio exercise " + i)
+                    .setTitle(i + " Custom cardio exercise ")
             );
         }
         for (int i = 0; i < 10; i++) {
@@ -92,19 +97,28 @@ public class FakeData {
                     .setStartTime(Calendar.getInstance().getTimeInMillis())
                     .setDuration(60)
                     .setNote("Note " + i)
-                    .setCurrentKcalPerHour(((CardioExerciseModel)sDefaultCatalog.get(ran)).getIntensityType() ==
-                            TYPE_NOT_SPECIFY? ((CardioExerciseModel)sDefaultCatalog.get(ran)).getDefValue(): (
-                                    (CardioExerciseModel)sDefaultCatalog.get(ran)).getLow())
+//                    .setCurrentKcalPerHour(((CardioExerciseModel)sDefaultCatalog.get(ran)).getIntensityType() ==
+//                            TYPE_NOT_SPECIFY? ((CardioExerciseModel)sDefaultCatalog.get(ran)).getDefValue(): (
+//                                    (CardioExerciseModel)sDefaultCatalog.get(ran)).getLow())
             );
             ran = random.nextInt(20);
             sExercisePerformances.add(new ModelOfExercisePerformance(sCustomCatalog.get(ran))
                     .setStartTime(Calendar.getInstance().getTimeInMillis())
                     .setDuration(45)
                     .setNote("Enot " + i)
-                    .setCurrentKcalPerHour(((CardioExerciseModel)sDefaultCatalog.get(ran)).getIntensityType() ==
-                            TYPE_NOT_SPECIFY? ((CardioExerciseModel)sDefaultCatalog.get(ran)).getDefValue(): (
-                            (CardioExerciseModel)sDefaultCatalog.get(ran)).getLow())
+//                    .setCurrentKcalPerHour(((CardioExerciseModel)sDefaultCatalog.get(ran)).getIntensityType() ==
+//                            TYPE_NOT_SPECIFY? ((CardioExerciseModel)sDefaultCatalog.get(ran)).getDefValue(): (
+//                            (CardioExerciseModel)sDefaultCatalog.get(ran)).getLow())
             );
+        }
+        for (ModelOfExercisePerformance model :
+                sExercisePerformances) {
+            if (model.getExercise().getType() == ExerciseModel.ExerciseType.CARDIO){
+                CardioExerciseModel cardioModel = (CardioExerciseModel) model.getExercise();
+                model.setCurrentKcalPerHour(cardioModel.getIntensityType() == TYPE_NOT_SPECIFY?
+                        cardioModel.getDefValue()
+                        :cardioModel.getLow());
+            }
         }
     }
 

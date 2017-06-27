@@ -1,6 +1,7 @@
 package com.khavronsky.unitedexercises.exercises_catalogs.ex_cat_presenters;
 
 import com.khavronsky.unitedexercises.exercises_models.CustomExModel;
+import com.khavronsky.unitedexercises.get_data.ExerciseRX;
 import com.khavronsky.unitedexercises.import_from_grand_project.AbstractPresenter;
 
 import android.util.Log;
@@ -13,7 +14,9 @@ public class RecentExPresenter extends AbstractPresenter<RecentExPresenter.IView
 
 
     public void loadData() {
-        Log.d("PRES", "loadData: ");
+        ExerciseRX.getRecentExerciseList();
+
+        Log.d("KhS", "loadData: RecentExPresenter");
         if (getView() != null) {
             getView().show(createCustomExecList());
         }

@@ -1,7 +1,7 @@
 package com.khavronsky.unitedexercises;
 
-import com.khavronsky.unitedexercises.create_new_exercises.new_cardio_exercise.CreateCardioExerciseActivity;
-import com.khavronsky.unitedexercises.create_new_exercises.new_power_exercise.CreatePowerExerciseActivity;
+import com.khavronsky.unitedexercises.create_new_exercises.new_cardio_exercise.CardioExerciseEditorActivity;
+import com.khavronsky.unitedexercises.create_new_exercises.new_power_exercise.PowerExerciseEditorActivity;
 import com.khavronsky.unitedexercises.exercise_performance.ExercisePerformActivity;
 import com.khavronsky.unitedexercises.exercises_catalogs.ExerciseCatalogActivity;
 
@@ -37,10 +37,10 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(this, ExercisePerformActivity.class));
                 break;
             case R.id.btn2:
-                startActivity(new Intent(this, CreateCardioExerciseActivity.class));
+                startActivity(new Intent(this, CardioExerciseEditorActivity.class));
                 break;
             case R.id.btn3:
-                startActivity(new Intent(this, CreatePowerExerciseActivity.class));
+                startActivity(new Intent(this, PowerExerciseEditorActivity.class));
                 break;
             case R.id.btn4:
                 startActivity(new Intent(this, ExerciseCatalogActivity.class));

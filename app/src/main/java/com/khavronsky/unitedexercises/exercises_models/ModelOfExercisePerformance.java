@@ -8,7 +8,9 @@ public class ModelOfExercisePerformance implements Serializable {
     //region FIELDS
     private ExerciseModel mExercise;
 
-    private Long mStartTime;
+    private long mLastChangedTime;
+
+    private long mStartTime;
 
     private int mDuration;
 
@@ -58,6 +60,15 @@ public class ModelOfExercisePerformance implements Serializable {
 
     public ModelOfExercisePerformance setNote(final String note) {
         mNote = note;
+        return this;
+    }
+
+    public long getLastChangedTime() {
+        return mLastChangedTime;
+    }
+
+    public ModelOfExercisePerformance setLastChangedTime(final long lastChangedTime) {
+        mLastChangedTime = lastChangedTime;
         return this;
     }
 }

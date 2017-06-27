@@ -21,7 +21,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class CreatePowerExerciseActivity extends AppCompatActivity implements View.OnClickListener,
+public class PowerExerciseEditorActivity extends AppCompatActivity implements View.OnClickListener,
         IDialogFragment {
 
     private final static String SETS = "sets";

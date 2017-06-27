@@ -31,7 +31,7 @@ import static com.khavronsky.unitedexercises.exercises_models.CardioExerciseMode
 import static com.khavronsky.unitedexercises.exercises_models.CardioExerciseModel.TYPE_SPECIFY;
 import static com.khavronsky.unitedexercises.import_from_grand_project.FloatNumPickerFragment.EXTRA_DECIMAL_STEP_IS_01;
 
-public class CreateCardioExerciseActivity extends AppCompatActivity implements View.OnClickListener {
+public class CardioExerciseEditorActivity extends AppCompatActivity implements View.OnClickListener {
 
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
@@ -243,7 +243,7 @@ public class CreateCardioExerciseActivity extends AppCompatActivity implements V
                 } catch (NumberFormatException e) {
                 }
                 if (s.length() > 10) {
-                    Toast.makeText(CreateCardioExerciseActivity.this, "Ой ой ой! \nОсеня мунога букавка твоя писать",
+                    Toast.makeText(CardioExerciseEditorActivity.this, "Ой ой ой! \nОсеня мунога букавка твоя писать",
                             Toast.LENGTH_SHORT).show();
                     s.delete(0, 1);
                 }
