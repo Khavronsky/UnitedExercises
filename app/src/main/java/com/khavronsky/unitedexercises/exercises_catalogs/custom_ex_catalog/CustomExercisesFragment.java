@@ -1,10 +1,8 @@
-package com.khavronsky.unitedexercises.exercises_catalogs.ex_cat_fragments;
+package com.khavronsky.unitedexercises.exercises_catalogs.custom_ex_catalog;
 
 
 import com.khavronsky.unitedexercises.R;
 import com.khavronsky.unitedexercises.create_new_exercises.new_cardio_exercise.CardioExerciseEditorActivity;
-import com.khavronsky.unitedexercises.exercises_catalogs.ex_cat_adapters.AdapterToCustomExerciseRecycler;
-import com.khavronsky.unitedexercises.exercises_catalogs.ex_cat_presenters.CustomExPresenter;
 import com.khavronsky.unitedexercises.exercises_models.ExerciseModel;
 import com.khavronsky.unitedexercises.exercises_models.ExerciseModel.ExerciseType;
 

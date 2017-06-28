@@ -1,8 +1,6 @@
-package com.khavronsky.unitedexercises.exercises_catalogs.ex_cat_fragments;
+package com.khavronsky.unitedexercises.exercises_catalogs.recent_ex_catalog;
 
 import com.khavronsky.unitedexercises.R;
-import com.khavronsky.unitedexercises.exercises_catalogs.ex_cat_adapters.AdapterToRecentExerciseRecycler;
-import com.khavronsky.unitedexercises.exercises_catalogs.ex_cat_presenters.RecentExPresenter;
 import com.khavronsky.unitedexercises.exercises_models.CustomExModel;
 
 import android.os.Bundle;

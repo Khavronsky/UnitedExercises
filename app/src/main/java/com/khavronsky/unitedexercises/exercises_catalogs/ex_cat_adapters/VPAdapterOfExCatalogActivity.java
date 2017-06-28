@@ -1,15 +1,15 @@
 package com.khavronsky.unitedexercises.exercises_catalogs.ex_cat_adapters;
 
-import com.khavronsky.unitedexercises.exercises_catalogs.ex_cat_fragments.CustomExercisesFragment;
-import com.khavronsky.unitedexercises.exercises_catalogs.ex_cat_fragments.ExerciseCatalogFragment;
-import com.khavronsky.unitedexercises.exercises_catalogs.ex_cat_fragments.RecentExercisesFragment;
+import com.khavronsky.unitedexercises.exercises_catalogs.custom_ex_catalog.CustomExercisesFragment;
+import com.khavronsky.unitedexercises.exercises_catalogs.default_ex_catalog.ExerciseCatalogFragment;
+import com.khavronsky.unitedexercises.exercises_catalogs.recent_ex_catalog.RecentExercisesFragment;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.util.Log;
 
-public class VPAdapterOfMainExerciseScreen extends FragmentPagerAdapter {
+public class VPAdapterOfExCatalogActivity extends FragmentPagerAdapter {
 
     private Fragment mFragment1;
 
@@ -19,7 +19,7 @@ public class VPAdapterOfMainExerciseScreen extends FragmentPagerAdapter {
 
     private String[] tabsTitle = {"НЕДАВНИЕ", "МОИ УПРАЖНЕНИЯ", "КАТАЛОГ"};
 
-    public VPAdapterOfMainExerciseScreen(final FragmentManager fm) {
+    public VPAdapterOfExCatalogActivity(final FragmentManager fm) {
         super(fm);
         Log.d("KhS", "VPAdapterOfMainExerciseScreen: ");
         mFragment1 = new ExerciseCatalogFragment();

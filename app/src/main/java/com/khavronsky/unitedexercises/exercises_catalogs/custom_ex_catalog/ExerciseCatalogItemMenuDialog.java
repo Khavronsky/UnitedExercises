@@ -1,4 +1,4 @@
-package com.khavronsky.unitedexercises.exercises_catalogs.ex_cat_fragments;
+package com.khavronsky.unitedexercises.exercises_catalogs.custom_ex_catalog;
 
 
 import com.khavronsky.unitedexercises.R;

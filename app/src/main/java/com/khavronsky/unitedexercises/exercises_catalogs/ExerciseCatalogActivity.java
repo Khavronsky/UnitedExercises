@@ -2,7 +2,7 @@ package com.khavronsky.unitedexercises.exercises_catalogs;
 
 import com.khavronsky.unitedexercises.R;
 import com.khavronsky.unitedexercises.exercises_catalogs.ExerciseSearch.SearchDialog;
-import com.khavronsky.unitedexercises.exercises_catalogs.ex_cat_adapters.VPAdapterOfMainExerciseScreen;
+import com.khavronsky.unitedexercises.exercises_catalogs.ex_cat_adapters.VPAdapterOfExCatalogActivity;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -29,7 +29,7 @@ public class ExerciseCatalogActivity extends AppCompatActivity implements View.O
         setContentView(R.layout.ex_catalog_activity);
         setToolbar();
         ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
-        PagerAdapter pagerAdapter = new VPAdapterOfMainExerciseScreen(getSupportFragmentManager());
+        PagerAdapter pagerAdapter = new VPAdapterOfExCatalogActivity(getSupportFragmentManager());
         viewPager.setAdapter(pagerAdapter);
         viewPager.setOffscreenPageLimit(3);
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);

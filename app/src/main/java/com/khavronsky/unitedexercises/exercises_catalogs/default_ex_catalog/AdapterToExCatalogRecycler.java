@@ -1,4 +1,4 @@
-package com.khavronsky.unitedexercises.exercises_catalogs.ex_cat_adapters;
+package com.khavronsky.unitedexercises.exercises_catalogs.default_ex_catalog;
 
 import com.khavronsky.unitedexercises.R;
 import com.khavronsky.unitedexercises.exercise_performance.ExercisePerformActivity;

@@ -1,4 +1,4 @@
-package com.khavronsky.unitedexercises.exercises_catalogs.ex_cat_presenters;
+package com.khavronsky.unitedexercises.exercises_catalogs.recent_ex_catalog;
 
 import com.khavronsky.unitedexercises.exercises_models.CustomExModel;
 import com.khavronsky.unitedexercises.get_data.ExerciseRX;

@@ -1,8 +1,6 @@
-package com.khavronsky.unitedexercises.exercises_catalogs.ex_cat_fragments;
+package com.khavronsky.unitedexercises.exercises_catalogs.default_ex_catalog;
 
 import com.khavronsky.unitedexercises.R;
-import com.khavronsky.unitedexercises.exercises_catalogs.ex_cat_adapters.AdapterToExCatalogRecycler;
-import com.khavronsky.unitedexercises.exercises_catalogs.ex_cat_presenters.DefaultExPresenter;
 import com.khavronsky.unitedexercises.exercises_models.ExerciseModel;
 import com.khavronsky.unitedexercises.exercises_models.ModelOfItemForExCatalog;
 

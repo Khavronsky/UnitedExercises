@@ -11,6 +11,7 @@ public class PresenterOfExercisePerformance extends AbstractPresenter<PresenterO
     private ModelOfExercisePerformance modelOfExercisePerformance;
 
     void loadData() {
+        
         if (getView() != null) {
             ModelOfExercisePerformance model;
             if (modelOfExercisePerformance != null) {
