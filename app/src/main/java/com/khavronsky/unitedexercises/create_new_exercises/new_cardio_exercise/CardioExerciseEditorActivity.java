@@ -2,6 +2,7 @@ package com.khavronsky.unitedexercises.create_new_exercises.new_cardio_exercise;
 
 import com.khavronsky.unitedexercises.R;
 import com.khavronsky.unitedexercises.exercises_models.CardioExerciseModel;
+import com.khavronsky.unitedexercises.get_data.FakeData;
 import com.khavronsky.unitedexercises.import_from_grand_project.FloatNumPickerFragment;
 import com.khavronsky.unitedexercises.import_from_grand_project.IDialogFragment;
 
@@ -31,8 +32,10 @@ import static com.khavronsky.unitedexercises.exercises_models.CardioExerciseMode
 import static com.khavronsky.unitedexercises.exercises_models.CardioExerciseModel.TYPE_SPECIFY;
 import static com.khavronsky.unitedexercises.import_from_grand_project.FloatNumPickerFragment.EXTRA_DECIMAL_STEP_IS_01;
 
-public class CardioExerciseEditorActivity extends AppCompatActivity implements View.OnClickListener {
+public class CardioExerciseEditorActivity extends AppCompatActivity implements View.OnClickListener,
+        PresenterOfCardioExerciseEditor.IView {
 
+    //region FIELDS
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
 
@@ -76,17 +79,24 @@ public class CardioExerciseEditorActivity extends AppCompatActivity implements V
 
     private TextWatcher mTextWatcher;
 
+    private PresenterOfCardioExerciseEditor mPresenter;
+
     private CardioExerciseModel mCardioExerciseModel = new CardioExerciseModel();
+
     String my_best_picker = "my_best_picker";
+    //endregion
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
-
         setContentView(R.layout.create_cardio_ex_activity);
+
+        if (mPresenter == null) {
+            mPresenter = new PresenterOfCardioExerciseEditor();
+        }
+        mPresenter.attachView(this);
+
         ButterKnife.bind(this);
         setToolbar();
         if (getIntent().getExtras() != null) {
@@ -99,15 +109,14 @@ public class CardioExerciseEditorActivity extends AppCompatActivity implements V
         setHintFromSelectedCountingMethod(mCountCalMethod.getSelectedItemPosition());
         createTextWatcher();
 
-        editTextListener = v -> {
-            showPicker((EditText) v);
-        };
+        editTextListener = v -> showPicker((EditText) v);
         setTextWatcher();
     }
 
     void showPicker(EditText editText) {
-        FloatNumPickerFragment dialog= (FloatNumPickerFragment) getSupportFragmentManager().findFragmentByTag(my_best_picker);
-        if(dialog!=null){
+        FloatNumPickerFragment dialog = (FloatNumPickerFragment) getSupportFragmentManager()
+                .findFragmentByTag(my_best_picker);
+        if (dialog != null) {
             return;
         }
         dialog = new FloatNumPickerFragment();
@@ -115,7 +124,9 @@ public class CardioExerciseEditorActivity extends AppCompatActivity implements V
         bundle.putInt("min_value", 0);
         bundle.putInt("max_value", 2);
         float curVal = 1;
-        if(editText.getText().length() != 0) curVal = Float.parseFloat(String.valueOf(editText.getText()));
+        if (editText.getText().length() != 0) {
+            curVal = Float.parseFloat(String.valueOf(editText.getText()));
+        }
         bundle.putFloat("current_value", curVal);
         bundle.putBoolean(EXTRA_DECIMAL_STEP_IS_01, true);
 //        bundle.putInt("one_point_value", 1);
@@ -133,7 +144,6 @@ public class CardioExerciseEditorActivity extends AppCompatActivity implements V
             @Override
             public void doByDismissed() {
 
-
             }
         });
 
@@ -141,10 +151,8 @@ public class CardioExerciseEditorActivity extends AppCompatActivity implements V
     }
 
 
-
     private void setTextWatcher() {
 //        mTitle.addTextChangedListener(mTextWatcher);
-
         mBurnedPerHour.setOnClickListener(editTextListener);
         mLowIntensity.setOnClickListener(editTextListener);
         mMiddleIntensity.setOnClickListener(editTextListener);
@@ -243,7 +251,8 @@ public class CardioExerciseEditorActivity extends AppCompatActivity implements V
                 } catch (NumberFormatException e) {
                 }
                 if (s.length() > 10) {
-                    Toast.makeText(CardioExerciseEditorActivity.this, "Ой ой ой! \nОсеня мунога букавка твоя писать",
+                    Toast.makeText(CardioExerciseEditorActivity.this,
+                            "Ой ой ой! \nОсеня мунога букавка твоя писать",
                             Toast.LENGTH_SHORT).show();
                     s.delete(0, 1);
                 }
@@ -307,6 +316,8 @@ public class CardioExerciseEditorActivity extends AppCompatActivity implements V
                     .setDefValue(Float.parseFloat(String.valueOf(mBurnedPerHour.getText())))
                     .setTitle(String.valueOf(mTitle.getText()));
         }
+        FakeData.setID(mCardioExerciseModel);
+        mPresenter.saveData(mCardioExerciseModel);
         showSavedToast();
 
         return true;
@@ -335,22 +346,21 @@ public class CardioExerciseEditorActivity extends AppCompatActivity implements V
 
     private void showSavedToast() {
         Toast.makeText(this, "MODEL SAVED \n"
-                        + "Title: " + mCardioExerciseModel.getTitle() + "\n"
-                ,
-                Toast.LENGTH_SHORT)
+                + "Title: " + mCardioExerciseModel.getTitle() + "\n", Toast.LENGTH_SHORT)
                 .show();
         Toast.makeText(this, "Calculating method: " + (mCardioExerciseModel.getCountCalMethod() ==
-                        METHOD_CAL_PER_HOUR ?
-                        "Calories per hour" : "MET values") + "\n"
-                        + "Intensity type: " + (mCardioExerciseModel.getIntensityType() == TYPE_SPECIFY ? "Specify" :
-                        "Not specify") + "\n",
-                Toast.LENGTH_SHORT)
+                METHOD_CAL_PER_HOUR ?
+                "Calories per hour" : "MET values") + "\n"
+                + "Intensity type: "
+                + (mCardioExerciseModel.getIntensityType() == TYPE_SPECIFY ?
+                "Specify"
+                : "Not specify") + "\n", Toast.LENGTH_SHORT)
                 .show();
         Toast.makeText(this, "Burned calories: " + (mCardioExerciseModel.getIntensityType() == TYPE_SPECIFY ?
-                        (mCardioExerciseModel.getLow() + "/" + mCardioExerciseModel.getMiddle()
-                                 + "/" + mCardioExerciseModel.getHigh()) : mCardioExerciseModel
-                        .getDefValue()),
-                Toast.LENGTH_SHORT)
+                (mCardioExerciseModel.getLow()
+                        + "/" + mCardioExerciseModel.getMiddle()
+                        + "/" + mCardioExerciseModel.getHigh())
+                : mCardioExerciseModel.getDefValue()), Toast.LENGTH_SHORT)
                 .show();
     }
 
@@ -361,5 +371,11 @@ public class CardioExerciseEditorActivity extends AppCompatActivity implements V
                 .setIntensityType(TYPE_SPECIFY)
                 .setTitle("Жим органики челюстями")
         ;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mPresenter.detachView();
     }
 }

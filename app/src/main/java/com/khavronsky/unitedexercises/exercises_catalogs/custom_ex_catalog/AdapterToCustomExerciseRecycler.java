@@ -5,6 +5,7 @@ import com.khavronsky.unitedexercises.create_new_exercises.new_cardio_exercise.C
 import com.khavronsky.unitedexercises.exercise_performance.ExercisePerformActivity;
 import com.khavronsky.unitedexercises.exercises_models.CardioExerciseModel;
 import com.khavronsky.unitedexercises.exercises_models.ExerciseModel;
+import com.khavronsky.unitedexercises.exercises_models.IEditCatalog;
 import com.khavronsky.unitedexercises.exercises_models.PowerExerciseModel;
 
 import android.content.Intent;
@@ -27,16 +28,22 @@ import butterknife.OnClick;
 
 import static com.khavronsky.unitedexercises.exercises_models.CardioExerciseModel.METHOD_MET_VALUES;
 
-public class AdapterToCustomExerciseRecycler
-        extends RecyclerView.Adapter<AdapterToCustomExerciseRecycler.CustomExerciseHolder> {
+public class AdapterToCustomExerciseRecycler extends RecyclerView.Adapter<CustomExerciseHolder>
+        implements CustomExerciseHolder.ICustomExEditor {
 
     private List<ExerciseModel> customExList;
 
     private FragmentManager mFragmentManager;
 
+    private IEditCatalog mEditor;
+
     public AdapterToCustomExerciseRecycler(FragmentManager fragmentManager) {
         mFragmentManager = fragmentManager;
 
+    }
+
+    public void setEditor(final IEditCatalog editor) {
+        mEditor = editor;
     }
 
     @Override
@@ -52,6 +59,18 @@ public class AdapterToCustomExerciseRecycler
     public void onBindViewHolder(final CustomExerciseHolder holder, final int position) {
 //        holder.setText(customExList.get(position).getTitle(), customExList.get(position).getType().toString());
         holder.setText(customExList.get(position).getTitle(), createDescription(customExList.get(position)));
+        holder.setEditor(this);
+
+    }
+
+    @Override
+    public void pressDel(int pos) {
+        mEditor.delElements(customExList.get(pos).getId());
+    }
+
+    @Override
+    public void pressEdit(int pos) {
+
     }
 
     private String createDescription(final ExerciseModel exerciseModel) {
@@ -64,10 +83,10 @@ public class AdapterToCustomExerciseRecycler
                             : " ккал/час")
                     ;
         }
-        if (exerciseModel.getType() == ExerciseModel.ExerciseType.POWER){
-            return ((PowerExerciseModel)exerciseModel).getSets() + " подходов, "
+        if (exerciseModel.getType() == ExerciseModel.ExerciseType.POWER) {
+            return ((PowerExerciseModel) exerciseModel).getSets() + " подходов, "
                     + ((PowerExerciseModel) exerciseModel).getRepeats() + " повторов, "
-                    + ((PowerExerciseModel)exerciseModel).getWeight() + " кг";
+                    + ((PowerExerciseModel) exerciseModel).getWeight() + " кг";
         }
         return "Упс, не нашли...";
     }
@@ -80,78 +99,94 @@ public class AdapterToCustomExerciseRecycler
     public void setModelList(final List<ExerciseModel> modelList) {
         customExList = modelList;
     }
+}
 
-    /**
-     * V I E W   H O L D E R
-     */
-    class CustomExerciseHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+/**
+ * V I E W   H O L D E R
+ */
+class CustomExerciseHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        @BindView(R.id.custom_exercise_item_title)
-        TextView itemTitle;
+    @BindView(R.id.custom_exercise_item_title)
+    TextView itemTitle;
 
-        @BindView(R.id.custom_exercise_item_sub_title)
-        TextView itemSubtitle;
+    @BindView(R.id.custom_exercise_item_sub_title)
+    TextView itemSubtitle;
 
-        @BindView(R.id.custom_exercise_menu)
-        ImageView itemMenu;
+    @BindView(R.id.custom_exercise_menu)
+    ImageView itemMenu;
 
-        @BindView(R.id.anchor)
-        View mView;
+    @BindView(R.id.anchor)
+    View mView;
 
-        FragmentManager mFragmentManager;
+    FragmentManager mFragmentManager;
 
-        public CustomExerciseHolder setFragmentManager(final FragmentManager fragmentManager) {
-            mFragmentManager = fragmentManager;
-            return this;
-        }
+    private ICustomExEditor mEditor;
 
-        CustomExerciseHolder(final View itemView) {
-            super(itemView);
-            ButterKnife.bind(this, itemView);
-        }
-
-        @OnClick({R.id.custom_exercise_item_title, R.id.custom_exercise_item_sub_title})
-        @Override
-        public void onClick(final View v) {
-            Toast.makeText(v.getContext(), "show exercise", Toast.LENGTH_SHORT).show();
-            v.getContext().startActivity(new Intent(v.getContext(), ExercisePerformActivity.class));
-        }
-
-        void setText(String title, String subTitle) {
-            itemTitle.setText(title);
-            itemSubtitle.setText(subTitle);
-        }
-
-        @OnClick(R.id.custom_exercise_menu)
-        void showMenu() {
-            PopupMenu popupMenu = new PopupMenu(mView.getContext(), mView, Gravity.END);
-            popupMenu.inflate(R.menu.popup_menu);
-
-            popupMenu
-                    .setOnMenuItemClickListener(item -> {
-                        switch (item.getItemId()) {
-
-                            case R.id.custom_exercise_item_menu_del:
-                                Toast.makeText(itemMenu.getContext(),
-                                        "DELETE",
-                                        Toast.LENGTH_SHORT).show();
-                                return true;
-                            case R.id.custom_exercise_item_menu_edit:
-                                Toast.makeText(itemMenu.getContext(),
-                                        "EDIT",
-                                        Toast.LENGTH_SHORT).show();
-                                itemMenu.getContext().startActivity(new Intent(itemMenu.getContext(),
-                                        CardioExerciseEditorActivity.class));
-                                return true;
-                            default:
-                                return false;
-                        }
-                    });
-
-            popupMenu.setOnDismissListener(menu -> Toast.makeText(itemMenu.getContext(), "onDismiss",
-                    Toast.LENGTH_SHORT).show());
-            popupMenu.show();
-        }
-
+    public CustomExerciseHolder setFragmentManager(final FragmentManager fragmentManager) {
+        mFragmentManager = fragmentManager;
+        return this;
     }
+
+    CustomExerciseHolder(final View itemView) {
+        super(itemView);
+        ButterKnife.bind(this, itemView);
+    }
+
+    @OnClick({R.id.custom_exercise_item_title, R.id.custom_exercise_item_sub_title})
+    @Override
+    public void onClick(final View v) {
+        Toast.makeText(v.getContext(), "show exercise", Toast.LENGTH_SHORT).show();
+        v.getContext().startActivity(new Intent(v.getContext(), ExercisePerformActivity.class));
+    }
+
+    public void setEditor(final ICustomExEditor editor) {
+        mEditor = editor;
+    }
+
+    void setText(String title, String subTitle) {
+        itemTitle.setText(title);
+        itemSubtitle.setText(subTitle);
+    }
+
+    @OnClick(R.id.custom_exercise_menu)
+    void showMenu() {
+        PopupMenu popupMenu = new PopupMenu(mView.getContext(), mView, Gravity.END);
+        popupMenu.inflate(R.menu.popup_menu);
+
+        popupMenu
+                .setOnMenuItemClickListener(item -> {
+                    switch (item.getItemId()) {
+
+                        case R.id.custom_exercise_item_menu_del:
+                            Toast.makeText(itemMenu.getContext(),
+                                    "ГУМНО",
+                                    Toast.LENGTH_SHORT).show();
+                            popupMenu.dismiss();
+
+                            mEditor.pressDel(getAdapterPosition());
+                            return true;
+                        case R.id.custom_exercise_item_menu_edit:
+                            Toast.makeText(itemMenu.getContext(),
+                                    "EDIT",
+                                    Toast.LENGTH_SHORT).show();
+
+                            mEditor.pressEdit(getAdapterPosition());
+                            return true;
+                        default:
+                            return false;
+                    }
+                });
+
+        popupMenu.setOnDismissListener(menu -> Toast.makeText(itemMenu.getContext(), "onDismiss",
+                Toast.LENGTH_SHORT).show());
+        popupMenu.show();
+    }
+
+    interface ICustomExEditor {
+
+        void pressDel(int pos);
+
+        void pressEdit(int pos);
+    }
+
 }

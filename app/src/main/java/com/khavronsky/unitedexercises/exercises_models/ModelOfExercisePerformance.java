@@ -3,9 +3,11 @@ package com.khavronsky.unitedexercises.exercises_models;
 
 import java.io.Serializable;
 
-public class ModelOfExercisePerformance implements Serializable {
+public class ModelOfExercisePerformance implements Serializable, IModel {
 
     //region FIELDS
+    private long id;
+
     private ExerciseModel mExercise;
 
     private long mLastChangedTime;
@@ -19,12 +21,25 @@ public class ModelOfExercisePerformance implements Serializable {
     private float currentKcalPerHour;
     //endregion
 
-    public float getCurrentKcalPerHour() {
-        return currentKcalPerHour;
+    //region id set/get
+
+    @Override
+    public long getId() {
+        return id;
     }
+
+    public void setId(final long id) {
+        this.id = id;
+    }
+
+    //endregion
 
     public ModelOfExercisePerformance(final ExerciseModel exercise) {
         mExercise = exercise;
+    }
+
+    public float getCurrentKcalPerHour() {
+        return currentKcalPerHour;
     }
 
     public ModelOfExercisePerformance setCurrentKcalPerHour(final float currentKcalPerHour) {

@@ -16,10 +16,11 @@ import rx.schedulers.Schedulers;
 
 public class CustomExPresenter extends AbstractPresenter<CustomExPresenter.IView> {
 
-
+    ExerciseModel.ExerciseType type;
 
 
     public void loadData(ExerciseModel.ExerciseType type) {
+        this.type = type;
         ExerciseRX.getCustomExerciseList()
                 .map(customExerciseModelList -> new ArrayList<ExerciseModel>() {{
                             for (ExerciseModel model :
@@ -49,6 +50,28 @@ public class CustomExPresenter extends AbstractPresenter<CustomExPresenter.IView
                         if (getView() != null) {
                             getView().show(exerciseModels);
                         }
+                    }
+                });
+    }
+
+    public void delCustomExercise(long id){
+        ExerciseRX.delCustomExercise(id)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<Boolean>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(final Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(final Boolean aBoolean) {
+                        loadData(type);
                     }
                 });
     }

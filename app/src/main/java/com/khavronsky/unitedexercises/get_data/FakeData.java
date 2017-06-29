@@ -3,8 +3,11 @@ package com.khavronsky.unitedexercises.get_data;
 
 import com.khavronsky.unitedexercises.exercises_models.CardioExerciseModel;
 import com.khavronsky.unitedexercises.exercises_models.ExerciseModel;
+import com.khavronsky.unitedexercises.exercises_models.IModel;
 import com.khavronsky.unitedexercises.exercises_models.ModelOfExercisePerformance;
 import com.khavronsky.unitedexercises.exercises_models.PowerExerciseModel;
+
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -24,12 +27,19 @@ public class FakeData {
     private static List<ExerciseModel> sCustomCatalog;
 
     private static List<ModelOfExercisePerformance> sExercisePerformances;
+
+    private static List<Long> allID = new ArrayList<>();
     //endregion
 
     static {
         createDefCatalog();
         createCustomCatalog();
         createExPerformanceCatalog();
+        for (long l :
+                allID) {
+
+            Log.d("ALLID", "static initializer: " + l);
+        }
     }
 
     static void createDefCatalog() {
@@ -57,6 +67,10 @@ public class FakeData {
                     .setCustomExercise(false)
                     .setTitle("Default power exercise " + (i + 10))
             );
+        }
+        for (IModel model :
+                sDefaultCatalog) {
+            setID(model);
         }
     }
 
@@ -86,6 +100,10 @@ public class FakeData {
                     .setTitle("Custom power exercise " + (i + 10))
             );
         }
+        for (IModel model :
+                sCustomCatalog) {
+            setID(model);
+        }
     }
 
     static void createExPerformanceCatalog() {
@@ -94,36 +112,34 @@ public class FakeData {
         for (int i = 0; i < 10; i++) {
             int ran = random.nextInt(20);
             sExercisePerformances.add(new ModelOfExercisePerformance(sDefaultCatalog.get(ran))
-                    .setStartTime(Calendar.getInstance().getTimeInMillis())
-                    .setDuration(60)
-                    .setNote("Note " + i)
-//                    .setCurrentKcalPerHour(((CardioExerciseModel)sDefaultCatalog.get(ran)).getIntensityType() ==
-//                            TYPE_NOT_SPECIFY? ((CardioExerciseModel)sDefaultCatalog.get(ran)).getDefValue(): (
-//                                    (CardioExerciseModel)sDefaultCatalog.get(ran)).getLow())
+                            .setStartTime(Calendar.getInstance().getTimeInMillis())
+                            .setDuration(60)
+                            .setNote("Note " + i)
             );
             ran = random.nextInt(20);
             sExercisePerformances.add(new ModelOfExercisePerformance(sCustomCatalog.get(ran))
-                    .setStartTime(Calendar.getInstance().getTimeInMillis())
-                    .setDuration(45)
-                    .setNote("Enot " + i)
-//                    .setCurrentKcalPerHour(((CardioExerciseModel)sDefaultCatalog.get(ran)).getIntensityType() ==
-//                            TYPE_NOT_SPECIFY? ((CardioExerciseModel)sDefaultCatalog.get(ran)).getDefValue(): (
-//                            (CardioExerciseModel)sDefaultCatalog.get(ran)).getLow())
+                            .setStartTime(Calendar.getInstance().getTimeInMillis())
+                            .setDuration(45)
+                            .setNote("Enot " + i)
             );
         }
         for (ModelOfExercisePerformance model :
                 sExercisePerformances) {
-            if (model.getExercise().getType() == ExerciseModel.ExerciseType.CARDIO){
+            if (model.getExercise().getType() == ExerciseModel.ExerciseType.CARDIO) {
                 CardioExerciseModel cardioModel = (CardioExerciseModel) model.getExercise();
-                model.setCurrentKcalPerHour(cardioModel.getIntensityType() == TYPE_NOT_SPECIFY?
+                model.setCurrentKcalPerHour(cardioModel.getIntensityType() == TYPE_NOT_SPECIFY ?
                         cardioModel.getDefValue()
-                        :cardioModel.getLow());
+                        : cardioModel.getLow());
             }
+        }
+
+        for (IModel model :
+                sExercisePerformances) {
+            setID(model);
         }
     }
 
     public static List<ExerciseModel> getDefaultCatalog() {
-
         return sDefaultCatalog;
     }
 
@@ -133,5 +149,66 @@ public class FakeData {
 
     public static List<ModelOfExercisePerformance> getExercisePerformances() {
         return sExercisePerformances;
+    }
+
+    public static boolean addCustomExercise(ExerciseModel exerciseModel) {
+        sCustomCatalog.add(exerciseModel);
+        return true;
+    }
+
+    public static boolean addExPerfofmance(ModelOfExercisePerformance exercisePerformance) {
+        sExercisePerformances.add(exercisePerformance);
+        return true;
+    }
+
+    public static boolean editCustomExercise(ExerciseModel exerciseModel) {
+        List<ExerciseModel> list = new ArrayList<>(sCustomCatalog);
+        for (ExerciseModel model :
+                list) {
+
+            if (model.getId() == exerciseModel.getId()) {
+                sCustomCatalog.add(sCustomCatalog.indexOf(model), exerciseModel);
+            }
+        }
+        return true;
+    }
+
+    public static boolean editExercisePerformance(ModelOfExercisePerformance exercisePerformance) {
+        return true;
+    }
+
+    public static boolean delCustomExercise(long id) {
+        List<ExerciseModel> list = new ArrayList<>(sCustomCatalog);
+        for (ExerciseModel model :
+                list) {
+            if (model.getId() == id) {
+                sCustomCatalog.remove(model);
+            }
+        }
+        return true;
+    }
+
+    public static boolean delExercisePerformance(long id) {
+        List<ModelOfExercisePerformance> list = new ArrayList<>(sExercisePerformances);
+        for (ModelOfExercisePerformance model :
+                list) {
+            if (model.getId() == id) {
+                sExercisePerformances.remove(model);
+            }
+        }
+        return true;
+    }
+
+    public static void setID(IModel model) {
+        long max = 0;
+        for (long l :
+                allID) {
+            if (l > max) {
+                max = l;
+            }
+        }
+        max++;
+        allID.add(max);
+        model.setId(max);
     }
 }

@@ -2,6 +2,7 @@ package com.khavronsky.unitedexercises.create_new_exercises.new_power_exercise;
 
 import com.khavronsky.unitedexercises.R;
 import com.khavronsky.unitedexercises.exercises_models.PowerExerciseModel;
+import com.khavronsky.unitedexercises.get_data.FakeData;
 import com.khavronsky.unitedexercises.import_from_grand_project.IDialogFragment;
 import com.khavronsky.unitedexercises.import_from_grand_project.IntNumPickerFragment;
 
@@ -22,8 +23,9 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class PowerExerciseEditorActivity extends AppCompatActivity implements View.OnClickListener,
-        IDialogFragment {
+        IDialogFragment, PresenterOfPowerExerciseEditor.IView {
 
+    //region FIELDS
     private final static String SETS = "sets";
 
     private final static String REPEATS = "repeats";
@@ -55,6 +57,26 @@ public class PowerExerciseEditorActivity extends AppCompatActivity implements Vi
     private IntNumPickerFragment mIntNumPickerDialog;
 
     private String pickerOnScreen = "";
+
+    private PresenterOfPowerExerciseEditor mPresenter;
+    //endregion
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        setContentView(R.layout.create_power_ex_activity);
+        if (mPresenter == null) {
+            mPresenter = new PresenterOfPowerExerciseEditor();
+        }
+        mPresenter.attachView(this);
+        ButterKnife.bind(this);
+        mFocusableLayout.setFocusableInTouchMode(true);
+
+        setToolbar();
+        setEditText(mPowerExerciseModel);
+        setPowerExerciseModel(new PowerExerciseModel());
+    }
 
     public void setPowerExerciseModel(final PowerExerciseModel powerExerciseModel) {
         mPowerExerciseModel = powerExerciseModel;
@@ -113,6 +135,7 @@ public class PowerExerciseEditorActivity extends AppCompatActivity implements Vi
     public void doByDismissed() {
 
     }
+
     //endregion
 
     void showIntPicker(int min, int max, int currentVal, int onePointVal) {
@@ -121,19 +144,6 @@ public class PowerExerciseEditorActivity extends AppCompatActivity implements Vi
             mIntNumPickerDialog.setCallback(this);
             mIntNumPickerDialog.show(getSupportFragmentManager(), "picker");
         }
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        setContentView(R.layout.create_power_ex_activity);
-        ButterKnife.bind(this);
-        mFocusableLayout.setFocusableInTouchMode(true);
-
-        setToolbar();
-        setEditText(mPowerExerciseModel);
-        setPowerExerciseModel(new PowerExerciseModel());
     }
 
     private void setEditText(PowerExerciseModel powerExerciseModel) {
@@ -204,6 +214,9 @@ public class PowerExerciseEditorActivity extends AppCompatActivity implements Vi
                 .setWeight(Integer.parseInt(String.valueOf(mExWeight.getText())))
                 .setTitle(String.valueOf(mExTitle.getText()))
         ;
+
+        FakeData.setID(mPowerExerciseModel);
+        mPresenter.saveData(mPowerExerciseModel);
         return true;
     }
 
@@ -223,12 +236,9 @@ public class PowerExerciseEditorActivity extends AppCompatActivity implements Vi
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.save) {
-            boolean qwe = saveExercise();
-            if (qwe) {
-                Toast.makeText(this, "SAVE", Toast.LENGTH_SHORT).show();
-                finish();
-            }
-            return qwe;
+            saveExercise();
+            Toast.makeText(this, "SAVE", Toast.LENGTH_SHORT).show();
+            onBackPressed();
         }
         return super.onOptionsItemSelected(item);
     }

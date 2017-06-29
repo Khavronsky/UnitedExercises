@@ -3,12 +3,14 @@ package com.khavronsky.unitedexercises.exercises_models;
 
 import java.io.Serializable;
 
-public abstract class ExerciseModel implements Serializable {
+public abstract class ExerciseModel implements Serializable, IModel {
 
     //region FIELDS
     private static final String CARDIO_TAG = "Cardio";
 
     private static final String POWER_TAG = "Power";
+
+    private long id;
 
     private String title;
 
@@ -34,6 +36,19 @@ public abstract class ExerciseModel implements Serializable {
             return typeTag;
         }
     }
+
+    //region id set/get
+
+    @Override
+    public long getId() {
+        return id;
+    }
+
+    public void setId(final long id) {
+        this.id = id;
+    }
+
+    //endregion
 
     //region title set/get
     public ExerciseModel setTitle(final String title) {

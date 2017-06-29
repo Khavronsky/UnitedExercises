@@ -5,6 +5,8 @@ import com.khavronsky.unitedexercises.R;
 import com.khavronsky.unitedexercises.create_new_exercises.new_cardio_exercise.CardioExerciseEditorActivity;
 import com.khavronsky.unitedexercises.exercises_models.ExerciseModel;
 import com.khavronsky.unitedexercises.exercises_models.ExerciseModel.ExerciseType;
+import com.khavronsky.unitedexercises.exercises_models.IEditCatalog;
+import com.khavronsky.unitedexercises.exercises_models.IModel;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -70,6 +72,18 @@ public class CustomExercisesFragment extends Fragment implements CustomExPresent
         emptyCustExList.setVisibility(View.GONE);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         adapterToCustomExerciseRecycler = new AdapterToCustomExerciseRecycler(getFragmentManager());
+        adapterToCustomExerciseRecycler.setEditor(new IEditCatalog() {
+            @Override
+            public IModel editElements(final IModel elements) {
+                getContext().startActivity(new Intent(getContext(), CardioExerciseEditorActivity.class));
+                return null;
+            }
+
+            @Override
+            public void delElements(final long id) {
+                mCustomExPresenter.delCustomExercise(id);
+            }
+        });
         recyclerView.setVisibility(View.VISIBLE);
         recyclerView.setLayoutManager(layoutManager);
         mCustomExPresenter.loadData(currentType);

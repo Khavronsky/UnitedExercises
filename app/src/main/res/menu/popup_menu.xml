@@ -6,8 +6,8 @@
     <item
 
         android:id="@+id/custom_exercise_item_menu_del"
-        android:title="Удалить" />
+        android:title="Уд-ть" />
     <item
         android:id="@+id/custom_exercise_item_menu_edit"
-        android:title="Редактировать" />
+        android:title="Ред-ть" />
 </menu>
