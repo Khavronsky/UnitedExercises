@@ -2,6 +2,7 @@ package com.khavronsky.unitedexercises.create_new_exercises.new_cardio_exercise;
 
 import com.khavronsky.unitedexercises.R;
 import com.khavronsky.unitedexercises.exercises_models.CardioExerciseModel;
+import com.khavronsky.unitedexercises.exercises_models.ExerciseModel;
 import com.khavronsky.unitedexercises.get_data.FakeData;
 import com.khavronsky.unitedexercises.import_from_grand_project.FloatNumPickerFragment;
 import com.khavronsky.unitedexercises.import_from_grand_project.IDialogFragment;
@@ -84,6 +85,8 @@ public class CardioExerciseEditorActivity extends AppCompatActivity implements V
     private CardioExerciseModel mCardioExerciseModel = new CardioExerciseModel();
 
     String my_best_picker = "my_best_picker";
+
+    public static final String CARDIO_MODEL_TAG = "cardio_model";
     //endregion
 
 
@@ -91,18 +94,17 @@ public class CardioExerciseEditorActivity extends AppCompatActivity implements V
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_cardio_ex_activity);
-
+        ButterKnife.bind(this);
         if (mPresenter == null) {
             mPresenter = new PresenterOfCardioExerciseEditor();
         }
         mPresenter.attachView(this);
-
-        ButterKnife.bind(this);
-        setToolbar();
         if (getIntent().getExtras() != null) {
-            mCardioExerciseModel = getIntent().getExtras().getParcelable("model");
+            mCardioExerciseModel = (CardioExerciseModel) getIntent().getExtras().getSerializable(ExerciseModel
+                    .ExerciseType.CARDIO.getTag());
             editExercise(mCardioExerciseModel);
         }
+        setToolbar();
 
         setSpinners();
         editTextVisibility(mIntensityType.getSelectedItemPosition());
@@ -112,6 +114,7 @@ public class CardioExerciseEditorActivity extends AppCompatActivity implements V
         editTextListener = v -> showPicker((EditText) v);
         setTextWatcher();
     }
+
 
     void showPicker(EditText editText) {
         FloatNumPickerFragment dialog = (FloatNumPickerFragment) getSupportFragmentManager()
@@ -152,7 +155,7 @@ public class CardioExerciseEditorActivity extends AppCompatActivity implements V
 
 
     private void setTextWatcher() {
-//        mTitle.addTextChangedListener(mTextWatcher);
+        mTitle.addTextChangedListener(mTextWatcher);
         mBurnedPerHour.setOnClickListener(editTextListener);
         mLowIntensity.setOnClickListener(editTextListener);
         mMiddleIntensity.setOnClickListener(editTextListener);
@@ -319,6 +322,10 @@ public class CardioExerciseEditorActivity extends AppCompatActivity implements V
         FakeData.setID(mCardioExerciseModel);
         mPresenter.saveData(mCardioExerciseModel);
         showSavedToast();
+//        Intent intent = new Intent();
+//        intent.getExtras().putSerializable("new_model", mCardioExerciseModel);
+        setResult(RESULT_OK);
+        finish();
 
         return true;
     }

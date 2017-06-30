@@ -51,6 +51,4 @@ public class ExerciseRX {
         return Observable.just(id)
                 .map(FakeData::delCustomExercise);
     }
-
-
 }

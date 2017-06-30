@@ -1,7 +1,6 @@
 package com.khavronsky.unitedexercises.exercises_catalogs.custom_ex_catalog;
 
 import com.khavronsky.unitedexercises.R;
-import com.khavronsky.unitedexercises.create_new_exercises.new_cardio_exercise.CardioExerciseEditorActivity;
 import com.khavronsky.unitedexercises.exercise_performance.ExercisePerformActivity;
 import com.khavronsky.unitedexercises.exercises_models.CardioExerciseModel;
 import com.khavronsky.unitedexercises.exercises_models.ExerciseModel;
@@ -70,7 +69,7 @@ public class AdapterToCustomExerciseRecycler extends RecyclerView.Adapter<Custom
 
     @Override
     public void pressEdit(int pos) {
-
+        mEditor.editElements(customExList.get(pos));
     }
 
     private String createDescription(final ExerciseModel exerciseModel) {
@@ -158,17 +157,13 @@ class CustomExerciseHolder extends RecyclerView.ViewHolder implements View.OnCli
                     switch (item.getItemId()) {
 
                         case R.id.custom_exercise_item_menu_del:
-                            Toast.makeText(itemMenu.getContext(),
-                                    "ГУМНО",
-                                    Toast.LENGTH_SHORT).show();
+                            Toast.makeText(itemMenu.getContext(), "ГУМНО", Toast.LENGTH_SHORT).show();
                             popupMenu.dismiss();
 
                             mEditor.pressDel(getAdapterPosition());
                             return true;
                         case R.id.custom_exercise_item_menu_edit:
-                            Toast.makeText(itemMenu.getContext(),
-                                    "EDIT",
-                                    Toast.LENGTH_SHORT).show();
+                            Toast.makeText(itemMenu.getContext(), "EDIT", Toast.LENGTH_SHORT).show();
 
                             mEditor.pressEdit(getAdapterPosition());
                             return true;

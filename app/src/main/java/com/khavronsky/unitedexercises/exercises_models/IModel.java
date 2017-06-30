@@ -1,7 +1,9 @@
 package com.khavronsky.unitedexercises.exercises_models;
 
 
-public interface IModel {
+import java.io.Serializable;
+
+public interface IModel extends Serializable {
     long getId();
     void setId(long id);
 

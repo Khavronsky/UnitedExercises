@@ -1,6 +1,7 @@
 package com.khavronsky.unitedexercises.create_new_exercises.new_power_exercise;
 
 import com.khavronsky.unitedexercises.R;
+import com.khavronsky.unitedexercises.exercises_models.ExerciseModel;
 import com.khavronsky.unitedexercises.exercises_models.PowerExerciseModel;
 import com.khavronsky.unitedexercises.get_data.FakeData;
 import com.khavronsky.unitedexercises.import_from_grand_project.IDialogFragment;
@@ -26,6 +27,8 @@ public class PowerExerciseEditorActivity extends AppCompatActivity implements Vi
         IDialogFragment, PresenterOfPowerExerciseEditor.IView {
 
     //region FIELDS
+    public final static String POWER_MODEL_TAG = "power_model";
+
     private final static String SETS = "sets";
 
     private final static String REPEATS = "repeats";
@@ -66,11 +69,16 @@ public class PowerExerciseEditorActivity extends AppCompatActivity implements Vi
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.create_power_ex_activity);
+        ButterKnife.bind(this);
         if (mPresenter == null) {
             mPresenter = new PresenterOfPowerExerciseEditor();
         }
         mPresenter.attachView(this);
-        ButterKnife.bind(this);
+        if (getIntent().getExtras() != null) {
+            mPowerExerciseModel = (PowerExerciseModel) getIntent().getExtras().getSerializable(
+                    ExerciseModel.ExerciseType.POWER.getTag());
+//            setEditText(mPowerExerciseModel);
+        }
         mFocusableLayout.setFocusableInTouchMode(true);
 
         setToolbar();
@@ -109,15 +117,12 @@ public class PowerExerciseEditorActivity extends AppCompatActivity implements Vi
             mIntNumPickerDialog.dismiss();
             switch (pickerOnScreen) {
                 case SETS:
-//                    ((PowerExerciseModel) mModelOfExercisePerformance.getExercise()).setSets((int) o);
                     mExSets.setText(String.valueOf(o));
                     break;
                 case REPEATS:
-//                    ((PowerExerciseModel) mModelOfExercisePerformance.getExercise()).setRepeats((int) o);
                     mExRepeats.setText(String.valueOf(o));
                     break;
                 case WEIGHT:
-//                    ((PowerExerciseModel) mModelOfExercisePerformance.getExercise()).setWeight((int) o);
                     mExWeight.setText(String.valueOf(o));
                     break;
             }

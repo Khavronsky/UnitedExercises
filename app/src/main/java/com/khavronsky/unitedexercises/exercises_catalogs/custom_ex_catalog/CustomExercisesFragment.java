@@ -27,6 +27,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static android.app.Activity.RESULT_OK;
 import static com.khavronsky.unitedexercises.exercises_models.ExerciseModel.ExerciseType.CARDIO;
 
 
@@ -41,7 +42,7 @@ public class CustomExercisesFragment extends Fragment implements CustomExPresent
 
     private CustomExPresenter mCustomExPresenter;
 
-    private ExerciseType currentType = CARDIO;
+    private static final ExerciseType currentType = CARDIO;
 
     private RecyclerView recyclerView;
 
@@ -58,7 +59,16 @@ public class CustomExercisesFragment extends Fragment implements CustomExPresent
             mCustomExPresenter = new CustomExPresenter();
         }
         mCustomExPresenter.attachView(this);
+    }
 
+    @Override
+    public void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            adapterToCustomExerciseRecycler.notifyDataSetChanged();
+            mCustomExPresenter.loadData(currentType);
+//            show((List<ExerciseModel>) data.getExtras().getSerializable("new_model"));
+        }
     }
 
     @Nullable
@@ -70,17 +80,24 @@ public class CustomExercisesFragment extends Fragment implements CustomExPresent
         ButterKnife.bind(this, view);
         recyclerView = (RecyclerView) view.findViewById(R.id.cardio_ex_custom_list);
         emptyCustExList.setVisibility(View.GONE);
+
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         adapterToCustomExerciseRecycler = new AdapterToCustomExerciseRecycler(getFragmentManager());
-        adapterToCustomExerciseRecycler.setEditor(new IEditCatalog() {
+        adapterToCustomExerciseRecycler.setEditor(
+                //todo
+                new IEditCatalog() {
             @Override
             public IModel editElements(final IModel elements) {
-                getContext().startActivity(new Intent(getContext(), CardioExerciseEditorActivity.class));
+                Log.d("KhSS", "editElements: " + elements.getId());
+                Intent intent = new Intent(getContext(), CardioExerciseEditorActivity.class);
+                intent.putExtra(((ExerciseModel) elements).getType().getTag(), elements);
+                getContext().startActivity(intent);
                 return null;
             }
 
             @Override
             public void delElements(final long id) {
+                Log.d("KhSS", "delElements: " + id);
                 mCustomExPresenter.delCustomExercise(id);
             }
         });
@@ -102,7 +119,7 @@ public class CustomExercisesFragment extends Fragment implements CustomExPresent
     @OnClick(R.id.custom_exercise_create_btn)
     void showToast() {
         Toast.makeText(getContext(), "CREATE NEW EXERCISE", Toast.LENGTH_SHORT).show();
-        startActivity(new Intent(getActivity(), CardioExerciseEditorActivity.class));
+        startActivityForResult(new Intent(getActivity(), CardioExerciseEditorActivity.class),0);
     }
 
     @Override

@@ -21,7 +21,7 @@
         <activity
             android:name=".exercise_performance.ExercisePerformActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".create_new_exercises.CardioExerciseEditorActivity"
+        <activity android:name=".create_new_exercises.new_cardio_exercise.CardioExerciseEditorActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".create_new_exercises.new_power_exercise.PowerExerciseEditorActivity"
             android:screenOrientation="portrait" />
