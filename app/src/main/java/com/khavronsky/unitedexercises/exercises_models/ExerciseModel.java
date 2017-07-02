@@ -22,7 +22,7 @@ public abstract class ExerciseModel implements Serializable, IModel {
 
     //endregion
 
-    public enum ExerciseType {
+    public enum ExerciseType implements Serializable {
         CARDIO(CARDIO_TAG),
         POWER(POWER_TAG);
 

@@ -16,8 +16,7 @@ import rx.schedulers.Schedulers;
 
 public class CustomExPresenter extends AbstractPresenter<CustomExPresenter.IView> {
 
-    ExerciseModel.ExerciseType type;
-
+    private ExerciseModel.ExerciseType type;
 
     public void loadData(ExerciseModel.ExerciseType type) {
         this.type = type;

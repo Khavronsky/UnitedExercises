@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:background="#66bb6a"
-        android:text="Хуюшки"/>
+        android:text="New Cardio"/>
 
     <android.support.v7.widget.AppCompatButton
         android:id="@+id/btn3"
@@ -32,7 +32,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:background="#d32f2f"
-        android:text="Кукуюшки"/>
+        android:text="New Power"/>
 
     <android.support.v7.widget.AppCompatButton
         android:id="@+id/btn4"
@@ -40,6 +40,14 @@
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:background="#c0ca33"
-        android:text="Ляськи-масяськи"/>
+        android:text="Cardio catalog"/>
+
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/btn5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:background="#9c27b0"
+        android:text="Power catalog"/>
 
 </LinearLayout>

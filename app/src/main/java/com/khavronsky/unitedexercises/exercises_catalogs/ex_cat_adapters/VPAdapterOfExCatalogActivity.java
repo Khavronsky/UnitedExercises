@@ -3,7 +3,9 @@ package com.khavronsky.unitedexercises.exercises_catalogs.ex_cat_adapters;
 import com.khavronsky.unitedexercises.exercises_catalogs.custom_ex_catalog.CustomExercisesFragment;
 import com.khavronsky.unitedexercises.exercises_catalogs.default_ex_catalog.ExerciseCatalogFragment;
 import com.khavronsky.unitedexercises.exercises_catalogs.recent_ex_catalog.RecentExercisesFragment;
+import com.khavronsky.unitedexercises.exercises_models.ExerciseModel;
 
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -19,12 +21,20 @@ public class VPAdapterOfExCatalogActivity extends FragmentPagerAdapter {
 
     private String[] tabsTitle = {"НЕДАВНИЕ", "МОИ УПРАЖНЕНИЯ", "КАТАЛОГ"};
 
-    public VPAdapterOfExCatalogActivity(final FragmentManager fm) {
+    private ExerciseModel.ExerciseType mType;
+
+    public VPAdapterOfExCatalogActivity(final FragmentManager fm, final ExerciseModel.ExerciseType type) {
         super(fm);
         Log.d("KhS", "VPAdapterOfMainExerciseScreen: ");
+        Bundle args = new Bundle();
+        mType = type;
+        args.putSerializable("type", mType);
         mFragment1 = new ExerciseCatalogFragment();
+        mFragment1.setArguments(args);
         mFragment2 = new CustomExercisesFragment();
+        mFragment2.setArguments(args);
         mFragment3 = new RecentExercisesFragment();
+        mFragment3.setArguments(args);
     }
 
     @Override
@@ -49,4 +59,5 @@ public class VPAdapterOfExCatalogActivity extends FragmentPagerAdapter {
     public CharSequence getPageTitle(final int position) {
         return tabsTitle[position];
     }
+
 }

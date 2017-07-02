@@ -11,9 +11,33 @@ import rx.schedulers.Schedulers;
 
 public class PresenterOfCardioExerciseEditor extends AbstractPresenter<PresenterOfCardioExerciseEditor.IView> {
 
-    void saveData(ExerciseModel model){
+    void saveData(ExerciseModel model) {
 
         ExerciseRX.addCustomExercise(model)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<Boolean>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(final Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(final Boolean aBoolean) {
+
+                    }
+                });
+
+    }
+
+    void editData(ExerciseModel model) {
+
+        ExerciseRX.editCustomExercise(model)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<Boolean>() {

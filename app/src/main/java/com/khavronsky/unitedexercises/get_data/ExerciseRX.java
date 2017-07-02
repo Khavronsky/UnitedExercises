@@ -39,6 +39,11 @@ public class ExerciseRX {
         return Observable.just(exerciseModel)
                 .map(model -> FakeData.addCustomExercise(exerciseModel));
     }
+    @NonNull
+    public static Observable<Boolean> editCustomExercise(ExerciseModel exerciseModel) {
+        return Observable.just(exerciseModel)
+                .map(model -> FakeData.editCustomExercise(exerciseModel));
+    }
 
     @NonNull
     public static Observable<Boolean> addExercisePerformance(ModelOfExercisePerformance exerciseModel) {

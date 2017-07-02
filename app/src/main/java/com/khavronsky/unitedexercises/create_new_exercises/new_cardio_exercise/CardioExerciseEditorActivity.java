@@ -82,7 +82,9 @@ public class CardioExerciseEditorActivity extends AppCompatActivity implements V
 
     private PresenterOfCardioExerciseEditor mPresenter;
 
-    private CardioExerciseModel mCardioExerciseModel = new CardioExerciseModel();
+    private CardioExerciseModel mCardioExerciseModel;
+
+    private boolean newExercise = true;
 
     String my_best_picker = "my_best_picker";
 
@@ -100,9 +102,17 @@ public class CardioExerciseEditorActivity extends AppCompatActivity implements V
         }
         mPresenter.attachView(this);
         if (getIntent().getExtras() != null) {
-            mCardioExerciseModel = (CardioExerciseModel) getIntent().getExtras().getSerializable(ExerciseModel
-                    .ExerciseType.CARDIO.getTag());
+            mCardioExerciseModel = (CardioExerciseModel) getIntent()
+                    .getExtras()
+                    .getSerializable(
+                            ExerciseModel
+                                    .ExerciseType
+                                    .CARDIO
+                                    .getTag());
             editExercise(mCardioExerciseModel);
+            newExercise = false;
+        } else {
+            mCardioExerciseModel = new CardioExerciseModel();
         }
         setToolbar();
 
@@ -253,7 +263,7 @@ public class CardioExerciseEditorActivity extends AppCompatActivity implements V
                     }
                 } catch (NumberFormatException e) {
                 }
-                if (s.length() > 10) {
+                if (s.length() > 25) {
                     Toast.makeText(CardioExerciseEditorActivity.this,
                             "Ой ой ой! \nОсеня мунога букавка твоя писать",
                             Toast.LENGTH_SHORT).show();
@@ -319,11 +329,12 @@ public class CardioExerciseEditorActivity extends AppCompatActivity implements V
                     .setDefValue(Float.parseFloat(String.valueOf(mBurnedPerHour.getText())))
                     .setTitle(String.valueOf(mTitle.getText()));
         }
-        FakeData.setID(mCardioExerciseModel);
-        mPresenter.saveData(mCardioExerciseModel);
-        showSavedToast();
-//        Intent intent = new Intent();
-//        intent.getExtras().putSerializable("new_model", mCardioExerciseModel);
+        if (newExercise) {
+            FakeData.setID(mCardioExerciseModel);
+            mPresenter.saveData(mCardioExerciseModel);
+        } else {
+            mPresenter.editData(mCardioExerciseModel);
+        }
         setResult(RESULT_OK);
         finish();
 

@@ -28,10 +28,9 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import static android.app.Activity.RESULT_OK;
-import static com.khavronsky.unitedexercises.exercises_models.ExerciseModel.ExerciseType.CARDIO;
 
 
-public class CustomExercisesFragment extends Fragment implements CustomExPresenter.IView {
+public class CustomExercisesFragment extends Fragment implements CustomExPresenter.IView, IEditCatalog {
 
     //region F I E L D S
     @BindView(R.id.custom_exercise_create_btn)
@@ -42,7 +41,7 @@ public class CustomExercisesFragment extends Fragment implements CustomExPresent
 
     private CustomExPresenter mCustomExPresenter;
 
-    private static final ExerciseType currentType = CARDIO;
+    private static ExerciseType currentType;
 
     private RecyclerView recyclerView;
 
@@ -59,15 +58,9 @@ public class CustomExercisesFragment extends Fragment implements CustomExPresent
             mCustomExPresenter = new CustomExPresenter();
         }
         mCustomExPresenter.attachView(this);
-    }
-
-    @Override
-    public void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK) {
-            adapterToCustomExerciseRecycler.notifyDataSetChanged();
-            mCustomExPresenter.loadData(currentType);
-//            show((List<ExerciseModel>) data.getExtras().getSerializable("new_model"));
+        if (getArguments().getSerializable("type") != null) {
+            currentType = (ExerciseType) getArguments().getSerializable("type");
+            Log.d("qwert", "CustomExercisesFragment " + currentType.getTag());
         }
     }
 
@@ -80,32 +73,24 @@ public class CustomExercisesFragment extends Fragment implements CustomExPresent
         ButterKnife.bind(this, view);
         recyclerView = (RecyclerView) view.findViewById(R.id.cardio_ex_custom_list);
         emptyCustExList.setVisibility(View.GONE);
-
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         adapterToCustomExerciseRecycler = new AdapterToCustomExerciseRecycler(getFragmentManager());
-        adapterToCustomExerciseRecycler.setEditor(
-                //todo
-                new IEditCatalog() {
-            @Override
-            public IModel editElements(final IModel elements) {
-                Log.d("KhSS", "editElements: " + elements.getId());
-                Intent intent = new Intent(getContext(), CardioExerciseEditorActivity.class);
-                intent.putExtra(((ExerciseModel) elements).getType().getTag(), elements);
-                getContext().startActivity(intent);
-                return null;
-            }
-
-            @Override
-            public void delElements(final long id) {
-                Log.d("KhSS", "delElements: " + id);
-                mCustomExPresenter.delCustomExercise(id);
-            }
-        });
+        adapterToCustomExerciseRecycler.setEditor(this);
         recyclerView.setVisibility(View.VISIBLE);
         recyclerView.setLayoutManager(layoutManager);
         mCustomExPresenter.loadData(currentType);
-
         return view;
+    }
+
+    @Override
+    public void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            Log.d("OAR", "onActivityResult: ");
+            mCustomExPresenter.loadData(currentType);
+            adapterToCustomExerciseRecycler.notifyDataSetChanged();
+//            show((List<ExerciseModel>) data.getExtras().getSerializable("new_model"));
+        }
     }
     //endregion
 
@@ -116,10 +101,25 @@ public class CustomExercisesFragment extends Fragment implements CustomExPresent
         adapterToCustomExerciseRecycler.notifyDataSetChanged();
     }
 
+    @Override
+    public IModel editElements(final IModel elements) {
+        Log.d("KhSS", "editElements: " + elements.getId());
+        Intent intent = new Intent(getContext(), CardioExerciseEditorActivity.class);
+        intent.putExtra(((ExerciseModel) elements).getType().getTag(), elements);
+        startActivityForResult(intent, 0);
+        return null;
+    }
+
+    @Override
+    public void delElements(final long id) {
+        Log.d("KhSS", "delElements: " + id);
+        mCustomExPresenter.delCustomExercise(id);
+    }
+
     @OnClick(R.id.custom_exercise_create_btn)
-    void showToast() {
+    void createNewEx() {
         Toast.makeText(getContext(), "CREATE NEW EXERCISE", Toast.LENGTH_SHORT).show();
-        startActivityForResult(new Intent(getActivity(), CardioExerciseEditorActivity.class),0);
+        startActivityForResult(new Intent(getActivity(), CardioExerciseEditorActivity.class), 0);
     }
 
     @Override

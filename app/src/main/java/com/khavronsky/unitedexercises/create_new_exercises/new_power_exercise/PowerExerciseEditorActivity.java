@@ -75,15 +75,22 @@ public class PowerExerciseEditorActivity extends AppCompatActivity implements Vi
         }
         mPresenter.attachView(this);
         if (getIntent().getExtras() != null) {
-            mPowerExerciseModel = (PowerExerciseModel) getIntent().getExtras().getSerializable(
-                    ExerciseModel.ExerciseType.POWER.getTag());
-//            setEditText(mPowerExerciseModel);
+            mPowerExerciseModel = (PowerExerciseModel) getIntent()
+                    .getExtras()
+                    .getSerializable(
+                            ExerciseModel
+                                    .ExerciseType
+                                    .POWER
+                                    .getTag());
+            setEditText(mPowerExerciseModel);
+        } else {
+            setPowerExerciseModel(new PowerExerciseModel());
         }
         mFocusableLayout.setFocusableInTouchMode(true);
 
         setToolbar();
-        setEditText(mPowerExerciseModel);
-        setPowerExerciseModel(new PowerExerciseModel());
+//        setEditText(mPowerExerciseModel);
+
     }
 
     public void setPowerExerciseModel(final PowerExerciseModel powerExerciseModel) {

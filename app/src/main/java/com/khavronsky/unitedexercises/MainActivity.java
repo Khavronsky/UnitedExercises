@@ -4,6 +4,7 @@ import com.khavronsky.unitedexercises.create_new_exercises.new_cardio_exercise.C
 import com.khavronsky.unitedexercises.create_new_exercises.new_power_exercise.PowerExerciseEditorActivity;
 import com.khavronsky.unitedexercises.exercise_performance.ExercisePerformActivity;
 import com.khavronsky.unitedexercises.exercises_catalogs.ExerciseCatalogActivity;
+import com.khavronsky.unitedexercises.exercises_models.ExerciseModel;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -30,8 +31,20 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.btn4)
     AppCompatButton mBtn4;
 
-    @OnClick({R.id.btn1, R.id.btn2, R.id.btn3, R.id.btn4})
+    @BindView(R.id.btn5)
+    AppCompatButton mBtn5;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
+    }
+
+
+    @OnClick({R.id.btn1, R.id.btn2, R.id.btn3, R.id.btn4, R.id.btn5})
     public void onViewClicked(View view) {
+        Intent intent;
         switch (view.getId()) {
             case R.id.btn1:
                 startActivity(new Intent(this, ExercisePerformActivity.class));
@@ -43,17 +56,17 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(this, PowerExerciseEditorActivity.class));
                 break;
             case R.id.btn4:
-                startActivity(new Intent(this, ExerciseCatalogActivity.class));
+
+                intent = new Intent(this, ExerciseCatalogActivity.class);
+                intent.putExtra("type", ExerciseModel.ExerciseType.CARDIO);
+                startActivity(intent);
+                break;
+            case R.id.btn5:
+                intent = new Intent(this, ExerciseCatalogActivity.class);
+                intent.putExtra("type", ExerciseModel.ExerciseType.POWER);
+                startActivity(intent);
                 break;
         }
-    }
-
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        ButterKnife.bind(this);
     }
 
 
