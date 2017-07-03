@@ -1,10 +1,15 @@
 package com.khavronsky.unitedexercises.exercise_performance;
 
 
-import com.khavronsky.unitedexercises.import_from_grand_project.AbstractPresenter;
 import com.khavronsky.unitedexercises.exercises_models.CardioExerciseModel;
 import com.khavronsky.unitedexercises.exercises_models.ModelOfExercisePerformance;
 import com.khavronsky.unitedexercises.exercises_models.PowerExerciseModel;
+import com.khavronsky.unitedexercises.get_data.ExerciseRX;
+import com.khavronsky.unitedexercises.import_from_grand_project.AbstractPresenter;
+
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 public class PresenterOfExercisePerformance extends AbstractPresenter<PresenterOfExercisePerformance.IView> {
 
@@ -66,10 +71,55 @@ public class PresenterOfExercisePerformance extends AbstractPresenter<PresenterO
     }
     //endregion
 
-    public void setData(ModelOfExercisePerformance modelOfExercisePerformance) {
+    public void addExPerformance(ModelOfExercisePerformance modelOfExercisePerformance) {
         this.modelOfExercisePerformance = modelOfExercisePerformance;
-        //куда-то сохраняем
+        ExerciseRX.addExercisePerformance(modelOfExercisePerformance)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<Boolean>() {
+                    @Override
+                    public void onCompleted() {
 
+                    }
+
+                    @Override
+                    public void onError(final Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(final Boolean aBoolean) {
+
+                    }
+                });
+    }
+
+    public void editExPerformance(ModelOfExercisePerformance modelOfExercisePerformance) {
+        this.modelOfExercisePerformance = modelOfExercisePerformance;
+        ExerciseRX.editExercisePerformance(modelOfExercisePerformance)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<Boolean>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(final Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(final Boolean aBoolean) {
+
+                    }
+                });
+    }
+
+    int getFakeWeight() {
+        //STUB
+        return 80;
     }
 
     interface IView {

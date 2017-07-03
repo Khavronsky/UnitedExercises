@@ -1,7 +1,7 @@
 package com.khavronsky.unitedexercises.exercises_catalogs.recent_ex_catalog;
 
 import com.khavronsky.unitedexercises.R;
-import com.khavronsky.unitedexercises.exercises_models.CustomExModel;
+import com.khavronsky.unitedexercises.exercises_models.ModelOfExercisePerformance;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -19,12 +19,16 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.khavronsky.unitedexercises.exercises_models.ExerciseModel.ExerciseType;
+
 public class RecentExercisesFragment extends Fragment implements RecentExPresenter.IView {
 
     @BindView(R.id.recent_exercise_not_found)
     TextView emptyCustExList;
 
     private RecentExPresenter mRecentExPresenter;
+
+    private static ExerciseType currentType;
 
     private RecyclerView recyclerView;
 
@@ -36,7 +40,10 @@ public class RecentExercisesFragment extends Fragment implements RecentExPresent
             mRecentExPresenter = new RecentExPresenter();
         }
         mRecentExPresenter.attachView(this);
-
+        if (getArguments().getSerializable("type") != null) {
+            currentType = (ExerciseType) getArguments().getSerializable("type");
+            Log.d("qwert", "RecentExercisesFragment " + currentType.getTag());
+        }
     }
 
     @Nullable
@@ -49,15 +56,15 @@ public class RecentExercisesFragment extends Fragment implements RecentExPresent
         recyclerView = (RecyclerView) view.findViewById(R.id.recent_exercise_custom_list);
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
-//        emptyCustExList.setVisibility(View.GONE);
-//        recyclerView.setVisibility(View.VISIBLE);
+        emptyCustExList.setVisibility(View.GONE);
+        recyclerView.setVisibility(View.VISIBLE);
         recyclerView.setLayoutManager(layoutManager);
-        mRecentExPresenter.loadData();
+        mRecentExPresenter.loadData(currentType);
         return view;
     }
 
     @Override
-    public void show(final List<CustomExModel> exModelList) {
+    public void show(final List<ModelOfExercisePerformance> exModelList) {
         AdapterToRecentExerciseRecycler adapterToCustomExerciseRecycler = new AdapterToRecentExerciseRecycler
                 (exModelList, getFragmentManager());
         recyclerView.setAdapter(adapterToCustomExerciseRecycler);

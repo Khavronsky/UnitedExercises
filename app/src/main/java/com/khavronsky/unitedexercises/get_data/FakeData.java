@@ -42,7 +42,7 @@ public class FakeData {
         }
     }
 
-    static void createDefCatalog() {
+    private static void createDefCatalog() {
         Random random = new Random();
         sDefaultCatalog = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
@@ -74,7 +74,7 @@ public class FakeData {
         }
     }
 
-    static void createCustomCatalog() {
+    private static void createCustomCatalog() {
         Random random = new Random();
         sCustomCatalog = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
@@ -106,7 +106,7 @@ public class FakeData {
         }
     }
 
-    static void createExPerformanceCatalog() {
+    private static void createExPerformanceCatalog() {
         Random random = new Random();
         sExercisePerformances = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
@@ -156,7 +156,7 @@ public class FakeData {
         return true;
     }
 
-    public static boolean addExPerfofmance(ModelOfExercisePerformance exercisePerformance) {
+    public static boolean addExPerformance(ModelOfExercisePerformance exercisePerformance) {
         sExercisePerformances.add(exercisePerformance);
         return true;
     }
@@ -174,6 +174,13 @@ public class FakeData {
     }
 
     public static boolean editExercisePerformance(ModelOfExercisePerformance exercisePerformance) {
+        List<ModelOfExercisePerformance> list = new ArrayList<>(sExercisePerformances);
+        for (ModelOfExercisePerformance model :
+                list) {
+            if (model.getId() == exercisePerformance.getId()) {
+                sExercisePerformances.add(sExercisePerformances.indexOf(model), exercisePerformance);
+            }
+        }
         return true;
     }
 

@@ -3,7 +3,10 @@ package com.khavronsky.unitedexercises.exercises_catalogs.recent_ex_catalog;
 
 import com.khavronsky.unitedexercises.R;
 import com.khavronsky.unitedexercises.exercise_performance.ExercisePerformActivity;
-import com.khavronsky.unitedexercises.exercises_models.CustomExModel;
+import com.khavronsky.unitedexercises.exercises_models.CardioExerciseModel;
+import com.khavronsky.unitedexercises.exercises_models.ExerciseModel;
+import com.khavronsky.unitedexercises.exercises_models.ModelOfExercisePerformance;
+import com.khavronsky.unitedexercises.exercises_models.PowerExerciseModel;
 
 import android.content.Intent;
 import android.support.v4.app.FragmentManager;
@@ -20,14 +23,16 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static com.khavronsky.unitedexercises.exercises_models.CardioExerciseModel.METHOD_MET_VALUES;
+
 public class AdapterToRecentExerciseRecycler
         extends RecyclerView.Adapter<AdapterToRecentExerciseRecycler.CustomExerciseHolder> {
 
-    private List<CustomExModel> customExList;
+    private List<ModelOfExercisePerformance> customExList;
 
     private FragmentManager mFragmentManager;
 
-    public AdapterToRecentExerciseRecycler(final List<CustomExModel> customExList,
+    public AdapterToRecentExerciseRecycler(final List<ModelOfExercisePerformance> customExList,
             FragmentManager fragmentManager) {
         this.customExList = customExList;
         mFragmentManager = fragmentManager;
@@ -43,9 +48,29 @@ public class AdapterToRecentExerciseRecycler
         return new CustomExerciseHolder(view).setFragmentManager(mFragmentManager);
     }
 
+    private String createDescription(final ExerciseModel exerciseModel) {
+        if (exerciseModel.getType() == ExerciseModel.ExerciseType.CARDIO) {
+            return ((CardioExerciseModel) exerciseModel).getIntensityType() == CardioExerciseModel.TYPE_SPECIFY ?
+                    "Расчет по типу интенсивности"
+                    : String.valueOf(((CardioExerciseModel) exerciseModel).getDefValue())
+                            + (((CardioExerciseModel) exerciseModel).getCountCalMethod() == METHOD_MET_VALUES ?
+                            " MET"
+                            : " ккал/час")
+                    ;
+        }
+        if (exerciseModel.getType() == ExerciseModel.ExerciseType.POWER) {
+            return ((PowerExerciseModel) exerciseModel).getSets() + " подходов, "
+                    + ((PowerExerciseModel) exerciseModel).getRepeats() + " повторов, "
+                    + ((PowerExerciseModel) exerciseModel).getWeight() + " кг";
+        }
+        return "Упс, не нашли...";
+    }
+
     @Override
     public void onBindViewHolder(final CustomExerciseHolder holder, final int position) {
-        holder.setText(customExList.get(position).getExTitle(), customExList.get(position).getExSubTitle());
+//        holder.setText(customExList.get(position).getExTitle(), customExList.get(position).getExSubTitle());
+        holder.setText(customExList.get(position).getExercise().getTitle(), createDescription(customExList.get
+                (position).getExercise()));
     }
 
     @Override

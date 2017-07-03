@@ -5,6 +5,7 @@ import com.khavronsky.unitedexercises.exercise_performance.custom_views.collapsi
 import com.khavronsky.unitedexercises.exercise_performance.fragments.CardioExPerformFragment;
 import com.khavronsky.unitedexercises.exercise_performance.fragments.PowerExPerformFragment;
 import com.khavronsky.unitedexercises.exercises_models.CardioExerciseModel;
+import com.khavronsky.unitedexercises.exercises_models.ExerciseModel;
 import com.khavronsky.unitedexercises.exercises_models.ModelOfExercisePerformance;
 
 import android.os.Bundle;
@@ -30,6 +31,7 @@ import static com.khavronsky.unitedexercises.exercises_models.ExerciseModel.Exer
 public class ExercisePerformActivity extends AppCompatActivity implements View.OnClickListener,
         PresenterOfExercisePerformance.IView, CardioExPerformFragment.IExerciseListener {
 
+    //region FIELDS
     @BindView(R.id.my_view)
     CustomCollapsingView mCustomCollapsingView;
 
@@ -39,6 +41,28 @@ public class ExercisePerformActivity extends AppCompatActivity implements View.O
     ModelOfExercisePerformance mModelOfExercisePerformance;
 
     private PresenterOfExercisePerformance mPresenter;
+    //endregion
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.ex_perform_activity);
+        ButterKnife.bind(this);
+        if (mPresenter == null) {
+            mPresenter = new PresenterOfExercisePerformance();
+        }
+        mPresenter.attachView(this);
+        if (getIntent().getExtras().getBoolean("newPerformance")) {
+            mModelOfExercisePerformance =
+                    new ModelOfExercisePerformance((ExerciseModel) getIntent().getSerializableExtra("exModel"));
+        } else {
+            mModelOfExercisePerformance = (ModelOfExercisePerformance) getIntent().getExtras()
+                    .getSerializable("exPerformance");
+        }
+//        mPresenter.loadData();
+
+        setToolbar();
+    }
 
     @Override
     public void updateModel(final ModelOfExercisePerformance modelOfExercisePerformance) {
@@ -76,20 +100,6 @@ public class ExercisePerformActivity extends AppCompatActivity implements View.O
             return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.ex_perform_activity);
-        ButterKnife.bind(this);
-        if (mPresenter == null) {
-            mPresenter = new PresenterOfExercisePerformance();
-        }
-        mPresenter.attachView(this);
-        mPresenter.loadData();
-
-        setToolbar();
     }
 
     @Override
@@ -148,7 +158,7 @@ public class ExercisePerformActivity extends AppCompatActivity implements View.O
             mCustomCollapsingView.showAlertView(false);
             subTitle = "Кардио";
 
-            kcalBurned = (int) (mModelOfExercisePerformance.getCurrentKcalPerHour() * getFakeWeight() *
+            kcalBurned = (int) (mModelOfExercisePerformance.getCurrentKcalPerHour() * mPresenter.getFakeWeight() *
                     mModelOfExercisePerformance.getDuration() / 60);
         }
 
@@ -169,11 +179,7 @@ public class ExercisePerformActivity extends AppCompatActivity implements View.O
 
     @OnClick(R.id.ex_performance_add_btn)
     void addExercise() {
-        mPresenter.setData(mModelOfExercisePerformance);
-    }
-
-    int getFakeWeight() {
-        return 80;
+        mPresenter.addExPerformance(mModelOfExercisePerformance);
     }
 
     int burnedKcalories(float burnPerHourValue, int duration,
@@ -182,7 +188,7 @@ public class ExercisePerformActivity extends AppCompatActivity implements View.O
 //            return (int) (burnPerHourValue * duration * getFakeWeight() / 60);
         } else {
         }
-        return (int) (burnPerHourValue * duration * getFakeWeight() / 60);
+        return (int) (burnPerHourValue * duration * mPresenter.getFakeWeight() / 60);
 
     }
 }
