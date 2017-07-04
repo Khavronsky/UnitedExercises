@@ -2,31 +2,53 @@ package com.khavronsky.unitedexercises.exercise_performance;
 
 
 import com.khavronsky.unitedexercises.exercises_models.CardioExerciseModel;
+import com.khavronsky.unitedexercises.exercises_models.ExerciseModel;
 import com.khavronsky.unitedexercises.exercises_models.ModelOfExercisePerformance;
 import com.khavronsky.unitedexercises.exercises_models.PowerExerciseModel;
 import com.khavronsky.unitedexercises.get_data.ExerciseRX;
+import com.khavronsky.unitedexercises.get_data.FakeData;
 import com.khavronsky.unitedexercises.import_from_grand_project.AbstractPresenter;
 
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
+import static com.khavronsky.unitedexercises.exercises_models.CardioExerciseModel.TYPE_NOT_SPECIFY;
+
 public class PresenterOfExercisePerformance extends AbstractPresenter<PresenterOfExercisePerformance.IView> {
+
+    private static final int DEFAULT_DURATION = 60;
 
     private ModelOfExercisePerformance modelOfExercisePerformance;
 
-    void loadData() {
-        
+    public void editExPerformance(final ModelOfExercisePerformance exercisePerformance) {
+        if (getView()!=null){
+            getView().show(exercisePerformance);
+        }
+    }
+
+    void newExPerformance(ExerciseModel exerciseModel) {
         if (getView() != null) {
             ModelOfExercisePerformance model;
-            if (modelOfExercisePerformance != null) {
-                model = modelOfExercisePerformance;
-            } else {
-                model = createFakeData3();
-            }
+            model = new ModelOfExercisePerformance(exerciseModel);
+            setCurrentBurnedKcal(model).setDuration(DEFAULT_DURATION);
+            FakeData.setID(model);
             getView().show(model);
         }
     }
+
+
+    private ModelOfExercisePerformance setCurrentBurnedKcal(ModelOfExercisePerformance model) {
+
+        if (model.getExercise().getType() == ExerciseModel.ExerciseType.CARDIO) {
+            CardioExerciseModel cardioModel = (CardioExerciseModel) model.getExercise();
+            model.setCurrentKcalPerHour(cardioModel.getIntensityType() == TYPE_NOT_SPECIFY ?
+                    cardioModel.getDefValue()
+                    : cardioModel.getLow());
+        }
+        return model;
+    }
+
 
     //region FAKE DATA
     private ModelOfExercisePerformance createFakeData() {
@@ -61,7 +83,7 @@ public class PresenterOfExercisePerformance extends AbstractPresenter<PresenterO
         return new ModelOfExercisePerformance(
                 new CardioExerciseModel()
                         .setCountCalMethod(CardioExerciseModel.METHOD_MET_VALUES)
-                        .setIntensityType(CardioExerciseModel.TYPE_NOT_SPECIFY)
+                        .setIntensityType(TYPE_NOT_SPECIFY)
                         .setDefValue(8)
                         .setTitle("Жим челюстями с фиксацией пищи обратным хватом")
                         .setCustomExercise(true))
@@ -94,7 +116,7 @@ public class PresenterOfExercisePerformance extends AbstractPresenter<PresenterO
                 });
     }
 
-    public void editExPerformance(ModelOfExercisePerformance modelOfExercisePerformance) {
+    public void saveEditedExPerformance(ModelOfExercisePerformance modelOfExercisePerformance) {
         this.modelOfExercisePerformance = modelOfExercisePerformance;
         ExerciseRX.editExercisePerformance(modelOfExercisePerformance)
                 .subscribeOn(Schedulers.newThread())

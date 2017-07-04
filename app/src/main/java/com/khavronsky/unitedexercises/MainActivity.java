@@ -5,6 +5,7 @@ import com.khavronsky.unitedexercises.create_new_exercises.new_power_exercise.Po
 import com.khavronsky.unitedexercises.exercise_performance.ExercisePerformActivity;
 import com.khavronsky.unitedexercises.exercises_catalogs.ExerciseCatalogActivity;
 import com.khavronsky.unitedexercises.exercises_models.ExerciseModel;
+import com.khavronsky.unitedexercises.get_data.FakeData;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -47,16 +48,22 @@ public class MainActivity extends AppCompatActivity {
         Intent intent;
         switch (view.getId()) {
             case R.id.btn1:
-                startActivity(new Intent(this, ExercisePerformActivity.class));
+                intent = new Intent(this, ExercisePerformActivity.class);
+                intent.putExtra(ExercisePerformActivity.NEW_PERFORMANCE, true);
+                intent.putExtra(ExercisePerformActivity.MODEL_OF_EXERCISE, FakeData.getDefaultCatalog().get(0));
+                startActivity(intent);
                 break;
             case R.id.btn2:
-                startActivity(new Intent(this, CardioExerciseEditorActivity.class));
+                intent = new Intent(this, CardioExerciseEditorActivity.class);
+//                intent.putExtra();
+                startActivity(intent);
                 break;
             case R.id.btn3:
-                startActivity(new Intent(this, PowerExerciseEditorActivity.class));
+                intent = new Intent(this, PowerExerciseEditorActivity.class);
+//                intent.putExtra();
+                startActivity(intent);
                 break;
             case R.id.btn4:
-
                 intent = new Intent(this, ExerciseCatalogActivity.class);
                 intent.putExtra("type", ExerciseModel.ExerciseType.CARDIO);
                 startActivity(intent);

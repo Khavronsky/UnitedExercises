@@ -51,7 +51,7 @@ public class FakeData {
                             : METHOD_MET_VALUES)
                     .setIntensityType(
                             i % 3 == 0 ? TYPE_NOT_SPECIFY : TYPE_SPECIFY)
-                    .setDefValue(i * random.nextInt(3))
+                    .setDefValue(i * random.nextInt(3) + 1)
                     .setLow(random.nextInt(5))
                     .setMiddle(random.nextInt(5) + 5)
                     .setHigh(random.nextInt(5) + 10)
@@ -123,6 +123,15 @@ public class FakeData {
                             .setNote("Enot " + i)
             );
         }
+        setCurrentBurnedKcal();
+
+        for (IModel model :
+                sExercisePerformances) {
+            setID(model);
+        }
+    }
+
+    private static void setCurrentBurnedKcal() {
         for (ModelOfExercisePerformance model :
                 sExercisePerformances) {
             if (model.getExercise().getType() == ExerciseModel.ExerciseType.CARDIO) {
@@ -131,11 +140,6 @@ public class FakeData {
                         cardioModel.getDefValue()
                         : cardioModel.getLow());
             }
-        }
-
-        for (IModel model :
-                sExercisePerformances) {
-            setID(model);
         }
     }
 

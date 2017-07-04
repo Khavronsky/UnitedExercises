@@ -7,6 +7,7 @@ import com.khavronsky.unitedexercises.exercises_models.ExerciseModel;
 import com.khavronsky.unitedexercises.exercises_models.IEditCatalog;
 import com.khavronsky.unitedexercises.exercises_models.PowerExerciseModel;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.PopupMenu;
@@ -28,13 +29,15 @@ import butterknife.OnClick;
 import static com.khavronsky.unitedexercises.exercises_models.CardioExerciseModel.METHOD_MET_VALUES;
 
 public class AdapterToCustomExerciseRecycler extends RecyclerView.Adapter<CustomExerciseHolder>
-        implements CustomExerciseHolder.ICustomExEditor {
+        implements CustomExerciseHolder.ICustomCatalogListener {
 
     private List<ExerciseModel> customExList;
 
     private FragmentManager mFragmentManager;
 
     private IEditCatalog mEditor;
+
+    private Context mContext;
 
     public AdapterToCustomExerciseRecycler(FragmentManager fragmentManager) {
         mFragmentManager = fragmentManager;
@@ -51,6 +54,7 @@ public class AdapterToCustomExerciseRecycler extends RecyclerView.Adapter<Custom
         View view = LayoutInflater
                 .from(parent.getContext())
                 .inflate(R.layout.custom_exercise_recycler_item, parent, false);
+        mContext = parent.getContext();
         return new CustomExerciseHolder(view).setFragmentManager(mFragmentManager);
     }
 
@@ -58,7 +62,7 @@ public class AdapterToCustomExerciseRecycler extends RecyclerView.Adapter<Custom
     public void onBindViewHolder(final CustomExerciseHolder holder, final int position) {
 //        holder.setText(customExList.get(position).getTitle(), customExList.get(position).getType().toString());
         holder.setText(customExList.get(position).getTitle(), createDescription(customExList.get(position)));
-        holder.setEditor(this);
+        holder.setCatalogListener(this);
 
     }
 
@@ -70,6 +74,15 @@ public class AdapterToCustomExerciseRecycler extends RecyclerView.Adapter<Custom
     @Override
     public void pressEdit(int pos) {
         mEditor.editElements(customExList.get(pos));
+    }
+
+    @Override
+    public void startExPerformanceActivity(final int pos) {
+
+        Intent intent = new Intent(mContext, ExercisePerformActivity.class);
+        intent.putExtra(ExercisePerformActivity.NEW_PERFORMANCE, true);
+        intent.putExtra(ExercisePerformActivity.MODEL_OF_EXERCISE, customExList.get(pos));
+        mContext.startActivity(intent);
     }
 
     private String createDescription(final ExerciseModel exerciseModel) {
@@ -119,7 +132,7 @@ class CustomExerciseHolder extends RecyclerView.ViewHolder implements View.OnCli
 
     FragmentManager mFragmentManager;
 
-    private ICustomExEditor mEditor;
+    private ICustomCatalogListener mCatalogListener;
 
     public CustomExerciseHolder setFragmentManager(final FragmentManager fragmentManager) {
         mFragmentManager = fragmentManager;
@@ -135,11 +148,12 @@ class CustomExerciseHolder extends RecyclerView.ViewHolder implements View.OnCli
     @Override
     public void onClick(final View v) {
         Toast.makeText(v.getContext(), "show exercise", Toast.LENGTH_SHORT).show();
-        v.getContext().startActivity(new Intent(v.getContext(), ExercisePerformActivity.class));
+        mCatalogListener.startExPerformanceActivity(getAdapterPosition());
+
     }
 
-    public void setEditor(final ICustomExEditor editor) {
-        mEditor = editor;
+    public void setCatalogListener(final ICustomCatalogListener catalogListener) {
+        mCatalogListener = catalogListener;
     }
 
     void setText(String title, String subTitle) {
@@ -160,12 +174,12 @@ class CustomExerciseHolder extends RecyclerView.ViewHolder implements View.OnCli
                             Toast.makeText(itemMenu.getContext(), "ГУМНО", Toast.LENGTH_SHORT).show();
                             popupMenu.dismiss();
 
-                            mEditor.pressDel(getAdapterPosition());
+                            mCatalogListener.pressDel(getAdapterPosition());
                             return true;
                         case R.id.custom_exercise_item_menu_edit:
                             Toast.makeText(itemMenu.getContext(), "EDIT", Toast.LENGTH_SHORT).show();
 
-                            mEditor.pressEdit(getAdapterPosition());
+                            mCatalogListener.pressEdit(getAdapterPosition());
                             return true;
                         default:
                             return false;
@@ -177,11 +191,13 @@ class CustomExerciseHolder extends RecyclerView.ViewHolder implements View.OnCli
         popupMenu.show();
     }
 
-    interface ICustomExEditor {
+    interface ICustomCatalogListener {
 
         void pressDel(int pos);
 
         void pressEdit(int pos);
+
+        void startExPerformanceActivity(int pos);
     }
 
 }

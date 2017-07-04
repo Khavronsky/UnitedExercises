@@ -4,6 +4,7 @@ import com.khavronsky.unitedexercises.R;
 import com.khavronsky.unitedexercises.exercise_performance.ExercisePerformActivity;
 import com.khavronsky.unitedexercises.exercises_models.ModelOfItemForExCatalog;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -16,9 +17,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AdapterToExCatalogRecycler
-        extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+        extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements
+        ExerciseCatalogHolder.IDefaultCatalogListener{
 
     private List<ModelOfItemForExCatalog> exerciseCatalog = new ArrayList<>();
+
+    private Context mContext;
 
     public AdapterToExCatalogRecycler setExerciseCatalog(final List<ModelOfItemForExCatalog> exerciseCatalog) {
         this.exerciseCatalog = exerciseCatalog;
@@ -28,6 +32,7 @@ public class AdapterToExCatalogRecycler
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(final ViewGroup parent, final int viewType) {
+        mContext = parent.getContext();
         if (viewType == 0) {
             View view = LayoutInflater
                     .from(parent.getContext())
@@ -61,39 +66,61 @@ public class AdapterToExCatalogRecycler
         return exerciseCatalog == null ? 0 : exerciseCatalog.size();
     }
 
-    /**
-     *      V I E W   H O L D E R
-     */
-    class ExerciseCatalogHolder extends RecyclerView.ViewHolder {
+    @Override
+    public void startExPerformanceActivity(final int pos) {
+        Intent intent = new Intent(mContext, ExercisePerformActivity.class);
+        intent.putExtra(ExercisePerformActivity.NEW_PERFORMANCE, true);
+        intent.putExtra(ExercisePerformActivity.MODEL_OF_EXERCISE, "СЮДЫ НАДОБНО МОДЕЛЬКУ"); // FIXME: 04.07.17 МОДЕЛЬКУ НАДОБНО ПЕРЕДЕЛАТЬ
+        mContext.startActivity(intent);
+    }
+}
 
-        TextView mTextView;
+/**
+ * V I E W   H O L D E R
+ */
+class ExerciseCatalogHolder extends RecyclerView.ViewHolder {
 
-        public ExerciseCatalogHolder(final View itemView) {
-            super(itemView);
-            mTextView = (TextView) itemView.findViewById(R.id.exercise_name);
-            Log.d("KhS", "ExerciseCatalogHolder: ");
-            mTextView.setOnClickListener(
-                    v -> v.getContext().startActivity(new Intent(v.getContext(), ExercisePerformActivity.class)));
-        }
+    TextView mTextView;
 
-        void setText(String text) {
-            mTextView.setText(text);
-        }
+    IDefaultCatalogListener mListener;
+
+    public ExerciseCatalogHolder(final View itemView) {
+        super(itemView);
+        mTextView = (TextView) itemView.findViewById(R.id.exercise_name);
+        Log.d("KhS", "ExerciseCatalogHolder: ");
+        mTextView.setOnClickListener(
+                v -> mListener.startExPerformanceActivity(getAdapterPosition()));
     }
 
-    class CapitalLetterItem extends RecyclerView.ViewHolder {
+    void setText(String text) {
+        mTextView.setText(text);
+    }
 
-        TextView mTextView;
+    public void setListener(
+            final IDefaultCatalogListener listener) {
+        mListener = listener;
+    }
 
-        public CapitalLetterItem(final View itemView) {
-            super(itemView);
-            mTextView = (TextView) itemView.findViewById(R.id.exercise_catalog_capital_letter);
+    interface IDefaultCatalogListener {
 
-        }
-
-        void setText(String text) {
-            mTextView.setText(text);
-        }
+        void startExPerformanceActivity(int pos);
 
     }
 }
+
+class CapitalLetterItem extends RecyclerView.ViewHolder {
+
+    TextView mTextView;
+
+    public CapitalLetterItem(final View itemView) {
+        super(itemView);
+        mTextView = (TextView) itemView.findViewById(R.id.exercise_catalog_capital_letter);
+
+    }
+
+    void setText(String text) {
+        mTextView.setText(text);
+    }
+
+}
+

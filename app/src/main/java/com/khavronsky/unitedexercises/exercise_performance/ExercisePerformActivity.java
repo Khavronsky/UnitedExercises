@@ -32,6 +32,12 @@ public class ExercisePerformActivity extends AppCompatActivity implements View.O
         PresenterOfExercisePerformance.IView, CardioExPerformFragment.IExerciseListener {
 
     //region FIELDS
+    public final static String NEW_PERFORMANCE = "new_performance";
+
+    public final static String MODEL_OF_EXERCISE = "exercise_model";
+
+    public final static String MODEL_OF_PERFORMANCE = "exercise_performance";
+
     @BindView(R.id.my_view)
     CustomCollapsingView mCustomCollapsingView;
 
@@ -52,15 +58,17 @@ public class ExercisePerformActivity extends AppCompatActivity implements View.O
             mPresenter = new PresenterOfExercisePerformance();
         }
         mPresenter.attachView(this);
-        if (getIntent().getExtras().getBoolean("newPerformance")) {
-            mModelOfExercisePerformance =
-                    new ModelOfExercisePerformance((ExerciseModel) getIntent().getSerializableExtra("exModel"));
+        if (getIntent().getExtras().getBoolean(NEW_PERFORMANCE)) {
+            mPresenter.newExPerformance((ExerciseModel) getIntent().getSerializableExtra(MODEL_OF_EXERCISE));
         } else {
-            mModelOfExercisePerformance = (ModelOfExercisePerformance) getIntent().getExtras()
-                    .getSerializable("exPerformance");
+            mPresenter.editExPerformance((ModelOfExercisePerformance) getIntent().getExtras()
+                    .getSerializable(MODEL_OF_PERFORMANCE));
         }
 //        mPresenter.loadData();
 
+//        mPresenter.newExPerformance();
+
+//        show(mModelOfExercisePerformance);
         setToolbar();
     }
 
