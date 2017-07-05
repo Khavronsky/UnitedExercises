@@ -62,6 +62,10 @@ public class PowerExerciseEditorActivity extends AppCompatActivity implements Vi
     private String pickerOnScreen = "";
 
     private PresenterOfPowerExerciseEditor mPresenter;
+
+    private boolean newExercise = true;
+
+    private String title = "";
     //endregion
 
     @Override
@@ -83,8 +87,12 @@ public class PowerExerciseEditorActivity extends AppCompatActivity implements Vi
                                     .POWER
                                     .getTag());
             setEditText(mPowerExerciseModel);
+            newExercise = false;
+            title = "Редактировать упражнение";
+
         } else {
             setPowerExerciseModel(new PowerExerciseModel());
+            title = "Новое упражнение";
         }
         mFocusableLayout.setFocusableInTouchMode(true);
 
@@ -163,9 +171,9 @@ public class PowerExerciseEditorActivity extends AppCompatActivity implements Vi
         if (powerExerciseModel != null) {
 
             mExTitle.setText(powerExerciseModel.getTitle());
-            mExSets.setText(powerExerciseModel.getSets());
-            mExRepeats.setText(powerExerciseModel.getRepeats());
-            mExWeight.setText(powerExerciseModel.getWeight());
+            mExSets.setText(String.valueOf(powerExerciseModel.getSets()));
+            mExRepeats.setText(String.valueOf(powerExerciseModel.getRepeats()));
+            mExWeight.setText(String.valueOf(powerExerciseModel.getWeight()));
         }
         mTextWatcher = new TextWatcher() {
             @Override
@@ -196,7 +204,7 @@ public class PowerExerciseEditorActivity extends AppCompatActivity implements Vi
 
     void setToolbar() {
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        mToolbar.setTitle("Новое упражнение");
+        mToolbar.setTitle(title);
         setSupportActionBar(mToolbar);
         mToolbar.inflateMenu(R.menu.menu);
         mToolbar.setNavigationOnClickListener(this);
@@ -227,8 +235,16 @@ public class PowerExerciseEditorActivity extends AppCompatActivity implements Vi
                 .setTitle(String.valueOf(mExTitle.getText()))
         ;
 
-        FakeData.setID(mPowerExerciseModel);
-        mPresenter.saveData(mPowerExerciseModel);
+        if (newExercise) {
+
+            FakeData.setID(mPowerExerciseModel);
+            mPresenter.saveData(mPowerExerciseModel);
+        } else {
+            mPresenter.editData(mPowerExerciseModel);
+        }
+
+        setResult(RESULT_OK);
+        finish();
         return true;
     }
 

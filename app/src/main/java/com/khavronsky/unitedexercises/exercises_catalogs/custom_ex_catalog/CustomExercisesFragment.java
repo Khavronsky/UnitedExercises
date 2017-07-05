@@ -3,6 +3,7 @@ package com.khavronsky.unitedexercises.exercises_catalogs.custom_ex_catalog;
 
 import com.khavronsky.unitedexercises.R;
 import com.khavronsky.unitedexercises.create_new_exercises.new_cardio_exercise.CardioExerciseEditorActivity;
+import com.khavronsky.unitedexercises.create_new_exercises.new_power_exercise.PowerExerciseEditorActivity;
 import com.khavronsky.unitedexercises.exercises_models.ExerciseModel;
 import com.khavronsky.unitedexercises.exercises_models.ExerciseModel.ExerciseType;
 import com.khavronsky.unitedexercises.exercises_models.IEditCatalog;
@@ -104,7 +105,12 @@ public class CustomExercisesFragment extends Fragment implements CustomExPresent
     @Override
     public IModel editElements(final IModel elements) {
         Log.d("KhSS", "editElements: " + elements.getId());
-        Intent intent = new Intent(getContext(), CardioExerciseEditorActivity.class);
+        Intent intent;
+        if (((ExerciseModel) elements).getType() == ExerciseType.CARDIO) {
+            intent = new Intent(getContext(), CardioExerciseEditorActivity.class);
+        } else {
+            intent = new Intent(getContext(), PowerExerciseEditorActivity.class);
+        }
         intent.putExtra(((ExerciseModel) elements).getType().getTag(), elements);
         startActivityForResult(intent, 0);
         return null;

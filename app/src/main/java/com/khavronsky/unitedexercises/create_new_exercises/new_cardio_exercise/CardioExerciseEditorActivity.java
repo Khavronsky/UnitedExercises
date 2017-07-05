@@ -89,6 +89,8 @@ public class CardioExerciseEditorActivity extends AppCompatActivity implements V
     String my_best_picker = "my_best_picker";
 
     public static final String CARDIO_MODEL_TAG = "cardio_model";
+
+    private String title = "";
     //endregion
 
 
@@ -111,8 +113,10 @@ public class CardioExerciseEditorActivity extends AppCompatActivity implements V
                                     .getTag());
             editExercise(mCardioExerciseModel);
             newExercise = false;
+            title = "Редактировать упражнение";
         } else {
             mCardioExerciseModel = new CardioExerciseModel();
+            title = "Новое упражнение";
         }
         setToolbar();
 
@@ -282,7 +286,7 @@ public class CardioExerciseEditorActivity extends AppCompatActivity implements V
         mToolbar.inflateMenu(R.menu.menu);
         setSupportActionBar(mToolbar);
         if (getSupportActionBar() != null) {
-            getSupportActionBar().setTitle("Новое упражнение");
+            getSupportActionBar().setTitle(title);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }

@@ -68,6 +68,13 @@ public class FakeData {
                     .setTitle("Default power exercise " + (i + 10))
             );
         }
+        sDefaultCatalog.add(new PowerExerciseModel()
+                .setSets(random.nextInt(5))
+                .setRepeats(random.nextInt(5) + 10)
+                .setWeight((random.nextInt(10) + 10) * 7)
+                .setCustomExercise(false)
+                .setTitle("Power exercise ")
+        );
         for (IModel model :
                 sDefaultCatalog) {
             setID(model);
@@ -171,7 +178,9 @@ public class FakeData {
                 list) {
 
             if (model.getId() == exerciseModel.getId()) {
-                sCustomCatalog.add(sCustomCatalog.indexOf(model), exerciseModel);
+                int a = sCustomCatalog.indexOf(model);
+                sCustomCatalog.remove(a);
+                sCustomCatalog.add(a, exerciseModel);
             }
         }
         return true;

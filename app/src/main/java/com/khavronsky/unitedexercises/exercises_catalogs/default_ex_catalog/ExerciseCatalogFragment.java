@@ -1,7 +1,7 @@
 package com.khavronsky.unitedexercises.exercises_catalogs.default_ex_catalog;
 
 import com.khavronsky.unitedexercises.R;
-import com.khavronsky.unitedexercises.exercises_models.ExerciseModel;
+import com.khavronsky.unitedexercises.exercises_models.ExerciseModel.ExerciseType;
 import com.khavronsky.unitedexercises.exercises_models.ModelOfItemForExCatalog;
 
 import android.os.Bundle;
@@ -15,12 +15,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
-import static com.khavronsky.unitedexercises.exercises_models.ExerciseModel.ExerciseType.CARDIO;
-import static com.khavronsky.unitedexercises.exercises_models.ModelOfItemForExCatalog.ItemType.CAPITAL_LETTER;
-import static com.khavronsky.unitedexercises.exercises_models.ModelOfItemForExCatalog.ItemType.EXERCISE_TITLE;
 
 public class ExerciseCatalogFragment extends Fragment implements DefaultExPresenter.IView {
 
@@ -30,7 +24,7 @@ public class ExerciseCatalogFragment extends Fragment implements DefaultExPresen
 
     private AdapterToExCatalogRecycler adapterToExCatalogRecycler;
 
-    private ExerciseModel.ExerciseType currentType = CARDIO;
+    private ExerciseType currentType;
 
 
     @Override
@@ -41,6 +35,10 @@ public class ExerciseCatalogFragment extends Fragment implements DefaultExPresen
             presenter = new DefaultExPresenter();
         }
         presenter.attachView(this);
+        if (getArguments().getSerializable("type") != null) {
+            currentType = (ExerciseType) getArguments().getSerializable("type");
+            Log.d("qwert", "CustomExercisesFragment " + currentType.getTag());
+        }
     }
 
     @Nullable
@@ -58,25 +56,10 @@ public class ExerciseCatalogFragment extends Fragment implements DefaultExPresen
     }
 
     @Override
-    public void show(final ArrayList<String> exList) {
-        adapterToExCatalogRecycler.setExerciseCatalog(convertToExCatModel(exList));
+    public void show(final ArrayList<ModelOfItemForExCatalog> exList) {
+        adapterToExCatalogRecycler.setExerciseCatalog(exList);
         recyclerView.setAdapter(adapterToExCatalogRecycler);
         adapterToExCatalogRecycler.notifyDataSetChanged();
-    }
-
-    List<ModelOfItemForExCatalog> convertToExCatModel(ArrayList<String> exList) {
-        List<ModelOfItemForExCatalog> list = new ArrayList<>();
-        Collections.sort(exList);
-        String x = "";
-        for (String s :
-                exList) {
-            if (!x.equals(s.substring(0, 1))) {
-                x = s.substring(0, 1);
-                list.add(new ModelOfItemForExCatalog(x, CAPITAL_LETTER));
-            }
-            list.add(new ModelOfItemForExCatalog(s, EXERCISE_TITLE));
-        }
-        return list;
     }
 
     @Override

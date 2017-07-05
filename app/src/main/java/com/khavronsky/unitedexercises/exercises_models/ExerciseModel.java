@@ -1,9 +1,11 @@
 package com.khavronsky.unitedexercises.exercises_models;
 
 
+import android.support.annotation.NonNull;
+
 import java.io.Serializable;
 
-public abstract class ExerciseModel implements Serializable, IModel {
+public abstract class ExerciseModel implements Comparable<ExerciseModel>, Serializable, IModel {
 
     //region FIELDS
     private static final String CARDIO_TAG = "Cardio";
@@ -93,4 +95,7 @@ public abstract class ExerciseModel implements Serializable, IModel {
     }
     //endregion
 
+    public int compareTo(@NonNull ExerciseModel model) {
+        return this.getTitle().compareTo(model.getTitle());
+    }
 }

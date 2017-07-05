@@ -52,6 +52,7 @@ public class AdapterToExCatalogRecycler
             ((CapitalLetterItem) holder).setText(exerciseCatalog.get(position).getTitle());
         } else {
             ((ExerciseCatalogHolder) holder).setText(exerciseCatalog.get(position).getTitle());
+            ((ExerciseCatalogHolder) holder).setListener(this);
             Log.d("KhS", "onBindViewHolder: " + exerciseCatalog.get(position));
         }
     }
@@ -70,7 +71,7 @@ public class AdapterToExCatalogRecycler
     public void startExPerformanceActivity(final int pos) {
         Intent intent = new Intent(mContext, ExercisePerformActivity.class);
         intent.putExtra(ExercisePerformActivity.NEW_PERFORMANCE, true);
-        intent.putExtra(ExercisePerformActivity.MODEL_OF_EXERCISE, "СЮДЫ НАДОБНО МОДЕЛЬКУ"); // FIXME: 04.07.17 МОДЕЛЬКУ НАДОБНО ПЕРЕДЕЛАТЬ
+        intent.putExtra(ExercisePerformActivity.MODEL_OF_EXERCISE, exerciseCatalog.get(pos).getExercise());
         mContext.startActivity(intent);
     }
 }

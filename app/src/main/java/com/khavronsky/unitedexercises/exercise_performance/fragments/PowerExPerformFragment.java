@@ -86,7 +86,7 @@ public class PowerExPerformFragment extends Fragment implements IDialogFragment,
             @Nullable Bundle savedInstanceState) {
         Log.d("KhSY_NewWaterMainFrg", "onCreateView: ");
         View v = inflater.inflate(R.layout.power_ex_perform_fragment, container, false);
-        mModelOfExercisePerformance = getArguments().getParcelable("model");
+        mModelOfExercisePerformance = (ModelOfExercisePerformance) getArguments().getSerializable("model");
         unbinder = ButterKnife.bind(this, v);
         init(v);
         return v;
