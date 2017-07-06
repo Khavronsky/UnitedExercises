@@ -1,9 +1,11 @@
 package com.khavronsky.unitedexercises.exercises_models;
 
 
+import android.support.annotation.NonNull;
+
 import java.io.Serializable;
 
-public class ModelOfExercisePerformance implements Serializable, IModel {
+public class ModelOfExercisePerformance implements Serializable, IModel, Comparable<ModelOfExercisePerformance> {
 
     //region FIELDS
     private long id;
@@ -85,5 +87,10 @@ public class ModelOfExercisePerformance implements Serializable, IModel {
     public ModelOfExercisePerformance setLastChangedTime(final long lastChangedTime) {
         mLastChangedTime = lastChangedTime;
         return this;
+    }
+
+    @Override
+    public int compareTo(@NonNull final ModelOfExercisePerformance o) {
+        return (int) (this.getLastChangedTime() - o.getLastChangedTime());
     }
 }

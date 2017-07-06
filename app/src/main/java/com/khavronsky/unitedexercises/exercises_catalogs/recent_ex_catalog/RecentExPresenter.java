@@ -8,6 +8,7 @@ import com.khavronsky.unitedexercises.import_from_grand_project.AbstractPresente
 import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import rx.Subscriber;
@@ -29,6 +30,28 @@ public class RecentExPresenter extends AbstractPresenter<RecentExPresenter.IView
                         if (model.getExercise().getType() == type) {
                             add(model);
                         }
+                    }
+                }})
+                //сортируем по дате изменения
+                .map(modelOfExercisePerformances -> {
+                    Collections.sort(modelOfExercisePerformances);
+                    return modelOfExercisePerformances;
+                })
+                //сортируем по уникальности ID
+                .map(modelOfExercisePerformances -> new ArrayList<ModelOfExercisePerformance>() {{
+                    for (ModelOfExercisePerformance model :
+                            modelOfExercisePerformances) {
+                        long id = model.getExercise().getId();
+
+                        for (ModelOfExercisePerformance model2 :
+                                modelOfExercisePerformances) {
+                            if (model2.getExercise().getId() == id) {
+                                break;
+                            }
+
+                        }
+
+
                     }
                 }})
                 .subscribeOn(Schedulers.newThread())

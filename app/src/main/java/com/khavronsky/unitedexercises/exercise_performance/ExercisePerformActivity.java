@@ -12,12 +12,15 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
+import java.util.Calendar;
 import java.util.Objects;
 
 import butterknife.BindView;
@@ -42,11 +45,13 @@ public class ExercisePerformActivity extends AppCompatActivity implements View.O
     CustomCollapsingView mCustomCollapsingView;
 
     @BindView(R.id.ex_performance_add_btn)
-    View addExButton;
+    AppCompatButton addExButton;
 
     ModelOfExercisePerformance mModelOfExercisePerformance;
 
     private PresenterOfExercisePerformance mPresenter;
+
+    private boolean newPerformance;
     //endregion
 
     @Override
@@ -58,17 +63,14 @@ public class ExercisePerformActivity extends AppCompatActivity implements View.O
             mPresenter = new PresenterOfExercisePerformance();
         }
         mPresenter.attachView(this);
-        if (getIntent().getExtras().getBoolean(NEW_PERFORMANCE)) {
+        newPerformance = getIntent().getExtras().getBoolean(NEW_PERFORMANCE);
+        if (newPerformance) {
             mPresenter.newExPerformance((ExerciseModel) getIntent().getSerializableExtra(MODEL_OF_EXERCISE));
+
         } else {
             mPresenter.editExPerformance((ModelOfExercisePerformance) getIntent().getExtras()
                     .getSerializable(MODEL_OF_PERFORMANCE));
         }
-//        mPresenter.loadData();
-
-//        mPresenter.newExPerformance();
-
-//        show(mModelOfExercisePerformance);
         setToolbar();
     }
 
@@ -165,7 +167,6 @@ public class ExercisePerformActivity extends AppCompatActivity implements View.O
         } else if (mModelOfExercisePerformance.getExercise().getType() == CARDIO) {
             mCustomCollapsingView.showAlertView(false);
             subTitle = "Кардио";
-
             kcalBurned = (int) (mModelOfExercisePerformance.getCurrentKcalPerHour() * mPresenter.getFakeWeight() *
                     mModelOfExercisePerformance.getDuration() / 60);
         }
@@ -187,16 +188,18 @@ public class ExercisePerformActivity extends AppCompatActivity implements View.O
 
     @OnClick(R.id.ex_performance_add_btn)
     void addExercise() {
-        mPresenter.addExPerformance(mModelOfExercisePerformance);
+        mModelOfExercisePerformance.setLastChangedTime(Calendar.getInstance().getTimeInMillis());
+        if(newPerformance){
+            Toast.makeText(this, "SAVE ADD", Toast.LENGTH_SHORT).show();
+            mPresenter.addExPerformance(mModelOfExercisePerformance);
+        } else {
+            Toast.makeText(this, "SAVE PERFORMANCE", Toast.LENGTH_SHORT).show();
+            mPresenter.editExPerformance(mModelOfExercisePerformance);
+        }
     }
 
     int burnedKcalories(float burnPerHourValue, int duration,
             @CardioExerciseModel.CountingCaloriesMethod int countingMethod) {
-        if (countingMethod == CardioExerciseModel.METHOD_CAL_PER_HOUR) {
-//            return (int) (burnPerHourValue * duration * getFakeWeight() / 60);
-        } else {
-        }
         return (int) (burnPerHourValue * duration * mPresenter.getFakeWeight() / 60);
-
     }
 }

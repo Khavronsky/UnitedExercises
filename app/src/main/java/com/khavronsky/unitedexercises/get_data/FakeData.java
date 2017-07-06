@@ -132,9 +132,10 @@ public class FakeData {
         }
         setCurrentBurnedKcal();
 
-        for (IModel model :
+        for (ModelOfExercisePerformance model :
                 sExercisePerformances) {
             setID(model);
+            model.setLastChangedTime(Calendar.getInstance().getTimeInMillis());
         }
     }
 
@@ -191,7 +192,9 @@ public class FakeData {
         for (ModelOfExercisePerformance model :
                 list) {
             if (model.getId() == exercisePerformance.getId()) {
-                sExercisePerformances.add(sExercisePerformances.indexOf(model), exercisePerformance);
+                int a = sExercisePerformances.indexOf(model);
+                sExercisePerformances.remove(a);
+                sExercisePerformances.add(a, exercisePerformance);
             }
         }
         return true;
