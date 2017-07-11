@@ -3,6 +3,7 @@ package com.khavronsky.unitedexercises.exercises_catalogs.ExerciseSearch;
 
 import com.khavronsky.unitedexercises.R;
 import com.khavronsky.unitedexercises.exercise_performance.ExercisePerformActivity;
+import com.khavronsky.unitedexercises.exercises_models.ExerciseModel;
 import com.khavronsky.unitedexercises.import_from_grand_project.RecyclerItemClickListener;
 
 import android.app.Dialog;
@@ -20,7 +21,6 @@ import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
-import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -29,9 +29,16 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.view.WindowManager.LayoutParams.*;
+
 
 public class SearchDialog extends DialogFragment
-        implements View.OnClickListener, TextWatcher, TextView.OnEditorActionListener {
+        implements View.OnClickListener, TextWatcher, TextView.OnEditorActionListener,
+        SearchDialogPresenter.IView {
+
+    public static final String TAG = "KhS_SearchDialog";
+
+    private ExerciseModel.ExerciseType mExerciseType;
 
     private EditText searchEditText;
 
@@ -49,34 +56,22 @@ public class SearchDialog extends DialogFragment
 
     public static final String SEARCH_DIALOG_TAG = "SearchDialog";
 
-    List<String> dataList = new ArrayList<>();
+    public static final String EX_TYPE_TAG = "ExerciseType";
 
-    private IResultListener mListener;
+    private List<ExerciseModel> dataList = new ArrayList<>();
 
-    private List<String> resultList = new ArrayList<>();
+    SearchDialogPresenter searchDialogPresenter;
 
-//    private onGenerateList onGenerateList;
-
+    //    private onGenerateList onGenerateList;
 
 //    public static SearchDialog newInstance() {
 //
 //        Bundle args = new Bundle();
-////        args.putBundle("ex_search", bundle);
+//        args.putBundle("ex_search", bundle);
 //        SearchDialog fragment = new SearchDialog();
 //        fragment.setArguments(args);
 //        return fragment;
 //    }
-
-    public interface IResultListener {
-
-        void getListID (int id);
-    }
-
-    void setListener(IResultListener resultListener){
-        this.mListener = resultListener;
-
-    }
-
 
     @Override
     public Dialog onCreateDialog(final Bundle savedInstanceState) {
@@ -88,9 +83,16 @@ public class SearchDialog extends DialogFragment
 
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         dialog.getWindow()
-                .setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
-        dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE
-                | WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+                .setLayout(MATCH_PARENT, MATCH_PARENT);
+        dialog.getWindow().setSoftInputMode(SOFT_INPUT_STATE_VISIBLE
+                | SOFT_INPUT_ADJUST_PAN);
+
+        if (getArguments() != null) {
+            mExerciseType = (ExerciseModel.ExerciseType) getArguments().getSerializable(EX_TYPE_TAG);
+        }
+
+        searchDialogPresenter = new SearchDialogPresenter(mExerciseType);
+        searchDialogPresenter.attachView(this);
 
         ImageButton buttonBack = (ImageButton) dialog.findViewById(R.id.back_button);
         buttonClearText = (ImageButton) dialog.findViewById(R.id.clear_text);
@@ -103,15 +105,19 @@ public class SearchDialog extends DialogFragment
         buttonBack.setOnClickListener(this);
         buttonMicrophone.setOnClickListener(this);
         recyclerView.setLayoutManager(mLayoutManager);
-        initList();
+        searchRecyclerViewAdapter = new RVAdapter();
         setDataList(dataList);
+        recyclerView.setAdapter(searchRecyclerViewAdapter);
         recyclerView.addOnItemTouchListener(
                 new RecyclerItemClickListener(
                         getActivity(), (view, position) -> {
-                    String item = ((RVAdapter) recyclerView.getAdapter()).getItem(position);
+                    ExerciseModel item = ((RVAdapter) recyclerView.getAdapter()).getItem(position);
 //                    searchEditText.setText(item);
 //                    searchEditText.setSelection(searchEditText.getText().length());
-                    startActivity(new Intent(getActivity(), ExercisePerformActivity.class));
+                    Intent intent = new Intent(getActivity(), ExercisePerformActivity.class);
+                    intent.putExtra(ExercisePerformActivity.NEW_PERFORMANCE, true);
+                    intent.putExtra(ExercisePerformActivity.MODEL_OF_EXERCISE, item);
+                    startActivity(intent);
                 })
         );
 
@@ -133,14 +139,15 @@ public class SearchDialog extends DialogFragment
                 break;
             case R.id.microphone_button:
                 Toast.makeText(getActivity(), "", Toast.LENGTH_SHORT).show();
-//                promptSpeechInput();
                 break;
         }
     }
 
-    public void setDataList(List<String> list) {
-        searchRecyclerViewAdapter = new RVAdapter(list);
-        recyclerView.setAdapter(searchRecyclerViewAdapter);
+    public void setDataList(List<ExerciseModel> list) {
+        if (list != null) {
+            searchRecyclerViewAdapter.setList(list);
+            searchRecyclerViewAdapter.notifyDataSetChanged();
+        }
     }
 
     @Override
@@ -192,15 +199,12 @@ public class SearchDialog extends DialogFragment
 //        }
 //    }
     //endregion
-
     @Override
     public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-        // до
     }
 
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
-        // во время
         if (s.toString().equals("")) {
             buttonMicrophone.setVisibility(View.VISIBLE);
             buttonClearText.setVisibility(View.INVISIBLE);
@@ -218,92 +222,35 @@ public class SearchDialog extends DialogFragment
     @Override
     public void afterTextChanged(Editable s) {
         search(s);
-        // после
+    }
+
+    @Override
+    public void setAllExercises(final ArrayList<ExerciseModel> exerciseModels) {
+        dataList = exerciseModels;
     }
 
     void search(CharSequence s) {
-        resultList = new ArrayList<>(dataList);
-        for (String str :
-                dataList) {
-            String str2 = str.toLowerCase();
-            String s2 = String.valueOf(s).toLowerCase();
-            if (!str2.contains(s2)) {
-                resultList.remove(str);
+        if (dataList != null) {
+
+            List<ExerciseModel> resultList = new ArrayList<>(dataList);
+            for (ExerciseModel model :
+                    dataList) {
+                String str1 = model.getTitle().toLowerCase();
+                String str2 = String.valueOf(s).toLowerCase();
+
+                if (!str1.contains(str2)) {
+                    resultList.remove(model);
+                }
             }
+            setDataList(resultList);
         }
-        searchRecyclerViewAdapter.setList(resultList);
+
     }
-//
-//    @Override
+
+    //
+    @Override
     public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-//        if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-//
-//            String request = searchEditText.getText().toString();
-//            if (request.equals("") || request.equals(" ")) {
-//                Toast.makeText(getActivity(), "Название блюда не должно быть пустым!", Toast.LENGTH_SHORT).show();
-//            } else {
-//                insertNewSearchRequest(searchEditText.getText().toString());
-//                Intent intent = new Intent(getActivity(), FoodCatalogListOfItemsActivity.class);
-//                intent.putExtra(FoodCatalogItemFrg.BUNDLE_FOOD_DATE_TAG,
-//                        getArguments().getBundle(FoodCatalogItemFrg.BUNDLE_FOOD_DATE_TAG));
-//                intent.putExtra(FoodCatalogListOfItemsActivity.SEARCH_TEXT_KEY,
-//                        searchEditText.getText().toString());
-//                intent.putExtra(FoodCatalogListOfItemsActivity.SEARCH_FOOD_TYPE_KEY,
-//                        FoodCatalogListOfItemsViewModel.SearchType.SEARCH);
-//                startActivity(intent);
-//            }
-//            return true;
-//        }
         return false;
     }
-
-    private void initList() {
-        dataList.add("Австралия");
-        dataList.add("Китай");
-        dataList.add("Япония");
-        dataList.add("Испания");
-        dataList.add("Монако");
-        dataList.add("Канада");
-        dataList.add("Австрия");
-        dataList.add("Великобритания");
-        dataList.add("Венгрия");
-        dataList.add("Бельгия");
-        dataList.add("Италия");
-        dataList.add("Сингапур");
-        dataList.add("Малайзия");
-        dataList.add("Япония");
-        dataList.add("США");
-        dataList.add("Мексика");
-        dataList.add("Бразилия");
-        dataList.add("Абу-Даби");
-
-
-    }
-//
-//    protected void insertNewSearchRequest(String request) {
-////        if(!blockInsertToDb) {
-//        request = request.toLowerCase();
-//
-//        OneTrakLifeApplication.searchRequestMap.put(request, System.currentTimeMillis());
-//        //searchBox.setVariantList(FoodActivity.searchRequestMap);
-//
-//        final ContentProviderOperation.Builder builder;
-//        final ArrayList<ContentProviderOperation> batch = new ArrayList<ContentProviderOperation>();
-//
-//        builder = ContentProviderOperation.newInsert(LastSearchRequestContract.getContentURI());
-//        builder.withValue(LastSearchRequestContract.Contract.CHANGED.name(), System.currentTimeMillis());
-//        builder.withValue(LastSearchRequestContract.Contract.REQUEST.name(), request);
-//
-//        batch.add(builder.build());
-//
-//        try {
-//            getActivity().getContentResolver().applyBatch(OneTrakLifeConsts.CONTENT_AUTHORITY, batch);
-//        } catch (RemoteException e) {
-//            e.printStackTrace();
-//        } catch (OperationApplicationException e) {
-//            e.printStackTrace();
-//        }
-////        }
-//    }
 }
 

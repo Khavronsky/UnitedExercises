@@ -2,6 +2,7 @@ package com.khavronsky.unitedexercises.exercises_catalogs.ExerciseSearch;
 
 
 import com.khavronsky.unitedexercises.R;
+import com.khavronsky.unitedexercises.exercises_models.ExerciseModel;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,17 +15,13 @@ import java.util.List;
 
 class RVAdapter extends RecyclerView.Adapter<RVAdapter.VHolder> {
 
-    private List<String> list = new ArrayList<>();
+    private List<ExerciseModel> list = new ArrayList<>();
 
-    RVAdapter(final List<String> list) {
-        this.list = list;
-    }
-
-    public String getItem(final int position) {
+    public ExerciseModel getItem(final int position) {
         return list.get(position);
     }
 
-    void setList(final List<String> list) {
+    void setList(final List<ExerciseModel> list) {
         this.list = list;
         notifyDataSetChanged();
     }
@@ -39,7 +36,7 @@ class RVAdapter extends RecyclerView.Adapter<RVAdapter.VHolder> {
 
     @Override
     public void onBindViewHolder(final VHolder holder, final int position) {
-        holder.setText(list.get(position));
+        holder.setText(list.get(position).getTitle());
 //        notifyDataSetChanged();
     }
 

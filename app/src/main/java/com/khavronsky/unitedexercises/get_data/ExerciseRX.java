@@ -26,6 +26,12 @@ public class ExerciseRX {
                 .map(integer -> FakeData.getDefaultCatalog())
                 ;
     }
+    @NonNull
+    public static Observable<List<ExerciseModel>> getAllExercises() {
+        return Observable.just(0)
+                .map(integer -> FakeData.getAllExercises())
+                ;
+    }
 
     @NonNull
     public static Observable<List<ModelOfExercisePerformance>> getRecentExerciseList() {

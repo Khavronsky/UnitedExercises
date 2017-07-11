@@ -22,6 +22,8 @@ import static com.khavronsky.unitedexercises.exercises_models.CardioExerciseMode
 public class FakeData {
 
     //region FIELDS
+    private static final String TAG = "FakeData";
+
     private static List<ExerciseModel> sDefaultCatalog;
 
     private static List<ExerciseModel> sCustomCatalog;
@@ -161,6 +163,18 @@ public class FakeData {
 
     public static List<ModelOfExercisePerformance> getExercisePerformances() {
         return sExercisePerformances;
+    }
+
+    public static List<ExerciseModel> getAllExercises(){
+        ArrayList<ExerciseModel> list = new ArrayList<>(sCustomCatalog);
+        list.addAll(sDefaultCatalog);
+        Log.d(TAG, "getAllExercises: list.size() - " + list.size());
+        for (ExerciseModel model :
+                list) {
+            Log.d(TAG, "model.title: " + model.getTitle());
+        }
+        return list;
+
     }
 
     public static boolean addCustomExercise(ExerciseModel exerciseModel) {

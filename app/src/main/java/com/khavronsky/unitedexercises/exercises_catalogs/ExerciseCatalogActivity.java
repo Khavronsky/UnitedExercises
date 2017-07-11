@@ -24,6 +24,7 @@ public class ExerciseCatalogActivity extends AppCompatActivity implements View.O
 
     ExerciseModel.ExerciseType mExerciseType;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,7 +90,10 @@ public class ExerciseCatalogActivity extends AppCompatActivity implements View.O
         int id = item.getItemId();
         if (id == R.id.search) {
             Toast.makeText(this, "SEARCH", Toast.LENGTH_SHORT).show();
+            Bundle args = new Bundle();
+            args.putSerializable(SearchDialog.EX_TYPE_TAG, mExerciseType);
             SearchDialog searchDialog = new SearchDialog();
+            searchDialog.setArguments(args);
             searchDialog.show(getFragmentManager(), "searchDialog");
             return true;
         }
