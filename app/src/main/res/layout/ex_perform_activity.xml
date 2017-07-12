@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.khavronsky.unitedexercises.exercise_performance.custom_views.collapsing_card.CustomCollapsingView
+<com.khavronsky.unitedexercises.presentation.exercise.exercise_performance.custom_views.collapsing_card.CustomCollapsingView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/my_view"
     android:layout_width="match_parent"
@@ -63,4 +63,4 @@
             android:textStyle="normal" />
 
     </LinearLayout>
-</com.khavronsky.unitedexercises.exercise_performance.custom_views.collapsing_card.CustomCollapsingView>
+</com.khavronsky.unitedexercises.presentation.exercise.exercise_performance.custom_views.collapsing_card.CustomCollapsingView>

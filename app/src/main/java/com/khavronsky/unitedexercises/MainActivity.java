@@ -1,11 +1,11 @@
 package com.khavronsky.unitedexercises;
 
-import com.khavronsky.unitedexercises.create_new_exercises.new_cardio_exercise.CardioExerciseEditorActivity;
-import com.khavronsky.unitedexercises.create_new_exercises.new_power_exercise.PowerExerciseEditorActivity;
-import com.khavronsky.unitedexercises.exercise_performance.ExercisePerformActivity;
-import com.khavronsky.unitedexercises.exercises_catalogs.ExerciseCatalogActivity;
-import com.khavronsky.unitedexercises.exercises_models.ExerciseModel;
-import com.khavronsky.unitedexercises.get_data.FakeData;
+import com.khavronsky.unitedexercises.presentation.exercise.create_new_exercises.new_cardio_exercise.CardioExerciseEditorActivity;
+import com.khavronsky.unitedexercises.presentation.exercise.create_new_exercises.new_power_exercise.PowerExerciseEditorActivity;
+import com.khavronsky.unitedexercises.presentation.exercise.exercise_performance.ExercisePerformActivity;
+import com.khavronsky.unitedexercises.presentation.exercise.exercises_catalogs.ExerciseCatalogActivity;
+import com.khavronsky.unitedexercises.presentation.exercise.exercises_models.ExerciseModel;
+import com.khavronsky.unitedexercises.busines.exercise.get_data.FakeData;
 
 import android.content.Intent;
 import android.os.Bundle;

@@ -8,7 +8,7 @@
     android:gravity="center_horizontal"
     android:orientation="horizontal">
 
-    <com.khavronsky.unitedexercises.import_from_grand_project.BaseNumberPicker
+    <com.khavronsky.unitedexercises.utils.import_from_grand_project.BaseNumberPicker
         android:id="@+id/integer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
@@ -21,7 +21,7 @@
         android:text=" : "
         android:textSize="30sp" />
 
-    <com.khavronsky.unitedexercises.import_from_grand_project.BaseNumberPicker
+    <com.khavronsky.unitedexercises.utils.import_from_grand_project.BaseNumberPicker
         android:id="@+id/fract"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
