@@ -34,7 +34,7 @@ import static com.khavronsky.unitedexercises.presentation.exercise.exercises_mod
 import static com.khavronsky.unitedexercises.utils.import_from_grand_project.FloatNumPickerFragment.EXTRA_DECIMAL_STEP_IS_01;
 
 public class CardioExerciseEditorActivity extends AppCompatActivity implements View.OnClickListener,
-        PresenterOfCardioExerciseEditor.IView {
+        IView {
 
     //region FIELDS
     @BindView(R.id.toolbar)
@@ -80,7 +80,7 @@ public class CardioExerciseEditorActivity extends AppCompatActivity implements V
 
     private TextWatcher mTextWatcher;
 
-    private PresenterOfCardioExerciseEditor mPresenter;
+    private CardioExerciseEditorPresenter mPresenter;
 
     private CardioExerciseModel mCardioExerciseModel;
 
@@ -100,7 +100,7 @@ public class CardioExerciseEditorActivity extends AppCompatActivity implements V
         setContentView(R.layout.create_cardio_ex_activity);
         ButterKnife.bind(this);
         if (mPresenter == null) {
-            mPresenter = new PresenterOfCardioExerciseEditor();
+            mPresenter = new CardioExerciseEditorPresenter();
         }
         mPresenter.attachView(this);
         if (getIntent().getExtras() != null) {

@@ -1,8 +1,9 @@
 package com.khavronsky.unitedexercises.presentation.exercise.exercises_catalogs.recent_ex_catalog;
 
+import com.khavronsky.unitedexercises.busines.exercise.get_data.ExerciseRX;
+import com.khavronsky.unitedexercises.busines.exercise.get_data.ExercisesInteractor;
 import com.khavronsky.unitedexercises.presentation.exercise.exercises_models.ExerciseModel;
 import com.khavronsky.unitedexercises.presentation.exercise.exercises_models.ModelOfExercisePerformance;
-import com.khavronsky.unitedexercises.busines.exercise.get_data.ExerciseRX;
 import com.khavronsky.unitedexercises.utils.import_from_grand_project.AbstractPresenter;
 
 import android.util.Log;
@@ -16,16 +17,21 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 
-public class RecentExPresenter extends AbstractPresenter<RecentExPresenter.IView> {
+public class RecentExPresenter extends AbstractPresenter<IView> {
 
     public static final String TAG = "KhS_RecentExPresenter";
 
+    private ExercisesInteractor mExercisesInteractor;
+
+    public RecentExPresenter() {
+        mExercisesInteractor = new ExerciseRX();
+    }
 
     private ExerciseModel.ExerciseType type;
 
     public void loadData(ExerciseModel.ExerciseType type) {
         this.type = type;
-        ExerciseRX.getRecentExerciseList()
+        mExercisesInteractor.getRecentExerciseList()
                 .map(modelOfExercisePerformances -> new ArrayList<ModelOfExercisePerformance>() {{
                     for (ModelOfExercisePerformance model :
                             modelOfExercisePerformances) {
@@ -111,9 +117,4 @@ public class RecentExPresenter extends AbstractPresenter<RecentExPresenter.IView
 //            }
 //        };
 //    }
-
-    public interface IView {
-
-        void show(List<ModelOfExercisePerformance> exModelList);
-    }
 }

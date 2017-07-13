@@ -7,6 +7,7 @@ import com.khavronsky.unitedexercises.presentation.exercise.exercises_models.Car
 import com.khavronsky.unitedexercises.presentation.exercise.exercises_models.ExerciseModel;
 import com.khavronsky.unitedexercises.presentation.exercise.exercises_models.ModelOfExercisePerformance;
 import com.khavronsky.unitedexercises.presentation.exercise.exercises_models.PowerExerciseModel;
+import com.khavronsky.unitedexercises.utils.import_from_grand_project.RecyclerItemClickListener;
 
 import android.content.Context;
 import android.content.Intent;
@@ -27,7 +28,8 @@ import butterknife.OnClick;
 import static com.khavronsky.unitedexercises.presentation.exercise.exercises_models.CardioExerciseModel.METHOD_MET_VALUES;
 
 public class AdapterToRecentExerciseRecycler
-        extends RecyclerView.Adapter<CustomExerciseHolder> implements IRecentCatalogListener {
+        extends RecyclerView.Adapter<AdapterToRecentExerciseRecycler.CustomExerciseHolder>
+        implements RecyclerItemClickListener.OnItemClickListener {
 
     private List<ModelOfExercisePerformance> customExList;
 
@@ -56,13 +58,12 @@ public class AdapterToRecentExerciseRecycler
     }
 
     @Override
-    public void startExPerformanceActivity(final int pos) {
+    public void onItemClick(final View view, final int pos) {
         Intent intent = new Intent(mContext, ExercisePerformActivity.class);
         intent.putExtra(ExercisePerformActivity.NEW_PERFORMANCE, false);
         intent.putExtra(ExercisePerformActivity.MODEL_OF_PERFORMANCE, customExList.get(pos));
         mContext.startActivity(intent);
     }
-
 
 
     private String createDescription(final ExerciseModel exerciseModel) {
@@ -101,49 +102,44 @@ public class AdapterToRecentExerciseRecycler
     /**
      * V I E W   H O L D E R
      */
+
+
+    class CustomExerciseHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+
+        @BindView(R.id.recent_exercise_item_title)
+        TextView itemTitle;
+
+        @BindView(R.id.recent_exercise_item_sub_title)
+        TextView itemSubtitle;
+
+        private FragmentManager mFragmentManager;
+
+        private RecyclerItemClickListener.OnItemClickListener mListener;
+
+        public CustomExerciseHolder setFragmentManager(final FragmentManager fragmentManager) {
+            mFragmentManager = fragmentManager;
+            return this;
+        }
+
+        CustomExerciseHolder(final View itemView) {
+            super(itemView);
+            ButterKnife.bind(this, itemView);
+        }
+
+        @OnClick({R.id.recent_exercise_item_title, R.id.recent_exercise_item_sub_title})
+        @Override
+        public void onClick(final View v) {
+            mListener.onItemClick(v, getAdapterPosition());
+            Toast.makeText(v.getContext(), "show exercise", Toast.LENGTH_SHORT).show();
+        }
+
+        void setText(String title, String subTitle) {
+            itemTitle.setText(title);
+            itemSubtitle.setText(subTitle);
+        }
+
+        public void setListener(final RecyclerItemClickListener.OnItemClickListener listener) {
+            mListener = listener;
+        }
+    }
 }
-
-class CustomExerciseHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-
-    @BindView(R.id.recent_exercise_item_title)
-    TextView itemTitle;
-
-    @BindView(R.id.recent_exercise_item_sub_title)
-    TextView itemSubtitle;
-
-    private FragmentManager mFragmentManager;
-
-    private IRecentCatalogListener mListener;
-
-    public CustomExerciseHolder setFragmentManager(final FragmentManager fragmentManager) {
-        mFragmentManager = fragmentManager;
-        return this;
-    }
-
-    CustomExerciseHolder(final View itemView) {
-        super(itemView);
-        ButterKnife.bind(this, itemView);
-    }
-
-    @OnClick({R.id.recent_exercise_item_title, R.id.recent_exercise_item_sub_title})
-    @Override
-    public void onClick(final View v) {
-        mListener.startExPerformanceActivity(getAdapterPosition());
-        Toast.makeText(v.getContext(), "show exercise", Toast.LENGTH_SHORT).show();
-    }
-
-    void setText(String title, String subTitle) {
-        itemTitle.setText(title);
-        itemSubtitle.setText(subTitle);
-    }
-
-    public void setListener(final IRecentCatalogListener listener) {
-        mListener = listener;
-    }
-}
-
-interface IRecentCatalogListener {
-
-    void startExPerformanceActivity(int pos);
-}
-

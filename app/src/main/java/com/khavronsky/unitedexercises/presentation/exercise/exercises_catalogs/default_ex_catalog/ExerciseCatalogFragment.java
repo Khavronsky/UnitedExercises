@@ -15,7 +15,7 @@ import android.view.ViewGroup;
 
 import java.util.ArrayList;
 
-public class ExerciseCatalogFragment extends Fragment implements DefaultExPresenter.IView {
+public class ExerciseCatalogFragment extends Fragment implements IView {
 
     private DefaultExPresenter presenter;
 

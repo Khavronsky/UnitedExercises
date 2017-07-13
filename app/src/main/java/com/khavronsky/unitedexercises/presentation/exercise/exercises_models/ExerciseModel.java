@@ -16,6 +16,8 @@ public abstract class ExerciseModel implements Comparable<ExerciseModel>, Serial
 
     private String title;
 
+    private String description;
+
     private ExerciseType type;
 
     private boolean customExercise;
@@ -60,6 +62,17 @@ public abstract class ExerciseModel implements Comparable<ExerciseModel>, Serial
 
     public String getTitle() {
         return title;
+    }
+    //endregion
+
+    //region description set/get
+    public String getDescription() {
+        return description;
+    }
+
+    public ExerciseModel setDescription(final String description) {
+        this.description = description;
+        return this;
     }
     //endregion
 

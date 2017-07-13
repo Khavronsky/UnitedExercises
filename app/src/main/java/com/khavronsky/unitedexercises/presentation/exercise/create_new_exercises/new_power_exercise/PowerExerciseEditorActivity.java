@@ -1,9 +1,9 @@
 package com.khavronsky.unitedexercises.presentation.exercise.create_new_exercises.new_power_exercise;
 
 import com.khavronsky.unitedexercises.R;
+import com.khavronsky.unitedexercises.busines.exercise.get_data.FakeData;
 import com.khavronsky.unitedexercises.presentation.exercise.exercises_models.ExerciseModel;
 import com.khavronsky.unitedexercises.presentation.exercise.exercises_models.PowerExerciseModel;
-import com.khavronsky.unitedexercises.busines.exercise.get_data.FakeData;
 import com.khavronsky.unitedexercises.utils.import_from_grand_project.IDialogFragment;
 import com.khavronsky.unitedexercises.utils.import_from_grand_project.IntNumPickerFragment;
 
@@ -61,7 +61,7 @@ public class PowerExerciseEditorActivity extends AppCompatActivity implements Vi
 
     private String pickerOnScreen = "";
 
-    private PresenterOfPowerExerciseEditor mPresenter;
+    private PowerExerciseEditorPresenter mPresenter;
 
     private boolean newExercise = true;
 
@@ -75,7 +75,7 @@ public class PowerExerciseEditorActivity extends AppCompatActivity implements Vi
         setContentView(R.layout.create_power_ex_activity);
         ButterKnife.bind(this);
         if (mPresenter == null) {
-            mPresenter = new PresenterOfPowerExerciseEditor();
+            mPresenter = new PowerExerciseEditorPresenter();
         }
         mPresenter.attachView(this);
         if (getIntent().getExtras() != null) {
@@ -93,6 +93,7 @@ public class PowerExerciseEditorActivity extends AppCompatActivity implements Vi
         } else {
             setPowerExerciseModel(new PowerExerciseModel());
             title = "Новое упражнение";
+            newExercise = true;
         }
         mFocusableLayout.setFocusableInTouchMode(true);
 

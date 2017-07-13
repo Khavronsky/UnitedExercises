@@ -31,7 +31,7 @@ import butterknife.OnClick;
 import static android.app.Activity.RESULT_OK;
 
 
-public class CustomExercisesFragment extends Fragment implements CustomExPresenter.IView, IEditCatalog {
+public class CustomExercisesFragment extends Fragment implements IView, IEditCatalog {
 
     //region F I E L D S
     @BindView(R.id.custom_exercise_create_btn)
@@ -125,7 +125,13 @@ public class CustomExercisesFragment extends Fragment implements CustomExPresent
     @OnClick(R.id.custom_exercise_create_btn)
     void createNewEx() {
         Toast.makeText(getContext(), "CREATE NEW EXERCISE", Toast.LENGTH_SHORT).show();
-        startActivityForResult(new Intent(getActivity(), CardioExerciseEditorActivity.class), 0);
+        Intent intent;
+        if (currentType == ExerciseType.CARDIO) {
+            intent = new Intent(getActivity(), CardioExerciseEditorActivity.class);
+        } else {
+            intent = new Intent(getActivity(), PowerExerciseEditorActivity.class);
+        }
+        startActivityForResult(intent, 0);
     }
 
     @Override
