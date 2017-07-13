@@ -4,7 +4,6 @@ import com.khavronsky.unitedexercises.R;
 import com.khavronsky.unitedexercises.busines.exercise.get_data.FakeData;
 import com.khavronsky.unitedexercises.presentation.exercise.exercises_models.ExerciseModel;
 import com.khavronsky.unitedexercises.presentation.exercise.exercises_models.PowerExerciseModel;
-import com.khavronsky.unitedexercises.utils.import_from_grand_project.IDialogFragment;
 import com.khavronsky.unitedexercises.utils.import_from_grand_project.IntNumPickerFragment;
 
 import android.os.Bundle;
@@ -21,10 +20,8 @@ import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
-public class PowerExerciseEditorActivity extends AppCompatActivity implements View.OnClickListener,
-        IDialogFragment, IView {
+public class PowerExerciseEditorActivity extends AppCompatActivity implements View.OnClickListener, IView {
 
     //region FIELDS
     public final static String POWER_MODEL_TAG = "power_model";
@@ -43,14 +40,8 @@ public class PowerExerciseEditorActivity extends AppCompatActivity implements Vi
     @BindView(R.id.ex_title)
     EditText mExTitle;
 
-    @BindView(R.id.ex_sets)
-    EditText mExSets;
-
-    @BindView(R.id.ex_repeats)
-    EditText mExRepeats;
-
-    @BindView(R.id.ex_weight)
-    EditText mExWeight;
+    @BindView(R.id.ex_description)
+    EditText mExDescription;
 
     @BindView(R.id.focusable_layout)
     LinearLayout mFocusableLayout;
@@ -98,73 +89,10 @@ public class PowerExerciseEditorActivity extends AppCompatActivity implements Vi
         mFocusableLayout.setFocusableInTouchMode(true);
 
         setToolbar();
-//        setEditText(mPowerExerciseModel);
-
     }
 
     public void setPowerExerciseModel(final PowerExerciseModel powerExerciseModel) {
         mPowerExerciseModel = powerExerciseModel;
-    }
-
-    @OnClick({R.id.ex_sets, R.id.ex_repeats, R.id.ex_weight})
-    public void onViewClicked(View view) {
-        mExTitle.clearFocus();
-        switch (view.getId()) {
-            case R.id.ex_sets:
-                pickerOnScreen = SETS;
-                showIntPicker(1, 20, mPowerExerciseModel.getSets(), 1);
-                break;
-            case R.id.ex_repeats:
-                pickerOnScreen = REPEATS;
-                showIntPicker(1, 50, mPowerExerciseModel.getRepeats(), 1);
-                break;
-            case R.id.ex_weight:
-                //поменять на floatPicker??????
-                pickerOnScreen = WEIGHT;
-                showIntPicker(1, 500, mPowerExerciseModel.getWeight(), 1);
-                break;
-        }
-    }
-
-    //region IDialogFragment implementation
-    @Override
-    public void doButtonClick1(final Object o) {
-        if (mIntNumPickerDialog != null) {
-            mIntNumPickerDialog.dismiss();
-            switch (pickerOnScreen) {
-                case SETS:
-                    mExSets.setText(String.valueOf(o));
-                    break;
-                case REPEATS:
-                    mExRepeats.setText(String.valueOf(o));
-                    break;
-                case WEIGHT:
-                    mExWeight.setText(String.valueOf(o));
-                    break;
-            }
-            mIntNumPickerDialog = null;
-        }
-        pickerOnScreen = null;
-    }
-
-    @Override
-    public void doButtonClick2() {
-
-    }
-
-    @Override
-    public void doByDismissed() {
-
-    }
-
-    //endregion
-
-    void showIntPicker(int min, int max, int currentVal, int onePointVal) {
-        if (mIntNumPickerDialog == null) {
-            mIntNumPickerDialog = IntNumPickerFragment.newInstance(min, max, currentVal, onePointVal);
-            mIntNumPickerDialog.setCallback(this);
-            mIntNumPickerDialog.show(getSupportFragmentManager(), "picker");
-        }
     }
 
     private void setEditText(PowerExerciseModel powerExerciseModel) {
@@ -172,9 +100,6 @@ public class PowerExerciseEditorActivity extends AppCompatActivity implements Vi
         if (powerExerciseModel != null) {
 
             mExTitle.setText(powerExerciseModel.getTitle());
-            mExSets.setText(String.valueOf(powerExerciseModel.getSets()));
-            mExRepeats.setText(String.valueOf(powerExerciseModel.getRepeats()));
-            mExWeight.setText(String.valueOf(powerExerciseModel.getWeight()));
         }
         mTextWatcher = new TextWatcher() {
             @Override
@@ -197,9 +122,7 @@ public class PowerExerciseEditorActivity extends AppCompatActivity implements Vi
             }
         };
         mExTitle.addTextChangedListener(mTextWatcher);
-        mExSets.addTextChangedListener(mTextWatcher);
-        mExRepeats.addTextChangedListener(mTextWatcher);
-        mExWeight.addTextChangedListener(mTextWatcher);
+
 
     }
 
@@ -217,23 +140,10 @@ public class PowerExerciseEditorActivity extends AppCompatActivity implements Vi
             Toast.makeText(this, "Ойойой1", Toast.LENGTH_SHORT).show();
             return false;
         }
-        if (mExSets.getText().length() == 0) {
-            Toast.makeText(this, "Ойойой2", Toast.LENGTH_SHORT).show();
-            return false;
-        }
-        if (mExRepeats.getText().length() == 0) {
-            Toast.makeText(this, "Ойойой3", Toast.LENGTH_SHORT).show();
-            return false;
-        }
-        if (mExWeight.getText().length() == 0) {
-            Toast.makeText(this, "Ойойой4", Toast.LENGTH_SHORT).show();
-            return false;
-        }
+
         mPowerExerciseModel
-                .setSets(Integer.parseInt(String.valueOf(mExSets.getText())))
-                .setRepeats(Integer.parseInt(String.valueOf(mExRepeats.getText())))
-                .setWeight(Integer.parseInt(String.valueOf(mExWeight.getText())))
                 .setTitle(String.valueOf(mExTitle.getText()))
+                .setDescription(String.valueOf(mExDescription.getText()))
         ;
 
         if (newExercise) {
@@ -265,9 +175,10 @@ public class PowerExerciseEditorActivity extends AppCompatActivity implements Vi
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.save) {
-            saveExercise();
-            Toast.makeText(this, "SAVE", Toast.LENGTH_SHORT).show();
-            onBackPressed();
+            if (saveExercise()) {
+                Toast.makeText(this, "SAVE", Toast.LENGTH_SHORT).show();
+                onBackPressed();
+            }
         }
         return super.onOptionsItemSelected(item);
     }
