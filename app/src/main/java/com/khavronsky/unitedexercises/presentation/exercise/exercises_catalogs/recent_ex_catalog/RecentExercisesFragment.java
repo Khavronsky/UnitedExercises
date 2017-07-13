@@ -21,7 +21,7 @@ import butterknife.ButterKnife;
 
 import static com.khavronsky.unitedexercises.presentation.exercise.exercises_models.ExerciseModel.ExerciseType;
 
-public class RecentExercisesFragment extends Fragment implements RecentExPresenter.IView {
+public class RecentExercisesFragment extends Fragment implements IView {
 
     @BindView(R.id.recent_exercise_not_found)
     TextView emptyCustExList;

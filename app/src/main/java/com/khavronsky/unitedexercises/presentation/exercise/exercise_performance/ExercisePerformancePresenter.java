@@ -16,7 +16,7 @@ import rx.schedulers.Schedulers;
 
 import static com.khavronsky.unitedexercises.presentation.exercise.exercises_models.CardioExerciseModel.TYPE_NOT_SPECIFY;
 
-public class PresenterOfExercisePerformance extends AbstractPresenter<PresenterOfExercisePerformance.IView> {
+public class ExercisePerformancePresenter extends AbstractPresenter<IView> {
 
     private static final int DEFAULT_EXERCISE_DURATION = 60;
 
@@ -24,7 +24,7 @@ public class PresenterOfExercisePerformance extends AbstractPresenter<PresenterO
 
     private ModelOfExercisePerformance modelOfExercisePerformance;
 
-    public PresenterOfExercisePerformance() {
+    public ExercisePerformancePresenter() {
         mExercisesInteractor = new ExerciseRX();
     }
 
@@ -149,10 +149,5 @@ public class PresenterOfExercisePerformance extends AbstractPresenter<PresenterO
     int getFakeWeight() {
         //STUB
         return 80;
-    }
-
-    interface IView {
-
-        void show(ModelOfExercisePerformance modelOfExercisePerformance);
     }
 }

@@ -6,6 +6,7 @@ import com.khavronsky.unitedexercises.presentation.exercise.exercises_models.Car
 import com.khavronsky.unitedexercises.presentation.exercise.exercises_models.ExerciseModel;
 import com.khavronsky.unitedexercises.presentation.exercise.exercises_models.IEditCatalog;
 import com.khavronsky.unitedexercises.presentation.exercise.exercises_models.PowerExerciseModel;
+import com.khavronsky.unitedexercises.utils.import_from_grand_project.RecyclerItemClickListener;
 
 import android.content.Context;
 import android.content.Intent;
@@ -28,8 +29,9 @@ import butterknife.OnClick;
 
 import static com.khavronsky.unitedexercises.presentation.exercise.exercises_models.CardioExerciseModel.METHOD_MET_VALUES;
 
-public class AdapterToCustomExerciseRecycler extends RecyclerView.Adapter<CustomExerciseHolder>
-        implements CustomExerciseHolder.ICustomCatalogListener {
+public class AdapterToCustomExerciseRecycler
+        extends RecyclerView.Adapter<AdapterToCustomExerciseRecycler.CustomExerciseHolder>
+        implements OnClickDialogItemListener, RecyclerItemClickListener.OnItemClickListener {
 
     private List<ExerciseModel> customExList;
 
@@ -41,7 +43,6 @@ public class AdapterToCustomExerciseRecycler extends RecyclerView.Adapter<Custom
 
     public AdapterToCustomExerciseRecycler(FragmentManager fragmentManager) {
         mFragmentManager = fragmentManager;
-
     }
 
     public void setEditor(final IEditCatalog editor) {
@@ -60,10 +61,8 @@ public class AdapterToCustomExerciseRecycler extends RecyclerView.Adapter<Custom
 
     @Override
     public void onBindViewHolder(final CustomExerciseHolder holder, final int position) {
-//        holder.setText(customExList.get(position).getTitle(), customExList.get(position).getType().toString());
         holder.setText(customExList.get(position).getTitle(), createDescription(customExList.get(position)));
-        holder.setCatalogListener(this);
-
+        holder.setCatalogListeners(this, this);
     }
 
     @Override
@@ -77,8 +76,7 @@ public class AdapterToCustomExerciseRecycler extends RecyclerView.Adapter<Custom
     }
 
     @Override
-    public void startExPerformanceActivity(final int pos) {
-
+    public void onItemClick(final View view, final int pos) {
         Intent intent = new Intent(mContext, ExercisePerformActivity.class);
         intent.putExtra(ExercisePerformActivity.NEW_PERFORMANCE, true);
         intent.putExtra(ExercisePerformActivity.MODEL_OF_EXERCISE, customExList.get(pos));
@@ -111,93 +109,89 @@ public class AdapterToCustomExerciseRecycler extends RecyclerView.Adapter<Custom
     public void setModelList(final List<ExerciseModel> modelList) {
         customExList = modelList;
     }
-}
 
-/**
- * V I E W   H O L D E R
- */
-class CustomExerciseHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-    @BindView(R.id.custom_exercise_item_title)
-    TextView itemTitle;
+    /**
+     * V I E W   H O L D E R
+     */
+    class CustomExerciseHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-    @BindView(R.id.custom_exercise_item_sub_title)
-    TextView itemSubtitle;
+        @BindView(R.id.custom_exercise_item_title)
+        TextView itemTitle;
 
-    @BindView(R.id.custom_exercise_menu)
-    ImageView itemMenu;
+        @BindView(R.id.custom_exercise_item_sub_title)
+        TextView itemSubtitle;
 
-    @BindView(R.id.anchor)
-    View mView;
+        @BindView(R.id.custom_exercise_menu)
+        ImageView itemMenu;
 
-    FragmentManager mFragmentManager;
+        @BindView(R.id.anchor)
+        View mView;
 
-    private ICustomCatalogListener mCatalogListener;
+        FragmentManager mFragmentManager;
 
-    public CustomExerciseHolder setFragmentManager(final FragmentManager fragmentManager) {
-        mFragmentManager = fragmentManager;
-        return this;
+        private OnClickDialogItemListener mCatalogListener;
+
+        private RecyclerItemClickListener.OnItemClickListener mOnItemClickListener;
+
+
+        public CustomExerciseHolder setFragmentManager(final FragmentManager fragmentManager) {
+            mFragmentManager = fragmentManager;
+            return this;
+        }
+
+        CustomExerciseHolder(final View itemView) {
+            super(itemView);
+            ButterKnife.bind(this, itemView);
+        }
+
+        @OnClick({R.id.custom_exercise_item_title, R.id.custom_exercise_item_sub_title})
+        @Override
+        public void onClick(final View v) {
+            Toast.makeText(v.getContext(), "show exercise", Toast.LENGTH_SHORT).show();
+            mOnItemClickListener.onItemClick(v, getAdapterPosition());
+
+        }
+
+        public void setCatalogListeners(final OnClickDialogItemListener catalogListener, final
+                RecyclerItemClickListener.OnItemClickListener onItemClickListener) {
+            mCatalogListener = catalogListener;
+            mOnItemClickListener = onItemClickListener;
+        }
+
+        void setText(String title, String subTitle) {
+            itemTitle.setText(title);
+            itemSubtitle.setText(subTitle);
+        }
+
+        @OnClick(R.id.custom_exercise_menu)
+        void showMenu() {
+            PopupMenu popupMenu = new PopupMenu(mView.getContext(), mView, Gravity.END);
+            popupMenu.inflate(R.menu.popup_menu);
+
+            popupMenu
+                    .setOnMenuItemClickListener(item -> {
+                        switch (item.getItemId()) {
+
+                            case R.id.custom_exercise_item_menu_del:
+                                Toast.makeText(itemMenu.getContext(), "ГУМНО", Toast.LENGTH_SHORT).show();
+                                popupMenu.dismiss();
+
+                                mCatalogListener.pressDel(getAdapterPosition());
+                                return true;
+                            case R.id.custom_exercise_item_menu_edit:
+                                Toast.makeText(itemMenu.getContext(), "EDIT", Toast.LENGTH_SHORT).show();
+
+                                mCatalogListener.pressEdit(getAdapterPosition());
+                                return true;
+                            default:
+                                return false;
+                        }
+                    });
+
+            popupMenu.setOnDismissListener(menu -> Toast.makeText(itemMenu.getContext(), "onDismiss",
+                    Toast.LENGTH_SHORT).show());
+            popupMenu.show();
+        }
     }
-
-    CustomExerciseHolder(final View itemView) {
-        super(itemView);
-        ButterKnife.bind(this, itemView);
-    }
-
-    @OnClick({R.id.custom_exercise_item_title, R.id.custom_exercise_item_sub_title})
-    @Override
-    public void onClick(final View v) {
-        Toast.makeText(v.getContext(), "show exercise", Toast.LENGTH_SHORT).show();
-        mCatalogListener.startExPerformanceActivity(getAdapterPosition());
-
-    }
-
-    public void setCatalogListener(final ICustomCatalogListener catalogListener) {
-        mCatalogListener = catalogListener;
-    }
-
-    void setText(String title, String subTitle) {
-        itemTitle.setText(title);
-        itemSubtitle.setText(subTitle);
-    }
-
-    @OnClick(R.id.custom_exercise_menu)
-    void showMenu() {
-        PopupMenu popupMenu = new PopupMenu(mView.getContext(), mView, Gravity.END);
-        popupMenu.inflate(R.menu.popup_menu);
-
-        popupMenu
-                .setOnMenuItemClickListener(item -> {
-                    switch (item.getItemId()) {
-
-                        case R.id.custom_exercise_item_menu_del:
-                            Toast.makeText(itemMenu.getContext(), "ГУМНО", Toast.LENGTH_SHORT).show();
-                            popupMenu.dismiss();
-
-                            mCatalogListener.pressDel(getAdapterPosition());
-                            return true;
-                        case R.id.custom_exercise_item_menu_edit:
-                            Toast.makeText(itemMenu.getContext(), "EDIT", Toast.LENGTH_SHORT).show();
-
-                            mCatalogListener.pressEdit(getAdapterPosition());
-                            return true;
-                        default:
-                            return false;
-                    }
-                });
-
-        popupMenu.setOnDismissListener(menu -> Toast.makeText(itemMenu.getContext(), "onDismiss",
-                Toast.LENGTH_SHORT).show());
-        popupMenu.show();
-    }
-
-    interface ICustomCatalogListener {
-
-        void pressDel(int pos);
-
-        void pressEdit(int pos);
-
-        void startExPerformanceActivity(int pos);
-    }
-
 }

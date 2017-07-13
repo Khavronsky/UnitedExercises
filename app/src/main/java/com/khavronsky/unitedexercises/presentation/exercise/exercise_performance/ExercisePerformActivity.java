@@ -32,7 +32,7 @@ import static com.khavronsky.unitedexercises.presentation.exercise.exercises_mod
 
 
 public class ExercisePerformActivity extends AppCompatActivity implements View.OnClickListener,
-        PresenterOfExercisePerformance.IView, CardioExPerformFragment.IExerciseListener {
+        IView, CardioExPerformFragment.IExerciseListener {
 
     //region FIELDS
     public final static String NEW_PERFORMANCE = "new_performance";
@@ -49,7 +49,7 @@ public class ExercisePerformActivity extends AppCompatActivity implements View.O
 
     ModelOfExercisePerformance mModelOfExercisePerformance;
 
-    private PresenterOfExercisePerformance mPresenter;
+    private ExercisePerformancePresenter mPresenter;
 
     private boolean newPerformance;
     //endregion
@@ -60,7 +60,7 @@ public class ExercisePerformActivity extends AppCompatActivity implements View.O
         setContentView(R.layout.ex_perform_activity);
         ButterKnife.bind(this);
         if (mPresenter == null) {
-            mPresenter = new PresenterOfExercisePerformance();
+            mPresenter = new ExercisePerformancePresenter();
         }
         mPresenter.attachView(this);
         newPerformance = getIntent().getExtras().getBoolean(NEW_PERFORMANCE);

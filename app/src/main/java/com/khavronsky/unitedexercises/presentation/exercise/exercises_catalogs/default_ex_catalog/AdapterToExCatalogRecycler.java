@@ -2,6 +2,7 @@ package com.khavronsky.unitedexercises.presentation.exercise.exercises_catalogs.
 
 import com.khavronsky.unitedexercises.R;
 import com.khavronsky.unitedexercises.presentation.exercise.exercise_performance.ExercisePerformActivity;
+import com.khavronsky.unitedexercises.utils.import_from_grand_project.RecyclerItemClickListener;
 
 import android.content.Context;
 import android.content.Intent;
@@ -15,9 +16,8 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AdapterToExCatalogRecycler
-        extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements
-        IDefaultCatalogListener {
+public class AdapterToExCatalogRecycler extends RecyclerView.Adapter<RecyclerView.ViewHolder>
+        implements RecyclerItemClickListener.OnItemClickListener {
 
     private List<ModelOfItemForExCatalog> exerciseCatalog = new ArrayList<>();
 
@@ -67,52 +67,47 @@ public class AdapterToExCatalogRecycler
     }
 
     @Override
-    public void startExPerformanceActivity(final int pos) {
+    public void onItemClick(final View view, final int pos) {
         Intent intent = new Intent(mContext, ExercisePerformActivity.class);
         intent.putExtra(ExercisePerformActivity.NEW_PERFORMANCE, true);
         intent.putExtra(ExercisePerformActivity.MODEL_OF_EXERCISE, exerciseCatalog.get(pos).getExercise());
         mContext.startActivity(intent);
     }
 
-
     /**
      * V I E W   H O L D E R
      */
-    class ExerciseCatalogHolder extends RecyclerView.ViewHolder {
+    private class ExerciseCatalogHolder extends RecyclerView.ViewHolder {
 
         TextView mTextView;
 
-        IDefaultCatalogListener mListener;
+        RecyclerItemClickListener.OnItemClickListener mListener;
 
-        public ExerciseCatalogHolder(final View itemView) {
+        ExerciseCatalogHolder(final View itemView) {
             super(itemView);
             mTextView = (TextView) itemView.findViewById(R.id.exercise_name);
             Log.d("KhS", "ExerciseCatalogHolder: ");
             mTextView.setOnClickListener(
-                    v -> mListener.startExPerformanceActivity(getAdapterPosition()));
+                    v -> mListener.onItemClick(itemView, getAdapterPosition()));
         }
 
         void setText(String text) {
             mTextView.setText(text);
         }
 
-        public void setListener(
-                final IDefaultCatalogListener listener) {
+        void setListener(
+                final RecyclerItemClickListener.OnItemClickListener listener) {
             mListener = listener;
         }
-
-
-
     }
 
-    class CapitalLetterItem extends RecyclerView.ViewHolder {
+    private class CapitalLetterItem extends RecyclerView.ViewHolder {
 
         TextView mTextView;
 
-        public CapitalLetterItem(final View itemView) {
+        CapitalLetterItem(final View itemView) {
             super(itemView);
             mTextView = (TextView) itemView.findViewById(R.id.exercise_catalog_capital_letter);
-
         }
 
         void setText(String text) {

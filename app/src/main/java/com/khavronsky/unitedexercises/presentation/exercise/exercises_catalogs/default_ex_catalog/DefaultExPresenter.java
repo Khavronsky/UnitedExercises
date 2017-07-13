@@ -1,7 +1,8 @@
 package com.khavronsky.unitedexercises.presentation.exercise.exercises_catalogs.default_ex_catalog;
 
-import com.khavronsky.unitedexercises.presentation.exercise.exercises_models.ExerciseModel;
 import com.khavronsky.unitedexercises.busines.exercise.get_data.ExerciseRX;
+import com.khavronsky.unitedexercises.busines.exercise.get_data.ExercisesInteractor;
+import com.khavronsky.unitedexercises.presentation.exercise.exercises_models.ExerciseModel;
 import com.khavronsky.unitedexercises.utils.import_from_grand_project.AbstractPresenter;
 
 import android.util.Log;
@@ -17,11 +18,16 @@ import static com.khavronsky.unitedexercises.presentation.exercise.exercises_cat
 import static com.khavronsky.unitedexercises.presentation.exercise.exercises_catalogs.default_ex_catalog.ModelOfItemForExCatalog.ItemType.EXERCISE_TITLE;
 
 
-public class DefaultExPresenter extends AbstractPresenter<DefaultExPresenter.IView> {
+public class DefaultExPresenter extends AbstractPresenter<IView> {
 
+    private ExercisesInteractor mExercisesInteractor;
+
+    public DefaultExPresenter() {
+        mExercisesInteractor = new ExerciseRX();
+    }
 
     public void loadData(final ExerciseModel.ExerciseType type) {
-        ExerciseRX.getDefaultExerciseList()
+        mExercisesInteractor.getDefaultExerciseList()
                 .map(defExModels -> new ArrayList<ExerciseModel>() {{
                     for (ExerciseModel model :
                             defExModels) {
@@ -73,10 +79,5 @@ public class DefaultExPresenter extends AbstractPresenter<DefaultExPresenter.IVi
             .setExercise(model));
         }
         return list;
-    }
-
-    public interface IView {
-
-        void show(ArrayList<ModelOfItemForExCatalog> exList);
     }
 }

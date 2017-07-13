@@ -1,4 +1,4 @@
-package com.khavronsky.unitedexercises.presentation.exercise.create_new_exercises.new_cardio_exercise;
+package com.khavronsky.unitedexercises.presentation.exercise.create_new_exercises.new_power_exercise;
 
 import com.khavronsky.unitedexercises.busines.exercise.get_data.ExerciseRX;
 import com.khavronsky.unitedexercises.busines.exercise.get_data.ExercisesInteractor;
@@ -10,11 +10,11 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 
-public class PresenterOfCardioExerciseEditor extends AbstractPresenter<IView> {
+public class PowerExerciseEditorPresenter extends AbstractPresenter<IView> {
 
     private ExercisesInteractor mExercisesInteractor;
 
-    public PresenterOfCardioExerciseEditor() {
+    public PowerExerciseEditorPresenter() {
         mExercisesInteractor = new ExerciseRX();
     }
 
@@ -42,6 +42,7 @@ public class PresenterOfCardioExerciseEditor extends AbstractPresenter<IView> {
 
     }
 
+
     void editData(ExerciseModel model) {
 
         mExercisesInteractor.editCustomExercise(model)
@@ -65,5 +66,4 @@ public class PresenterOfCardioExerciseEditor extends AbstractPresenter<IView> {
                 });
 
     }
-
 }

@@ -34,7 +34,7 @@ import static android.view.WindowManager.LayoutParams.*;
 
 public class SearchDialog extends DialogFragment
         implements View.OnClickListener, TextWatcher, TextView.OnEditorActionListener,
-        SearchDialogPresenter.IView {
+        IView {
 
     public static final String TAG = "KhS_SearchDialog";
 
@@ -118,6 +118,7 @@ public class SearchDialog extends DialogFragment
                     intent.putExtra(ExercisePerformActivity.NEW_PERFORMANCE, true);
                     intent.putExtra(ExercisePerformActivity.MODEL_OF_EXERCISE, item);
                     startActivity(intent);
+                    dismiss();
                 })
         );
 
