@@ -8,7 +8,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,14 +28,12 @@ public class ExerciseCatalogFragment extends Fragment implements IView {
     @Override
     public void onCreate(@Nullable final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d("KhS", "onCreate: ExerciseCatalogFragment");
         if (presenter == null) {
             presenter = new DefaultExPresenter();
         }
         presenter.attachView(this);
         if (getArguments().getSerializable("type") != null) {
             currentType = (ExerciseType) getArguments().getSerializable("type");
-            Log.d("qwert", "CustomExercisesFragment " + currentType.name());
         }
     }
 
@@ -45,7 +42,6 @@ public class ExerciseCatalogFragment extends Fragment implements IView {
     public View onCreateView(final LayoutInflater inflater, @Nullable final ViewGroup container,
             @Nullable final Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.exercise_catalog_fragment, container, false);
-        Log.d("KhS", "onCreateView: ExerciseCatalogFragment");
         recyclerView = (RecyclerView) view.findViewById(R.id.exercise_catalog_recycler);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         adapterToExCatalogRecycler = new AdapterToExCatalogRecycler();

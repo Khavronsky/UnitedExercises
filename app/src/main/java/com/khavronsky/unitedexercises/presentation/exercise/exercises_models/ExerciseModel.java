@@ -17,7 +17,7 @@ public abstract class ExerciseModel implements Comparable<ExerciseModel>, Serial
 
     private ExerciseType type;
 
-    private boolean customExercise;
+    private boolean customExercise = true;
 
     private boolean active = true;
 

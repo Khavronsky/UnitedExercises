@@ -11,7 +11,6 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -46,11 +45,9 @@ public class ExerciseCatalogItemMenuDialog extends BaseDialogFragment {
         switch (id){
             case R.id.custom_exercise_item_menu_del_btn:
                 callback.doButtonClick1(null);
-                Toast.makeText(v.getContext(), "TEST DELETE", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.custom_exercise_item_menu_edit_btn:
                 callback.doButtonClick2();
-                Toast.makeText(v.getContext(), "TEST EDIT", Toast.LENGTH_SHORT).show();
                 break;
         }
     }

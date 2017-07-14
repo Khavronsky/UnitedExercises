@@ -141,7 +141,6 @@ public class CardioExerciseEditorActivity extends AppCompatActivity implements V
         }
         bundle.putFloat("current_value", curVal);
         bundle.putBoolean(EXTRA_DECIMAL_STEP_IS_01, true);
-//        bundle.putInt("one_point_value", 1);
         dialog.setArguments(bundle);
         dialog.setCallback(new IDialogFragment() {
             @Override
@@ -272,10 +271,6 @@ public class CardioExerciseEditorActivity extends AppCompatActivity implements V
         };
     }
 
-    public void setCardioExerciseModel(final CardioExerciseModel cardioExerciseModel) {
-        mCardioExerciseModel = cardioExerciseModel;
-    }
-
     private void setToolbar() {
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mToolbar.inflateMenu(R.menu.menu);
@@ -361,35 +356,6 @@ public class CardioExerciseEditorActivity extends AppCompatActivity implements V
             saveExercise(mIntensityType.getSelectedItemPosition());
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    private void showSavedToast() {
-        Toast.makeText(this, "MODEL SAVED \n"
-                + "Title: " + mCardioExerciseModel.getTitle() + "\n", Toast.LENGTH_SHORT)
-                .show();
-        Toast.makeText(this, "Calculating method: " + (mCardioExerciseModel.getCountCalMethod() ==
-                METHOD_CAL_PER_HOUR ?
-                "Calories per hour" : "MET values") + "\n"
-                + "Intensity type: "
-                + (mCardioExerciseModel.getIntensityType() == TYPE_SPECIFY ?
-                "Specify"
-                : "Not specify") + "\n", Toast.LENGTH_SHORT)
-                .show();
-        Toast.makeText(this, "Burned calories: " + (mCardioExerciseModel.getIntensityType() == TYPE_SPECIFY ?
-                (mCardioExerciseModel.getLow()
-                        + "/" + mCardioExerciseModel.getMiddle()
-                        + "/" + mCardioExerciseModel.getHigh())
-                : mCardioExerciseModel.getDefValue()), Toast.LENGTH_SHORT)
-                .show();
-    }
-
-    private void createModel() {
-        mCardioExerciseModel = new CardioExerciseModel();
-        mCardioExerciseModel
-                .setCountCalMethod(METHOD_MET_VALUES)
-                .setIntensityType(TYPE_SPECIFY)
-                .setTitle("Жим органики челюстями")
-        ;
     }
 
     @Override

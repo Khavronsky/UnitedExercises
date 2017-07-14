@@ -5,8 +5,6 @@ import com.khavronsky.unitedexercises.busines.exercise.get_data.ExercisesInterac
 import com.khavronsky.unitedexercises.presentation.exercise.exercises_models.ExerciseModel;
 import com.khavronsky.unitedexercises.utils.import_from_grand_project.AbstractPresenter;
 
-import android.util.Log;
-
 import java.util.ArrayList;
 
 import rx.Subscriber;
@@ -52,7 +50,6 @@ public class CustomExPresenter extends AbstractPresenter<IView> {
 
                     @Override
                     public void onNext(final ArrayList<ExerciseModel> exerciseModels) {
-                        Log.d("KhS", "loadData: CustomExPresenter ");
                         if (getView() != null) {
                             getView().show(exerciseModels);
                         }

@@ -15,12 +15,10 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.List;
 
@@ -54,14 +52,12 @@ public class CustomExercisesFragment extends Fragment implements IView, IEditCat
     @Override
     public void onCreate(@Nullable final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d("KhS", "onCreate: CustomExercisesFragment");
         if (mCustomExPresenter == null) {
             mCustomExPresenter = new CustomExPresenter();
         }
         mCustomExPresenter.attachView(this);
         if (getArguments().getSerializable("type") != null) {
             currentType = (ExerciseType) getArguments().getSerializable("type");
-            Log.d("qwert", "CustomExercisesFragment " + currentType.name());
         }
     }
 
@@ -69,7 +65,6 @@ public class CustomExercisesFragment extends Fragment implements IView, IEditCat
     @Override
     public View onCreateView(final LayoutInflater inflater, @Nullable final ViewGroup container,
             @Nullable final Bundle savedInstanceState) {
-        Log.d("KhS", "onCreateView: CustomExercisesFragment");
         View view = inflater.inflate(R.layout.custom_exercises_fragment, container, false);
         ButterKnife.bind(this, view);
         recyclerView = (RecyclerView) view.findViewById(R.id.cardio_ex_custom_list);
@@ -87,10 +82,8 @@ public class CustomExercisesFragment extends Fragment implements IView, IEditCat
     public void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
-            Log.d("OAR", "onActivityResult: ");
             mCustomExPresenter.loadData(currentType);
             adapterToCustomExerciseRecycler.notifyDataSetChanged();
-//            show((List<ExerciseModel>) data.getExtras().getSerializable("new_model"));
         }
     }
     //endregion
@@ -110,7 +103,6 @@ public class CustomExercisesFragment extends Fragment implements IView, IEditCat
 
     @Override
     public IModel editElements(final IModel elements) {
-        Log.d("KhSS", "editElements: " + elements.getId());
         Intent intent;
         if (((ExerciseModel) elements).getType() == ExerciseType.CARDIO) {
             intent = new Intent(getContext(), CardioExerciseEditorActivity.class);
@@ -124,13 +116,11 @@ public class CustomExercisesFragment extends Fragment implements IView, IEditCat
 
     @Override
     public void delElements(final long id) {
-        Log.d("KhSS", "delElements: " + id);
         mCustomExPresenter.delCustomExercise(id);
     }
 
     @OnClick(R.id.custom_exercise_create_btn)
     void createNewEx() {
-        Toast.makeText(getContext(), "CREATE NEW EXERCISE", Toast.LENGTH_SHORT).show();
         Intent intent;
         if (currentType == ExerciseType.CARDIO) {
             intent = new Intent(getActivity(), CardioExerciseEditorActivity.class);

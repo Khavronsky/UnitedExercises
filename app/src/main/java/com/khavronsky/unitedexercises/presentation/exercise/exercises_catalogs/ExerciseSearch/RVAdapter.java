@@ -37,12 +37,8 @@ class RVAdapter extends RecyclerView.Adapter<RVAdapter.VHolder> {
     @Override
     public void onBindViewHolder(final VHolder holder, final int position) {
         holder.setText(list.get(position).getTitle());
-//        notifyDataSetChanged();
     }
 
-//    public String getItem(int position) {
-//        return searchDataModels.get(position).getItem();
-//    }
 
     @Override
     public int getItemCount() {
@@ -56,10 +52,6 @@ class RVAdapter extends RecyclerView.Adapter<RVAdapter.VHolder> {
         VHolder(final View itemView) {
             super(itemView);
             mTextView = (TextView) itemView.findViewById(R.id.rv_item);
-        }
-
-        public TextView getTextView() {
-            return mTextView;
         }
 
         void setText(final String text) {

@@ -6,8 +6,6 @@ import com.khavronsky.unitedexercises.presentation.exercise.exercises_models.Exe
 import com.khavronsky.unitedexercises.presentation.exercise.exercises_models.ModelOfExercisePerformance;
 import com.khavronsky.unitedexercises.utils.import_from_grand_project.AbstractPresenter;
 
-import android.util.Log;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -19,7 +17,6 @@ import rx.schedulers.Schedulers;
 
 public class RecentExPresenter extends AbstractPresenter<IView> {
 
-    public static final String TAG = "KhS_RecentExPresenter";
 
     private ExercisesInteractor mExercisesInteractor;
 
@@ -43,8 +40,6 @@ public class RecentExPresenter extends AbstractPresenter<IView> {
                 //сортируем по дате изменения
                 .map(modelOfExercisePerformances -> {
                     Collections.sort(modelOfExercisePerformances);
-                    Log.d(TAG, "сортируем по дате изменения \n modelOfExercisePerformances size: " +
-                            modelOfExercisePerformances.size());
                     return modelOfExercisePerformances;
                 })
                 //сортируем по уникальности ID
@@ -67,7 +62,6 @@ public class RecentExPresenter extends AbstractPresenter<IView> {
                             add(model);
                         }
                     }
-                    Log.d(TAG, "сортируем по уникальности ID: " + this.size());
                 }})
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -84,37 +78,10 @@ public class RecentExPresenter extends AbstractPresenter<IView> {
 
                     @Override
                     public void onNext(final List<ModelOfExercisePerformance> exerciseModels) {
-                        Log.d("KhS_", "loadData: CustomExPresenter ");
-                        Log.d("KhS_", "loadData: exerciseModels.size() " + exerciseModels.size());
                         if (getView() != null) {
                             getView().show(exerciseModels);
                         }
                     }
                 });
     }
-//
-//    private List<CustomExModel> createCustomExecList() {
-//
-//        return new ArrayList<CustomExModel>() {
-//            {
-//                add(new CustomExModel() {
-//                    {
-//                        this.setExTitle("SuperExercise")
-//                                .setExSubTitle("SuperSubtitle")
-//                                .setActive(true)
-//                                .setId(1);
-//                    }
-//                });
-//
-//                add(new CustomExModel() {
-//                    {
-//                        this.setExTitle("PuperExercise")
-//                                .setExSubTitle("PuperSubtitle")
-//                                .setActive(true)
-//                                .setId(2);
-//                    }
-//                });
-//            }
-//        };
-//    }
 }

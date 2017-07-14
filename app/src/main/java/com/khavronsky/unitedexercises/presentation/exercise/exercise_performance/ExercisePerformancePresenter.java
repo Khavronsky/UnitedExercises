@@ -17,8 +17,6 @@ import static com.khavronsky.unitedexercises.presentation.exercise.exercises_mod
 
 public class ExercisePerformancePresenter extends AbstractPresenter<IView> {
 
-    private final static String TAG = "KhS_ExPerfPres";
-
     private static final int DEFAULT_EXERCISE_DURATION = 60;
 
     private ExercisesInteractor mExercisesInteractor;

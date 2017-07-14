@@ -12,11 +12,9 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 public class ExerciseCatalogActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -33,11 +31,9 @@ public class ExerciseCatalogActivity extends AppCompatActivity implements View.O
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d("KhS", "onCreate: ExerciseCatalogActivity");
         setContentView(R.layout.ex_catalog_activity);
         if (getIntent().getExtras().getSerializable("type") != null) {
             mExerciseType = (ExerciseModel.ExerciseType) getIntent().getExtras().getSerializable("type");
-            Log.d("qwert", "ExerciseCatalogActivity " + mExerciseType.name());
         }
         setToolbar();
 
@@ -61,7 +57,6 @@ public class ExerciseCatalogActivity extends AppCompatActivity implements View.O
 
             @Override
             public void onPageSelected(final int position) {
-//                pagerAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -96,7 +91,6 @@ public class ExerciseCatalogActivity extends AppCompatActivity implements View.O
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.search) {
-            Toast.makeText(this, "SEARCH", Toast.LENGTH_SHORT).show();
             Bundle args = new Bundle();
             args.putSerializable(SearchDialog.EX_TYPE_TAG, mExerciseType);
             SearchDialog searchDialog = new SearchDialog();

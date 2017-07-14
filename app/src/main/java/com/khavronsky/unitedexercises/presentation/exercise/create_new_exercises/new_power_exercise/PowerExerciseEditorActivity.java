@@ -26,13 +26,6 @@ import static com.khavronsky.unitedexercises.presentation.exercise.exercises_mod
 public class PowerExerciseEditorActivity extends AppCompatActivity implements View.OnClickListener, IView {
 
     //region FIELDS
-    public final static String POWER_MODEL_TAG = "power_model";
-
-    private final static String SETS = "sets";
-
-    private final static String REPEATS = "repeats";
-
-    private final static String WEIGHT = "weight";
 
     TextWatcher mTextWatcher;
 
@@ -79,17 +72,13 @@ public class PowerExerciseEditorActivity extends AppCompatActivity implements Vi
             title = "Редактировать упражнение";
 
         } else {
-            setPowerExerciseModel(new PowerExerciseModel());
             title = "Новое упражнение";
             newExercise = true;
+            mPowerExerciseModel = new PowerExerciseModel();
         }
         mFocusableLayout.setFocusableInTouchMode(true);
 
         setToolbar();
-    }
-
-    public void setPowerExerciseModel(final PowerExerciseModel powerExerciseModel) {
-        mPowerExerciseModel = powerExerciseModel;
     }
 
     private void setEditText(PowerExerciseModel powerExerciseModel) {
@@ -175,7 +164,6 @@ public class PowerExerciseEditorActivity extends AppCompatActivity implements Vi
         int id = item.getItemId();
         if (id == R.id.save) {
             if (saveExercise()) {
-                Toast.makeText(this, "SAVE", Toast.LENGTH_SHORT).show();
                 onBackPressed();
             }
         }

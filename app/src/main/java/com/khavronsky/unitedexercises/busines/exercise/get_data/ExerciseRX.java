@@ -6,7 +6,6 @@ import com.khavronsky.unitedexercises.presentation.exercise.exercises_models.IMo
 import com.khavronsky.unitedexercises.presentation.exercise.exercises_models.ModelOfExercisePerformance;
 
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 import java.util.List;
 
@@ -39,7 +38,6 @@ public class ExerciseRX implements ExercisesInteractor {
 
     @NonNull
     public  Observable<IModel> findExerciseByID(long id) {
-        Log.d(TAG, "findExerciseByID: " + id);
         return Observable.just(id)
                 .map(integer -> FakeData.findExerciseByID(id))
                 ;

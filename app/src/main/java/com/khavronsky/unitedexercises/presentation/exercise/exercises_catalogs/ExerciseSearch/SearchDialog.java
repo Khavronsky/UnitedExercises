@@ -62,17 +62,6 @@ public class SearchDialog extends DialogFragment
 
     SearchDialogPresenter searchDialogPresenter;
 
-    //    private onGenerateList onGenerateList;
-
-//    public static SearchDialog newInstance() {
-//
-//        Bundle args = new Bundle();
-//        args.putBundle("ex_search", bundle);
-//        SearchDialog fragment = new SearchDialog();
-//        fragment.setArguments(args);
-//        return fragment;
-//    }
-
     @Override
     public Dialog onCreateDialog(final Bundle savedInstanceState) {
 
@@ -112,8 +101,6 @@ public class SearchDialog extends DialogFragment
                 new RecyclerItemClickListener(
                         getActivity(), (view, position) -> {
                     ExerciseModel item = ((RVAdapter) recyclerView.getAdapter()).getItem(position);
-//                    searchEditText.setText(item);
-//                    searchEditText.setSelection(searchEditText.getText().length());
                     Intent intent = new Intent(getActivity(), ExercisePerformActivity.class);
                     intent.putExtra(ExercisePerformActivity.NEW_PERFORMANCE, true);
                     intent.putExtra(ExercisePerformActivity.MODEL_OF_EXERCISE, item);
@@ -159,47 +146,8 @@ public class SearchDialog extends DialogFragment
     }
 
     /**
-     * Showing google speech input dialog
+     * Google speech input dialog??????
      */
-    //region google speech
-//    private void promptSpeechInput() {
-//        Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-//        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
-//                RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
-//        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault());
-//        intent.putExtra(RecognizerIntent.EXTRA_PROMPT,
-//                "Произнесите название блюда");
-//        try {
-//            startActivityForResult(intent, REQ_CODE_SPEECH_INPUT);
-//        } catch (ActivityNotFoundException a) {
-//            Toast.makeText(getActivity().getApplicationContext(),
-//                    "К сожалению, ваш телефон не поддерживает распознавание речи.",
-//                    Toast.LENGTH_SHORT).show();
-//        }
-//    }
-//
-//    @Override
-//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//
-//        switch (requestCode) {
-//            case REQ_CODE_SPEECH_INPUT: {
-//                if (resultCode == RESULT_OK && null != data) {
-//
-//                    ArrayList<String> result = data
-//                            .getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-//                    searchEditText.setText(result.get(0));
-//                    searchEditText.setSelection(searchEditText.getText().length());
-//                    InputMethodManager imm = (InputMethodManager) getActivity()
-//                            .getSystemService(Context.INPUT_METHOD_SERVICE);
-//                    imm.showSoftInput(searchEditText, InputMethodManager.SHOW_IMPLICIT);
-//                }
-//                break;
-//            }
-//
-//        }
-//    }
-    //endregion
     @Override
     public void beforeTextChanged(CharSequence s, int start, int count, int after) {
     }
@@ -213,9 +161,6 @@ public class SearchDialog extends DialogFragment
         } else {
             buttonMicrophone.setVisibility(View.INVISIBLE);
             buttonClearText.setVisibility(View.VISIBLE);
-//            if (onGenerateList != null) {
-//                setDataList(onGenerateList.generateList(s));
-//            }
             recyclerView.setVisibility(View.VISIBLE);
         }
     }

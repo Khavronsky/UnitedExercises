@@ -6,7 +6,6 @@ import com.khavronsky.unitedexercises.presentation.exercise.create_new_exercises
 import com.khavronsky.unitedexercises.presentation.exercise.exercise_performance.custom_views.collapsing_card.CustomCollapsingView;
 import com.khavronsky.unitedexercises.presentation.exercise.exercise_performance.fragments.CardioExPerformFragment;
 import com.khavronsky.unitedexercises.presentation.exercise.exercise_performance.fragments.PowerExPerformFragment;
-import com.khavronsky.unitedexercises.presentation.exercise.exercises_models.CardioExerciseModel;
 import com.khavronsky.unitedexercises.presentation.exercise.exercises_models.ExerciseModel;
 import com.khavronsky.unitedexercises.presentation.exercise.exercises_models.ModelOfExercisePerformance;
 
@@ -17,11 +16,9 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import java.util.Calendar;
 
@@ -84,8 +81,6 @@ public class ExercisePerformActivity extends AppCompatActivity implements View.O
     @Override
     public void show(final ModelOfExercisePerformance modelOfExercisePerformance) {
         this.mModelOfExercisePerformance = modelOfExercisePerformance;
-        Log.d("KhS_", "show: ");
-        Log.d("KhS_", "title: " + modelOfExercisePerformance.getExercise().getTitle());
         createMyView();
         startFragment();
     }
@@ -102,6 +97,9 @@ public class ExercisePerformActivity extends AppCompatActivity implements View.O
         boolean editIconVisible = mModelOfExercisePerformance.getExercise().isCustomExercise();
         menu.getItem(0).setVisible(deleteIconVisibility);
         menu.getItem(1).setVisible(editIconVisible);
+        if (!mModelOfExercisePerformance.getExercise().isActive()){
+            menu.getItem(1).setVisible(false);
+        }
         return true;
     }
 
@@ -136,8 +134,6 @@ public class ExercisePerformActivity extends AppCompatActivity implements View.O
                     .setExercise((ExerciseModel) data.getSerializableExtra(mModelOfExercisePerformance
                             .getExercise().getType().name()));
             show(mModelOfExercisePerformance);
-//            Log.d("KhS_", "onActivityResult: " + mModelOfExercisePerformance.getId());
-//            mPresenter.loadData(mModelOfExercisePerformance.getId());
         }
     }
 
@@ -154,11 +150,6 @@ public class ExercisePerformActivity extends AppCompatActivity implements View.O
                 .name();
         Fragment fragment;
         FragmentManager fragmentManager = getSupportFragmentManager();
-//        fragment = fragmentManager.findFragmentById(R.id.fragment_container);
-//        if (fragmentManager.findFragmentByTag(tag) != null) {
-//            fragment = fragmentManager.findFragmentByTag(tag);
-//        } else {
-//        }
         if (tag == CARDIO.name()) {
             fragment = CardioExPerformFragment.newInstance(mModelOfExercisePerformance);
             ((CardioExPerformFragment) fragment).setListener(this);
@@ -184,7 +175,6 @@ public class ExercisePerformActivity extends AppCompatActivity implements View.O
 
     private void createMyView() {
         String subTitle = "";
-        String value = "";
         String unit = "Ккал";
         String description = "";
         int kcalBurned = 0;
@@ -198,7 +188,6 @@ public class ExercisePerformActivity extends AppCompatActivity implements View.O
             kcalBurned = (int) (mModelOfExercisePerformance.getCurrentKcalPerHour() * mPresenter.getFakeWeight() *
                     mModelOfExercisePerformance.getDuration() / 60);
         }
-        Log.d("KhS_", "createMyView: " + mModelOfExercisePerformance.getExercise().getTitle());
         mCustomCollapsingView.setTextTitle(mModelOfExercisePerformance.getExercise().getTitle())
                 .setTextSubtitle(subTitle)
                 .setTextValue(String.valueOf(kcalBurned))
@@ -210,20 +199,12 @@ public class ExercisePerformActivity extends AppCompatActivity implements View.O
 
     @OnClick(R.id.ex_performance_add_btn)
     void addExercise() {
-        Log.d("KhS_ExPerform", "addExercise: ");
         mModelOfExercisePerformance.setLastChangedTime(Calendar.getInstance().getTimeInMillis());
         if (newPerformance) {
-            Toast.makeText(this, "SAVE ADD", Toast.LENGTH_SHORT).show();
             mPresenter.addExPerformance(mModelOfExercisePerformance);
         } else {
-            Toast.makeText(this, "SAVE PERFORMANCE", Toast.LENGTH_SHORT).show();
             mPresenter.saveEditedExPerformance(mModelOfExercisePerformance);
         }
         onBackPressed();
-    }
-
-    int burnedKcalories(float burnPerHourValue, int duration,
-            @CardioExerciseModel.CountingCaloriesMethod int countingMethod) {
-        return (int) (burnPerHourValue * duration * mPresenter.getFakeWeight() / 60);
     }
 }

@@ -5,8 +5,6 @@ import com.khavronsky.unitedexercises.busines.exercise.get_data.ExercisesInterac
 import com.khavronsky.unitedexercises.presentation.exercise.exercises_models.ExerciseModel;
 import com.khavronsky.unitedexercises.utils.import_from_grand_project.AbstractPresenter;
 
-import android.util.Log;
-
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -51,7 +49,6 @@ public class DefaultExPresenter extends AbstractPresenter<IView> {
 
                     @Override
                     public void onNext(final ArrayList<ExerciseModel> defaultExModels) {
-                        Log.d("KhS", "loadData: DefaultExPresenter");
                         if (getView() != null) {
                             getView().show(convertToExCatModel(defaultExModels));
                         }

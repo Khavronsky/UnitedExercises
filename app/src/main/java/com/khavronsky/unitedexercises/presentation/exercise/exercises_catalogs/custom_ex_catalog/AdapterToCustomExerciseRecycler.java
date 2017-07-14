@@ -18,7 +18,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.List;
 
@@ -145,7 +144,6 @@ public class AdapterToCustomExerciseRecycler
         @OnClick({R.id.custom_exercise_item_title, R.id.custom_exercise_item_sub_title})
         @Override
         public void onClick(final View v) {
-            Toast.makeText(v.getContext(), "show exercise", Toast.LENGTH_SHORT).show();
             mOnItemClickListener.onItemClick(v, getAdapterPosition());
 
         }
@@ -171,13 +169,11 @@ public class AdapterToCustomExerciseRecycler
                         switch (item.getItemId()) {
 
                             case R.id.custom_exercise_item_menu_del:
-                                Toast.makeText(itemMenu.getContext(), "ГУМНО", Toast.LENGTH_SHORT).show();
                                 popupMenu.dismiss();
 
                                 mCatalogListener.pressDel(getAdapterPosition());
                                 return true;
                             case R.id.custom_exercise_item_menu_edit:
-                                Toast.makeText(itemMenu.getContext(), "EDIT", Toast.LENGTH_SHORT).show();
 
                                 mCatalogListener.pressEdit(getAdapterPosition());
                                 return true;
@@ -185,9 +181,6 @@ public class AdapterToCustomExerciseRecycler
                                 return false;
                         }
                     });
-
-            popupMenu.setOnDismissListener(menu -> Toast.makeText(itemMenu.getContext(), "onDismiss",
-                    Toast.LENGTH_SHORT).show());
             popupMenu.show();
         }
     }

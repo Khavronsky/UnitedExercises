@@ -7,7 +7,6 @@ import com.khavronsky.unitedexercises.utils.import_from_grand_project.RecyclerIt
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,7 +24,6 @@ public class AdapterToExCatalogRecycler extends RecyclerView.Adapter<RecyclerVie
 
     public AdapterToExCatalogRecycler setExerciseCatalog(final List<ModelOfItemForExCatalog> exerciseCatalog) {
         this.exerciseCatalog = exerciseCatalog;
-        Log.d("KhS", "setExerciseCatalog: ");
         return this;
     }
 
@@ -52,7 +50,6 @@ public class AdapterToExCatalogRecycler extends RecyclerView.Adapter<RecyclerVie
         } else {
             ((ExerciseCatalogHolder) holder).setText(exerciseCatalog.get(position).getTitle());
             ((ExerciseCatalogHolder) holder).setListener(this);
-            Log.d("KhS", "onBindViewHolder: " + exerciseCatalog.get(position));
         }
     }
 
@@ -86,7 +83,6 @@ public class AdapterToExCatalogRecycler extends RecyclerView.Adapter<RecyclerVie
         ExerciseCatalogHolder(final View itemView) {
             super(itemView);
             mTextView = (TextView) itemView.findViewById(R.id.exercise_name);
-            Log.d("KhS", "ExerciseCatalogHolder: ");
             mTextView.setOnClickListener(
                     v -> mListener.onItemClick(itemView, getAdapterPosition()));
         }
