@@ -1,12 +1,12 @@
 package com.khavronsky.unitedexercises.presentation.exercise.create_new_exercises.new_cardio_exercise;
 
 import com.khavronsky.unitedexercises.R;
-import com.khavronsky.unitedexercises.presentation.exercise.exercises_models.CardioExerciseModel;
-import com.khavronsky.unitedexercises.presentation.exercise.exercises_models.ExerciseModel;
 import com.khavronsky.unitedexercises.busines.exercise.get_data.FakeData;
+import com.khavronsky.unitedexercises.presentation.exercise.exercises_models.CardioExerciseModel;
 import com.khavronsky.unitedexercises.utils.import_from_grand_project.FloatNumPickerFragment;
 import com.khavronsky.unitedexercises.utils.import_from_grand_project.IDialogFragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -31,6 +31,7 @@ import static com.khavronsky.unitedexercises.presentation.exercise.exercises_mod
 import static com.khavronsky.unitedexercises.presentation.exercise.exercises_models.CardioExerciseModel.METHOD_MET_VALUES;
 import static com.khavronsky.unitedexercises.presentation.exercise.exercises_models.CardioExerciseModel.TYPE_NOT_SPECIFY;
 import static com.khavronsky.unitedexercises.presentation.exercise.exercises_models.CardioExerciseModel.TYPE_SPECIFY;
+import static com.khavronsky.unitedexercises.presentation.exercise.exercises_models.ExerciseModel.ExerciseType.CARDIO;
 import static com.khavronsky.unitedexercises.utils.import_from_grand_project.FloatNumPickerFragment.EXTRA_DECIMAL_STEP_IS_01;
 
 public class CardioExerciseEditorActivity extends AppCompatActivity implements View.OnClickListener,
@@ -104,13 +105,8 @@ public class CardioExerciseEditorActivity extends AppCompatActivity implements V
         }
         mPresenter.attachView(this);
         if (getIntent().getExtras() != null) {
-            mCardioExerciseModel = (CardioExerciseModel) getIntent()
-                    .getExtras()
-                    .getSerializable(
-                            ExerciseModel
-                                    .ExerciseType
-                                    .CARDIO
-                                    .getTag());
+            mCardioExerciseModel = (CardioExerciseModel) getIntent().getExtras().getSerializable(
+                    CARDIO.name());
             editExercise(mCardioExerciseModel);
             newExercise = false;
             title = "Редактировать упражнение";
@@ -128,7 +124,6 @@ public class CardioExerciseEditorActivity extends AppCompatActivity implements V
         editTextListener = v -> showPicker((EditText) v);
         setTextWatcher();
     }
-
 
     void showPicker(EditText editText) {
         FloatNumPickerFragment dialog = (FloatNumPickerFragment) getSupportFragmentManager()
@@ -339,7 +334,9 @@ public class CardioExerciseEditorActivity extends AppCompatActivity implements V
         } else {
             mPresenter.editData(mCardioExerciseModel);
         }
-        setResult(RESULT_OK);
+        Intent intent = new Intent();
+        intent.putExtra(CARDIO.name(), mCardioExerciseModel);
+        setResult(RESULT_OK, intent);
         finish();
 
         return true;

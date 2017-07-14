@@ -44,7 +44,7 @@ public class RecentExercisesFragment extends Fragment implements IView {
         mRecentExPresenter.attachView(this);
         if (getArguments().getSerializable("type") != null) {
             currentType = (ExerciseType) getArguments().getSerializable("type");
-            Log.d("qwert", "RecentExercisesFragment " + currentType.getTag());
+            Log.d("qwert", "RecentExercisesFragment " + currentType.name());
         }
     }
 

@@ -30,7 +30,7 @@ import butterknife.Unbinder;
 public class PowerExPerformFragment extends Fragment implements IDialogFragment, TextWatcher {
 
     //region fields
-    public final static String FRAGMENT_TAG = ExerciseModel.ExerciseType.POWER.getTag();
+    public final static String FRAGMENT_TAG = ExerciseModel.ExerciseType.POWER.name();
 
     private final static String DURATION = "duration";
 

@@ -36,7 +36,7 @@ public class ExerciseCatalogFragment extends Fragment implements IView {
         presenter.attachView(this);
         if (getArguments().getSerializable("type") != null) {
             currentType = (ExerciseType) getArguments().getSerializable("type");
-            Log.d("qwert", "CustomExercisesFragment " + currentType.getTag());
+            Log.d("qwert", "CustomExercisesFragment " + currentType.name());
         }
     }
 

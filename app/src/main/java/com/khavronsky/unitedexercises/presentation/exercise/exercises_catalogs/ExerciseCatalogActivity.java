@@ -37,7 +37,7 @@ public class ExerciseCatalogActivity extends AppCompatActivity implements View.O
         setContentView(R.layout.ex_catalog_activity);
         if (getIntent().getExtras().getSerializable("type") != null) {
             mExerciseType = (ExerciseModel.ExerciseType) getIntent().getExtras().getSerializable("type");
-            Log.d("qwert", "ExerciseCatalogActivity " + mExerciseType.getTag());
+            Log.d("qwert", "ExerciseCatalogActivity " + mExerciseType.name());
         }
         setToolbar();
 

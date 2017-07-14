@@ -49,6 +49,12 @@ public class ModelOfExercisePerformance implements Serializable, IModel, Compara
         return this;
     }
 
+    public ModelOfExercisePerformance setExercise(
+            final ExerciseModel exercise) {
+        mExercise = exercise;
+        return this;
+    }
+
     public ExerciseModel getExercise() {
         return mExercise;
     }

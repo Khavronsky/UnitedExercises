@@ -61,7 +61,7 @@ public class CustomExercisesFragment extends Fragment implements IView, IEditCat
         mCustomExPresenter.attachView(this);
         if (getArguments().getSerializable("type") != null) {
             currentType = (ExerciseType) getArguments().getSerializable("type");
-            Log.d("qwert", "CustomExercisesFragment " + currentType.getTag());
+            Log.d("qwert", "CustomExercisesFragment " + currentType.name());
         }
     }
 
@@ -103,6 +103,12 @@ public class CustomExercisesFragment extends Fragment implements IView, IEditCat
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        mCustomExPresenter.loadData(currentType);
+    }
+
+    @Override
     public IModel editElements(final IModel elements) {
         Log.d("KhSS", "editElements: " + elements.getId());
         Intent intent;
@@ -111,7 +117,7 @@ public class CustomExercisesFragment extends Fragment implements IView, IEditCat
         } else {
             intent = new Intent(getContext(), PowerExerciseEditorActivity.class);
         }
-        intent.putExtra(((ExerciseModel) elements).getType().getTag(), elements);
+        intent.putExtra(((ExerciseModel) elements).getType().name(), elements);
         startActivityForResult(intent, 0);
         return null;
     }

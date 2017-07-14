@@ -2,6 +2,7 @@ package com.khavronsky.unitedexercises.busines.exercise.get_data;
 
 
 import com.khavronsky.unitedexercises.presentation.exercise.exercises_models.ExerciseModel;
+import com.khavronsky.unitedexercises.presentation.exercise.exercises_models.IModel;
 import com.khavronsky.unitedexercises.presentation.exercise.exercises_models.ModelOfExercisePerformance;
 
 import java.util.List;
@@ -17,6 +18,8 @@ public interface ExercisesInteractor {
     Observable<List<ExerciseModel>> getAllExercises();
 
     Observable<List<ModelOfExercisePerformance>> getRecentExerciseList();
+
+    Observable<IModel> findExerciseByID(long id);
 
     Observable<Boolean> addCustomExercise(ExerciseModel exerciseModel);
 

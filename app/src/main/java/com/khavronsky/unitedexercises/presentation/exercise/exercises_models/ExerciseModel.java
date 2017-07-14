@@ -8,9 +8,6 @@ import java.io.Serializable;
 public abstract class ExerciseModel implements Comparable<ExerciseModel>, Serializable, IModel {
 
     //region FIELDS
-    private static final String CARDIO_TAG = "Cardio";
-
-    private static final String POWER_TAG = "Power";
 
     private long id;
 
@@ -27,18 +24,8 @@ public abstract class ExerciseModel implements Comparable<ExerciseModel>, Serial
     //endregion
 
     public enum ExerciseType implements Serializable {
-        CARDIO(CARDIO_TAG),
-        POWER(POWER_TAG);
-
-        private final String typeTag;
-
-        ExerciseType(final String typeTag) {
-            this.typeTag = typeTag;
-        }
-
-        public String getTag() {
-            return typeTag;
-        }
+        CARDIO(),
+        POWER()
     }
 
     //region id set/get

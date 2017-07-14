@@ -2,9 +2,11 @@ package com.khavronsky.unitedexercises.busines.exercise.get_data;
 
 
 import com.khavronsky.unitedexercises.presentation.exercise.exercises_models.ExerciseModel;
+import com.khavronsky.unitedexercises.presentation.exercise.exercises_models.IModel;
 import com.khavronsky.unitedexercises.presentation.exercise.exercises_models.ModelOfExercisePerformance;
 
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import java.util.List;
 
@@ -12,6 +14,8 @@ import rx.Observable;
 
 
 public class ExerciseRX implements ExercisesInteractor {
+
+    private final static String TAG = "KhS_RX";
 
     @NonNull
     public  Observable<List<ExerciseModel>> getCustomExerciseList() {
@@ -30,6 +34,14 @@ public class ExerciseRX implements ExercisesInteractor {
     public  Observable<List<ExerciseModel>> getAllExercises() {
         return Observable.just(0)
                 .map(integer -> FakeData.getAllExercises())
+                ;
+    }
+
+    @NonNull
+    public  Observable<IModel> findExerciseByID(long id) {
+        Log.d(TAG, "findExerciseByID: " + id);
+        return Observable.just(id)
+                .map(integer -> FakeData.findExerciseByID(id))
                 ;
     }
 

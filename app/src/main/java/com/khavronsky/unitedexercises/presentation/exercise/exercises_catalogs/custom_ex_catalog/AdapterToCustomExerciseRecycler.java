@@ -5,7 +5,6 @@ import com.khavronsky.unitedexercises.presentation.exercise.exercise_performance
 import com.khavronsky.unitedexercises.presentation.exercise.exercises_models.CardioExerciseModel;
 import com.khavronsky.unitedexercises.presentation.exercise.exercises_models.ExerciseModel;
 import com.khavronsky.unitedexercises.presentation.exercise.exercises_models.IEditCatalog;
-import com.khavronsky.unitedexercises.presentation.exercise.exercises_models.PowerExerciseModel;
 import com.khavronsky.unitedexercises.utils.import_from_grand_project.RecyclerItemClickListener;
 
 import android.content.Context;
@@ -94,9 +93,7 @@ public class AdapterToCustomExerciseRecycler
                     ;
         }
         if (exerciseModel.getType() == ExerciseModel.ExerciseType.POWER) {
-            return ((PowerExerciseModel) exerciseModel).getSets() + " подходов, "
-                    + ((PowerExerciseModel) exerciseModel).getRepeats() + " повторов, "
-                    + ((PowerExerciseModel) exerciseModel).getWeight() + " кг";
+            return "";
         }
         return "Упс, не нашли...";
     }

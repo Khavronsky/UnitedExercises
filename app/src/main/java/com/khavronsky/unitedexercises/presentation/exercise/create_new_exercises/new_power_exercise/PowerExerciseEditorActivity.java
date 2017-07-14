@@ -2,10 +2,10 @@ package com.khavronsky.unitedexercises.presentation.exercise.create_new_exercise
 
 import com.khavronsky.unitedexercises.R;
 import com.khavronsky.unitedexercises.busines.exercise.get_data.FakeData;
-import com.khavronsky.unitedexercises.presentation.exercise.exercises_models.ExerciseModel;
 import com.khavronsky.unitedexercises.presentation.exercise.exercises_models.PowerExerciseModel;
 import com.khavronsky.unitedexercises.utils.import_from_grand_project.IntNumPickerFragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -20,6 +20,8 @@ import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static com.khavronsky.unitedexercises.presentation.exercise.exercises_models.ExerciseModel.ExerciseType.POWER;
 
 public class PowerExerciseEditorActivity extends AppCompatActivity implements View.OnClickListener, IView {
 
@@ -70,13 +72,8 @@ public class PowerExerciseEditorActivity extends AppCompatActivity implements Vi
         }
         mPresenter.attachView(this);
         if (getIntent().getExtras() != null) {
-            mPowerExerciseModel = (PowerExerciseModel) getIntent()
-                    .getExtras()
-                    .getSerializable(
-                            ExerciseModel
-                                    .ExerciseType
-                                    .POWER
-                                    .getTag());
+            mPowerExerciseModel = (PowerExerciseModel) getIntent().getExtras().getSerializable(
+                            POWER.name());
             setEditText(mPowerExerciseModel);
             newExercise = false;
             title = "Редактировать упражнение";
@@ -154,7 +151,9 @@ public class PowerExerciseEditorActivity extends AppCompatActivity implements Vi
             mPresenter.editData(mPowerExerciseModel);
         }
 
-        setResult(RESULT_OK);
+        Intent intent = new Intent();
+        intent.putExtra(POWER.name(), mPowerExerciseModel);
+        setResult(RESULT_OK, intent);
         finish();
         return true;
     }

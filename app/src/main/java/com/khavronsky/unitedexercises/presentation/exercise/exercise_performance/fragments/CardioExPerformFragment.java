@@ -35,7 +35,7 @@ public class CardioExPerformFragment extends Fragment implements IDialogFragment
 
     //region fields
 
-    public final static String FRAGMENT_TAG = ExerciseModel.ExerciseType.CARDIO.getTag();
+    public final static String FRAGMENT_TAG = ExerciseModel.ExerciseType.CARDIO.name();
 
     @BindView(R.id.ex_cardio_perform_start_time)
     EditText mExCardioPerformStartTime;

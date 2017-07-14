@@ -121,15 +121,15 @@ public class FakeData {
         for (int i = 0; i < 10; i++) {
             int ran = random.nextInt(20);
             sExercisePerformances.add(new ModelOfExercisePerformance(sDefaultCatalog.get(ran))
-                            .setStartTime(Calendar.getInstance().getTimeInMillis())
-                            .setDuration(60)
-                            .setNote("Note " + i)
+                    .setStartTime(Calendar.getInstance().getTimeInMillis())
+                    .setDuration(60)
+                    .setNote("Note " + i)
             );
             ran = random.nextInt(20);
             sExercisePerformances.add(new ModelOfExercisePerformance(sCustomCatalog.get(ran))
-                            .setStartTime(Calendar.getInstance().getTimeInMillis())
-                            .setDuration(45)
-                            .setNote("Enot " + i)
+                    .setStartTime(Calendar.getInstance().getTimeInMillis())
+                    .setDuration(45)
+                    .setNote("Enot " + i)
             );
         }
         setCurrentBurnedKcal();
@@ -165,16 +165,32 @@ public class FakeData {
         return sExercisePerformances;
     }
 
-    public static List<ExerciseModel> getAllExercises(){
+    public static List<ExerciseModel> getAllExercises() {
         ArrayList<ExerciseModel> list = new ArrayList<>(sCustomCatalog);
         list.addAll(sDefaultCatalog);
         Log.d(TAG, "getAllExercises: list.size() - " + list.size());
         for (ExerciseModel model :
                 list) {
-            Log.d(TAG, "model.title: " + model.getTitle());
+//            Log.d(TAG, "model.title: " + model.getTitle());
         }
         return list;
 
+    }
+
+    public static IModel findExerciseByID(long id) {
+        ArrayList<IModel> list = new ArrayList<>(getAllExercises());
+        list.addAll(getExercisePerformances());
+        Log.d("KhS_" + TAG, "list.SIZE " + list.size());
+        for (IModel model :
+                list) {
+//            Log.d("KhS_" + TAG, "проверяем: id = " + id + "   IModel.getID = " + model.getId());
+            if (model.getId() == id) {
+                Log.d("KhS_" + TAG, "BINGOOO");
+                return model;
+            }
+        }
+        Log.d("KhS_" + TAG, "По ID нихуяшеньки не нашли!!!");
+        return null;
     }
 
     public static boolean addCustomExercise(ExerciseModel exerciseModel) {
@@ -197,6 +213,7 @@ public class FakeData {
                 int a = sCustomCatalog.indexOf(model);
                 sCustomCatalog.remove(a);
                 sCustomCatalog.add(a, exerciseModel);
+                Log.d(TAG, "editCustomExercise: " + sCustomCatalog.get(a).getTitle());
             }
         }
         return true;
@@ -210,6 +227,8 @@ public class FakeData {
                 int a = sExercisePerformances.indexOf(model);
                 sExercisePerformances.remove(a);
                 sExercisePerformances.add(a, exercisePerformance);
+                Log.d(TAG, "editExercisePerformance: " + "ID-" + sExercisePerformances.get(a).getId() + " "
+                        + "title-" + sExercisePerformances.get(a).getExercise().getTitle());
             }
         }
         return true;
@@ -247,6 +266,7 @@ public class FakeData {
         }
         max++;
         allID.add(max);
+        Log.d(TAG, "SET ID: " + max);
         model.setId(max);
     }
 }
