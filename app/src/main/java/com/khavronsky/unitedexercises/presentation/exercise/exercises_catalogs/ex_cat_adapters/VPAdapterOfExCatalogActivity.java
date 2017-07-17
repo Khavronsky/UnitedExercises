@@ -1,5 +1,6 @@
 package com.khavronsky.unitedexercises.presentation.exercise.exercises_catalogs.ex_cat_adapters;
 
+import com.khavronsky.unitedexercises.presentation.exercise.exercises_catalogs.IRefreshableFragment;
 import com.khavronsky.unitedexercises.presentation.exercise.exercises_catalogs.custom_ex_catalog.CustomExercisesFragment;
 import com.khavronsky.unitedexercises.presentation.exercise.exercises_catalogs.default_ex_catalog.ExerciseCatalogFragment;
 import com.khavronsky.unitedexercises.presentation.exercise.exercises_catalogs.recent_ex_catalog.RecentExercisesFragment;
@@ -33,6 +34,28 @@ public class VPAdapterOfExCatalogActivity extends FragmentPagerAdapter {
         mFragment2.setArguments(args);
         mFragment3 = new RecentExercisesFragment();
         mFragment3.setArguments(args);
+    }
+
+    public VPAdapterOfExCatalogActivity setType(
+            final ExerciseModel.ExerciseType type) {
+        mType = type;
+        return this;
+    }
+    
+    public void refreshPager(final ExerciseModel.ExerciseType type){
+        mType = type;
+        recreateFragment((IRefreshableFragment) mFragment1);
+        recreateFragment((IRefreshableFragment) mFragment2);
+        recreateFragment((IRefreshableFragment) mFragment3);
+    }
+
+    void recreateFragment(IRefreshableFragment fragment){
+        fragment.refresh(mType);
+    }
+
+    @Override
+    public int getItemPosition(final Object object) {
+        return POSITION_NONE;
     }
 
     @Override

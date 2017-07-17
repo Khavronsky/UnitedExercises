@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingEnd="16dp"
+    android:paddingStart="16dp">
+
+    <FrameLayout
+        android:id="@+id/select_catalog_by_type_cardio__"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:paddingBottom="13dp"
+        android:paddingTop="14dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif"
+            android:text="Кардио упражнения"
+            android:textColor="@color/gray5"
+            android:textSize="16sp"
+            android:textStyle="normal" />
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/select_catalog_by_type_power__"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:paddingBottom="13dp"
+        android:paddingTop="14dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif"
+            android:text="Силовые упражнения"
+            android:textColor="@color/gray5"
+            android:textSize="16sp"
+            android:textStyle="normal" />
+
+    </FrameLayout>
+
+</LinearLayout>

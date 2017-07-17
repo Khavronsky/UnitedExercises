@@ -8,7 +8,6 @@ import java.io.Serializable;
 public abstract class ExerciseModel implements Comparable<ExerciseModel>, Serializable, IModel {
 
     //region FIELDS
-
     private long id;
 
     private String title;
@@ -20,7 +19,6 @@ public abstract class ExerciseModel implements Comparable<ExerciseModel>, Serial
     private boolean customExercise = true;
 
     private boolean active = true;
-
     //endregion
 
     public enum ExerciseType implements Serializable {

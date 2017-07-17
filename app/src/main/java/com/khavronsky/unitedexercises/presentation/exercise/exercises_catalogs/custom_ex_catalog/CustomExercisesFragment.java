@@ -4,6 +4,7 @@ package com.khavronsky.unitedexercises.presentation.exercise.exercises_catalogs.
 import com.khavronsky.unitedexercises.R;
 import com.khavronsky.unitedexercises.presentation.exercise.create_new_exercises.new_cardio_exercise.CardioExerciseEditorActivity;
 import com.khavronsky.unitedexercises.presentation.exercise.create_new_exercises.new_power_exercise.PowerExerciseEditorActivity;
+import com.khavronsky.unitedexercises.presentation.exercise.exercises_catalogs.IRefreshableFragment;
 import com.khavronsky.unitedexercises.presentation.exercise.exercises_models.ExerciseModel;
 import com.khavronsky.unitedexercises.presentation.exercise.exercises_models.ExerciseModel.ExerciseType;
 import com.khavronsky.unitedexercises.presentation.exercise.exercises_models.IEditCatalog;
@@ -29,7 +30,7 @@ import butterknife.OnClick;
 import static android.app.Activity.RESULT_OK;
 
 
-public class CustomExercisesFragment extends Fragment implements IView, IEditCatalog {
+public class CustomExercisesFragment extends Fragment implements IView, IEditCatalog, IRefreshableFragment {
 
     //region F I E L D S
     @BindView(R.id.custom_exercise_create_btn)
@@ -93,6 +94,13 @@ public class CustomExercisesFragment extends Fragment implements IView, IEditCat
         adapterToCustomExerciseRecycler.setModelList(exModelList);
         recyclerView.setAdapter(adapterToCustomExerciseRecycler);
         adapterToCustomExerciseRecycler.notifyDataSetChanged();
+    }
+
+    @Override
+    public void refresh(ExerciseType type) {
+        currentType = type;
+        mCustomExPresenter.loadData(currentType);
+
     }
 
     @Override

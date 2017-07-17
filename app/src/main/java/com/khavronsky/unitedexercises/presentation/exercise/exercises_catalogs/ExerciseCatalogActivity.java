@@ -11,14 +11,40 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class ExerciseCatalogActivity extends AppCompatActivity implements View.OnClickListener {
 
+    private static final String TOOLBAR_TITLE_CARDIO = "Кардио упражнения";
+
+    private static final String TOOLBAR_TITLE_POWER = "Силовые упражнения";
+
+    @BindView(R.id.cust_toolbar)
     Toolbar mToolbar;
+
+    @BindView(R.id.ex_catalog_toolbar_title)
+    TextView mToolbarTitle;
+
+    @BindView(R.id.ex_catalog_toolbar_click_area)
+    View mToolbarClickArea;
+
+    @BindView(R.id.ex_catalog_dropdown_menu)
+    ImageView mDropDownMenu;
+
+    @BindView(R.id.ex_cat_anchor)
+    View mAnchor;
 
     ExerciseModel.ExerciseType mExerciseType;
 
@@ -26,12 +52,11 @@ public class ExerciseCatalogActivity extends AppCompatActivity implements View.O
 
     VPAdapterOfExCatalogActivity pagerAdapter;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ex_catalog_activity);
+        ButterKnife.bind(this);
         if (getIntent().getExtras().getSerializable("type") != null) {
             mExerciseType = (ExerciseModel.ExerciseType) getIntent().getExtras().getSerializable("type");
         }
@@ -66,10 +91,14 @@ public class ExerciseCatalogActivity extends AppCompatActivity implements View.O
     }
 
     void setToolbar() {
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        mToolbar.setTitle(mExerciseType == ExerciseModel.ExerciseType.CARDIO ?
-                "Кардио упражнение"
-                : "Силовое упражнение");
+        mToolbar = (Toolbar) findViewById(R.id.cust_toolbar);
+        mToolbar.setTitle("");
+        mToolbarTitle.setText(mExerciseType == ExerciseModel.ExerciseType.CARDIO ?
+                TOOLBAR_TITLE_CARDIO
+                : TOOLBAR_TITLE_POWER);
+//        mToolbar.setTitle(mExerciseType == ExerciseModel.ExerciseType.CARDIO ?
+//                "Кардио упражнение"
+//                : "Силовое упражнение");
         setSupportActionBar(mToolbar);
         mToolbar.inflateMenu(R.menu.search_menu);
         mToolbar.setNavigationOnClickListener(this);
@@ -79,6 +108,33 @@ public class ExerciseCatalogActivity extends AppCompatActivity implements View.O
     @Override
     public void onClick(final View v) {
         onBackPressed();
+    }
+
+    @OnClick(R.id.ex_catalog_toolbar_click_area)
+    public void showSelectExCatMenu() {
+        Log.d("KhS", "DROPDOWN_MENU: ");
+        PopupMenu popupMenu = new PopupMenu(this, mAnchor, Gravity.END);
+        popupMenu.inflate(R.menu.switch_menu);
+        popupMenu
+                .setOnMenuItemClickListener(item -> {
+                    switch (item.getItemId()) {
+                        case R.id.select_catalog_by_type_cardio:
+                            mExerciseType = ExerciseModel.ExerciseType.CARDIO;
+                            mToolbarTitle.setText(TOOLBAR_TITLE_CARDIO);
+                            pagerAdapter.refreshPager(mExerciseType);
+                            popupMenu.dismiss();
+                            return true;
+                        case R.id.select_catalog_by_type_power:
+                            mExerciseType = ExerciseModel.ExerciseType.POWER;
+                            mToolbarTitle.setText(TOOLBAR_TITLE_POWER);
+                            pagerAdapter.refreshPager(mExerciseType);
+                            popupMenu.dismiss();
+                            return true;
+                        default:
+                            return false;
+                    }
+                });
+        popupMenu.show();
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.khavronsky.unitedexercises.presentation.exercise.exercises_catalogs.recent_ex_catalog;
 
 import com.khavronsky.unitedexercises.R;
+import com.khavronsky.unitedexercises.presentation.exercise.exercises_catalogs.IRefreshableFragment;
 import com.khavronsky.unitedexercises.presentation.exercise.exercises_models.ModelOfExercisePerformance;
 
 import android.os.Bundle;
@@ -20,7 +21,7 @@ import butterknife.ButterKnife;
 
 import static com.khavronsky.unitedexercises.presentation.exercise.exercises_models.ExerciseModel.ExerciseType;
 
-public class RecentExercisesFragment extends Fragment implements IView {
+public class RecentExercisesFragment extends Fragment implements IView, IRefreshableFragment {
 
     @BindView(R.id.recent_exercise_not_found)
     TextView emptyCustExList;
@@ -86,5 +87,11 @@ public class RecentExercisesFragment extends Fragment implements IView {
     public void onDestroy() {
         super.onDestroy();
         mRecentExPresenter.detachView();
+    }
+
+    @Override
+    public void refresh(final ExerciseType type) {
+        currentType = type;
+        mRecentExPresenter.loadData(currentType);
     }
 }

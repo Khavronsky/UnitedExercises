@@ -1,6 +1,7 @@
 package com.khavronsky.unitedexercises.presentation.exercise.exercises_catalogs.default_ex_catalog;
 
 import com.khavronsky.unitedexercises.R;
+import com.khavronsky.unitedexercises.presentation.exercise.exercises_catalogs.IRefreshableFragment;
 import com.khavronsky.unitedexercises.presentation.exercise.exercises_models.ExerciseModel.ExerciseType;
 
 import android.os.Bundle;
@@ -14,7 +15,7 @@ import android.view.ViewGroup;
 
 import java.util.ArrayList;
 
-public class ExerciseCatalogFragment extends Fragment implements IView {
+public class ExerciseCatalogFragment extends Fragment implements IView, IRefreshableFragment {
 
     private DefaultExPresenter presenter;
 
@@ -35,6 +36,12 @@ public class ExerciseCatalogFragment extends Fragment implements IView {
         if (getArguments().getSerializable("type") != null) {
             currentType = (ExerciseType) getArguments().getSerializable("type");
         }
+    }
+
+    @Override
+    public void refresh(ExerciseType type) {
+        currentType = type;
+        presenter.loadData(currentType);
     }
 
     @Nullable
