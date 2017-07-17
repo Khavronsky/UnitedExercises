@@ -15,13 +15,13 @@ import android.view.ViewGroup;
 
 import java.util.ArrayList;
 
-public class ExerciseCatalogFragment extends Fragment implements IView, IRefreshableFragment {
+public class DefaultExerciseFragment extends Fragment implements IView, IRefreshableFragment {
 
     private DefaultExPresenter presenter;
 
     private RecyclerView recyclerView;
 
-    private AdapterToExCatalogRecycler adapterToExCatalogRecycler;
+    private DefaultCatalogRVAdapter mDefaultCatalogRVAdapter;
 
     private ExerciseType currentType;
 
@@ -51,17 +51,17 @@ public class ExerciseCatalogFragment extends Fragment implements IView, IRefresh
         View view = inflater.inflate(R.layout.exercise_catalog_fragment, container, false);
         recyclerView = (RecyclerView) view.findViewById(R.id.exercise_catalog_recycler);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
-        adapterToExCatalogRecycler = new AdapterToExCatalogRecycler();
+        mDefaultCatalogRVAdapter = new DefaultCatalogRVAdapter();
         recyclerView.setLayoutManager(layoutManager);
         presenter.loadData(currentType);
         return view;
     }
 
     @Override
-    public void show(final ArrayList<ModelOfItemForExCatalog> exList) {
-        adapterToExCatalogRecycler.setExerciseCatalog(exList);
-        recyclerView.setAdapter(adapterToExCatalogRecycler);
-        adapterToExCatalogRecycler.notifyDataSetChanged();
+    public void show(final ArrayList<DefaultCatalogModel> exList) {
+        mDefaultCatalogRVAdapter.setExerciseCatalog(exList);
+        recyclerView.setAdapter(mDefaultCatalogRVAdapter);
+        mDefaultCatalogRVAdapter.notifyDataSetChanged();
     }
 
     @Override

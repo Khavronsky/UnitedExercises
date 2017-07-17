@@ -12,8 +12,8 @@ import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-import static com.khavronsky.unitedexercises.presentation.exercise.exercises_catalogs.default_ex_catalog.ModelOfItemForExCatalog.ItemType.CAPITAL_LETTER;
-import static com.khavronsky.unitedexercises.presentation.exercise.exercises_catalogs.default_ex_catalog.ModelOfItemForExCatalog.ItemType.EXERCISE_TITLE;
+import static com.khavronsky.unitedexercises.presentation.exercise.exercises_catalogs.default_ex_catalog.DefaultCatalogModel.ItemType.CAPITAL_LETTER;
+import static com.khavronsky.unitedexercises.presentation.exercise.exercises_catalogs.default_ex_catalog.DefaultCatalogModel.ItemType.EXERCISE_TITLE;
 
 
 public class DefaultExPresenter extends AbstractPresenter<IView> {
@@ -57,8 +57,8 @@ public class DefaultExPresenter extends AbstractPresenter<IView> {
         ;
     }
 
-    private ArrayList<ModelOfItemForExCatalog> convertToExCatModel(ArrayList<ExerciseModel> models) {
-        ArrayList<ModelOfItemForExCatalog> list = new ArrayList<>();
+    private ArrayList<DefaultCatalogModel> convertToExCatModel(ArrayList<ExerciseModel> models) {
+        ArrayList<DefaultCatalogModel> list = new ArrayList<>();
 
         Collections.sort(models);
         String x = "";
@@ -69,10 +69,10 @@ public class DefaultExPresenter extends AbstractPresenter<IView> {
             s = model.getTitle();
             if (!x.equals(s.substring(0, 1))) {
                 x = s.substring(0, 1);
-                list.add(new ModelOfItemForExCatalog(CAPITAL_LETTER)
+                list.add(new DefaultCatalogModel(CAPITAL_LETTER)
                 .setTitle(x));
             }
-            list.add(new ModelOfItemForExCatalog(EXERCISE_TITLE)
+            list.add(new DefaultCatalogModel(EXERCISE_TITLE)
             .setExercise(model));
         }
         return list;

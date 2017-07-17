@@ -14,7 +14,6 @@ import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.text.format.DateUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -84,7 +83,6 @@ public class PowerExPerformFragment extends Fragment implements IDialogFragment,
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
             @Nullable Bundle savedInstanceState) {
-        Log.d("KhSY_NewWaterMainFrg", "onCreateView: ");
         View v = inflater.inflate(R.layout.power_ex_perform_fragment, container, false);
         mModelOfExercisePerformance = (ModelOfExercisePerformance) getArguments().getSerializable("model");
         unbinder = ButterKnife.bind(this, v);

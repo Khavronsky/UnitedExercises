@@ -2,7 +2,7 @@ package com.khavronsky.unitedexercises.presentation.exercise.exercises_catalogs.
 
 import com.khavronsky.unitedexercises.presentation.exercise.exercises_catalogs.IRefreshableFragment;
 import com.khavronsky.unitedexercises.presentation.exercise.exercises_catalogs.custom_ex_catalog.CustomExercisesFragment;
-import com.khavronsky.unitedexercises.presentation.exercise.exercises_catalogs.default_ex_catalog.ExerciseCatalogFragment;
+import com.khavronsky.unitedexercises.presentation.exercise.exercises_catalogs.default_ex_catalog.DefaultExerciseFragment;
 import com.khavronsky.unitedexercises.presentation.exercise.exercises_catalogs.recent_ex_catalog.RecentExercisesFragment;
 import com.khavronsky.unitedexercises.presentation.exercise.exercises_models.ExerciseModel;
 
@@ -28,7 +28,7 @@ public class VPAdapterOfExCatalogActivity extends FragmentPagerAdapter {
         Bundle args = new Bundle();
         mType = type;
         args.putSerializable("type", mType);
-        mFragment1 = new ExerciseCatalogFragment();
+        mFragment1 = new DefaultExerciseFragment();
         mFragment1.setArguments(args);
         mFragment2 = new CustomExercisesFragment();
         mFragment2.setArguments(args);

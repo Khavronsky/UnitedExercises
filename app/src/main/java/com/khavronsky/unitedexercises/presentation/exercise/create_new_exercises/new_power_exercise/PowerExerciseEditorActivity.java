@@ -3,7 +3,6 @@ package com.khavronsky.unitedexercises.presentation.exercise.create_new_exercise
 import com.khavronsky.unitedexercises.R;
 import com.khavronsky.unitedexercises.busines.exercise.get_data.FakeData;
 import com.khavronsky.unitedexercises.presentation.exercise.exercises_models.PowerExerciseModel;
-import com.khavronsky.unitedexercises.utils.import_from_grand_project.IntNumPickerFragment;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -20,6 +19,7 @@ import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 import static com.khavronsky.unitedexercises.presentation.exercise.exercises_models.ExerciseModel.ExerciseType.POWER;
 
@@ -43,15 +43,13 @@ public class PowerExerciseEditorActivity extends AppCompatActivity implements Vi
 
     private PowerExerciseModel mPowerExerciseModel;
 
-    private IntNumPickerFragment mIntNumPickerDialog;
-
-    private String pickerOnScreen = "";
-
     private PowerExerciseEditorPresenter mPresenter;
 
     private boolean newExercise = true;
 
-    private String title = "";
+    private String mTitle = "";
+
+    private Unbinder unbinder;
     //endregion
 
     @Override
@@ -59,20 +57,20 @@ public class PowerExerciseEditorActivity extends AppCompatActivity implements Vi
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.create_power_ex_activity);
-        ButterKnife.bind(this);
+        unbinder = ButterKnife.bind(this);
         if (mPresenter == null) {
             mPresenter = new PowerExerciseEditorPresenter();
         }
         mPresenter.attachView(this);
         if (getIntent().getExtras() != null) {
             mPowerExerciseModel = (PowerExerciseModel) getIntent().getExtras().getSerializable(
-                            POWER.name());
+                    POWER.name());
             setEditText(mPowerExerciseModel);
             newExercise = false;
-            title = "Редактировать упражнение";
+            mTitle = "Редактировать упражнение";
 
         } else {
-            title = "Новое упражнение";
+            mTitle = "Новое упражнение";
             newExercise = true;
             mPowerExerciseModel = new PowerExerciseModel();
         }
@@ -114,7 +112,7 @@ public class PowerExerciseEditorActivity extends AppCompatActivity implements Vi
 
     void setToolbar() {
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        mToolbar.setTitle(title);
+        mToolbar.setTitle(mTitle);
         setSupportActionBar(mToolbar);
         mToolbar.inflateMenu(R.menu.menu);
         mToolbar.setNavigationOnClickListener(this);
@@ -168,5 +166,12 @@ public class PowerExerciseEditorActivity extends AppCompatActivity implements Vi
             }
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unbinder.unbind();
+        mPresenter.detachView();
     }
 }

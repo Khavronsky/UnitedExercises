@@ -24,6 +24,7 @@ import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
@@ -42,7 +43,7 @@ public class CardioExerciseEditorActivity extends AppCompatActivity implements V
     Toolbar mToolbar;
 
     @BindView(R.id.ex_cardio_title)
-    EditText mTitle;
+    EditText mExerciseTitle;
 
     @BindView(R.id.ex_cardio_burned_per_hour)
     EditText mBurnedPerHour;
@@ -77,7 +78,7 @@ public class CardioExerciseEditorActivity extends AppCompatActivity implements V
     @BindView(R.id.ex_cardio_Intensity_type)
     Spinner mIntensityType;
 
-    View.OnClickListener editTextListener;
+    private View.OnClickListener editTextListener;
 
     private TextWatcher mTextWatcher;
 
@@ -87,11 +88,13 @@ public class CardioExerciseEditorActivity extends AppCompatActivity implements V
 
     private boolean newExercise = true;
 
-    String my_best_picker = "my_best_picker";
+    private String mPickerTag = "mPickerTag";
 
     public static final String CARDIO_MODEL_TAG = "cardio_model";
 
-    private String title = "";
+    private String mTitle = "";
+
+    private Unbinder unbinder;
     //endregion
 
 
@@ -99,7 +102,7 @@ public class CardioExerciseEditorActivity extends AppCompatActivity implements V
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_cardio_ex_activity);
-        ButterKnife.bind(this);
+        unbinder = ButterKnife.bind(this);
         if (mPresenter == null) {
             mPresenter = new CardioExerciseEditorPresenter();
         }
@@ -109,10 +112,10 @@ public class CardioExerciseEditorActivity extends AppCompatActivity implements V
                     CARDIO.name());
             editExercise(mCardioExerciseModel);
             newExercise = false;
-            title = "Редактировать упражнение";
+            mTitle = "Редактировать упражнение";
         } else {
             mCardioExerciseModel = new CardioExerciseModel();
-            title = "Новое упражнение";
+            mTitle = "Новое упражнение";
         }
         setToolbar();
 
@@ -127,7 +130,7 @@ public class CardioExerciseEditorActivity extends AppCompatActivity implements V
 
     void showPicker(EditText editText) {
         FloatNumPickerFragment dialog = (FloatNumPickerFragment) getSupportFragmentManager()
-                .findFragmentByTag(my_best_picker);
+                .findFragmentByTag(mPickerTag);
         if (dialog != null) {
             return;
         }
@@ -158,12 +161,12 @@ public class CardioExerciseEditorActivity extends AppCompatActivity implements V
             }
         });
 
-        dialog.show(getSupportFragmentManager(), my_best_picker);
+        dialog.show(getSupportFragmentManager(), mPickerTag);
     }
 
 
     private void setTextWatcher() {
-        mTitle.addTextChangedListener(mTextWatcher);
+        mExerciseTitle.addTextChangedListener(mTextWatcher);
         mBurnedPerHour.setOnClickListener(editTextListener);
         mLowIntensity.setOnClickListener(editTextListener);
         mMiddleIntensity.setOnClickListener(editTextListener);
@@ -206,7 +209,7 @@ public class CardioExerciseEditorActivity extends AppCompatActivity implements V
 
     private void editExercise(CardioExerciseModel cardioExerciseModel) {
         if (cardioExerciseModel != null) {
-            mTitle.setText(cardioExerciseModel.getTitle());
+            mExerciseTitle.setText(cardioExerciseModel.getTitle());
             mBurnedPerHour.setText(String.valueOf(cardioExerciseModel.getDefValue()));
             mLowIntensity.setText(String.valueOf(cardioExerciseModel.getLow()));
             mMiddleIntensity.setText(String.valueOf(cardioExerciseModel.getMiddle()));
@@ -255,6 +258,7 @@ public class CardioExerciseEditorActivity extends AppCompatActivity implements V
 
             @Override
             public void afterTextChanged(final Editable s) {
+                // FIXME: 17.07.17 что можно и что нельзя писать в названии???
                 try {
                     if (Integer.parseInt(String.valueOf(s)) == 0) {
                         s.clear();
@@ -276,7 +280,7 @@ public class CardioExerciseEditorActivity extends AppCompatActivity implements V
         mToolbar.inflateMenu(R.menu.menu);
         setSupportActionBar(mToolbar);
         if (getSupportActionBar() != null) {
-            getSupportActionBar().setTitle(title);
+            getSupportActionBar().setTitle(mTitle);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
@@ -284,24 +288,24 @@ public class CardioExerciseEditorActivity extends AppCompatActivity implements V
     }
 
     private boolean saveExercise(int intensityType) {
-
-        if (mTitle.getText().length() == 0) {
-            Toast.makeText(this, "Ойойой1", Toast.LENGTH_SHORT).show();
+        // FIXME: 17.07.17 какие тосты выводить???
+        if (mExerciseTitle.getText().length() == 0) {
+            Toast.makeText(this, "Необходимо заполнить все поля", Toast.LENGTH_SHORT).show();
             return false;
         }
 
         if (intensityType == TYPE_SPECIFY) {
 
             if (mLowIntensity.getText().length() == 0) {
-                Toast.makeText(this, "Ойойой2", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Необходимо заполнить все поля", Toast.LENGTH_SHORT).show();
                 return false;
             }
             if (mMiddleIntensity.getText().length() == 0) {
-                Toast.makeText(this, "Ойойой3", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Необходимо заполнить все поля", Toast.LENGTH_SHORT).show();
                 return false;
             }
             if (mHighIntensity.getText().length() == 0) {
-                Toast.makeText(this, "Ойойой4", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Необходимо заполнить все поля", Toast.LENGTH_SHORT).show();
                 return false;
             }
 
@@ -312,16 +316,16 @@ public class CardioExerciseEditorActivity extends AppCompatActivity implements V
                     .setLow(Float.parseFloat(String.valueOf(mLowIntensity.getText())))
                     .setMiddle(Float.parseFloat(String.valueOf(mMiddleIntensity.getText())))
                     .setHigh(Float.parseFloat(String.valueOf(mHighIntensity.getText())))
-                    .setTitle(String.valueOf(mTitle.getText()));
+                    .setTitle(String.valueOf(mExerciseTitle.getText()));
         } else {
             if (mBurnedPerHour.getText().length() == 0) {
-                Toast.makeText(this, "Ойойой5", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Необходимо заполнить все поля", Toast.LENGTH_SHORT).show();
                 return false;
             }
             mCardioExerciseModel
                     .setIntensityType(TYPE_NOT_SPECIFY)
                     .setDefValue(Float.parseFloat(String.valueOf(mBurnedPerHour.getText())))
-                    .setTitle(String.valueOf(mTitle.getText()));
+                    .setTitle(String.valueOf(mExerciseTitle.getText()));
         }
         if (newExercise) {
             FakeData.setID(mCardioExerciseModel);
@@ -362,5 +366,7 @@ public class CardioExerciseEditorActivity extends AppCompatActivity implements V
     protected void onDestroy() {
         super.onDestroy();
         mPresenter.detachView();
+        unbinder.unbind();
+
     }
 }

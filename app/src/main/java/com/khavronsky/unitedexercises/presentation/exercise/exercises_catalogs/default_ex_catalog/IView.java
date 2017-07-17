@@ -5,6 +5,6 @@ import java.util.ArrayList;
 
 interface IView {
 
-    void show(ArrayList<ModelOfItemForExCatalog> exList);
+    void show(ArrayList<DefaultCatalogModel> exList);
 
 }

@@ -25,6 +25,7 @@ import java.util.Calendar;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 
 import static com.khavronsky.unitedexercises.presentation.exercise.exercises_models.ExerciseModel.ExerciseType.CARDIO;
 import static com.khavronsky.unitedexercises.presentation.exercise.exercises_models.ExerciseModel.ExerciseType.POWER;
@@ -46,18 +47,20 @@ public class ExercisePerformActivity extends AppCompatActivity implements View.O
     @BindView(R.id.ex_performance_add_btn)
     AppCompatButton addExButton;
 
-    ModelOfExercisePerformance mModelOfExercisePerformance;
+    private ModelOfExercisePerformance mModelOfExercisePerformance;
 
     private ExercisePerformancePresenter mPresenter;
 
     private boolean newPerformance;
+
+    private Unbinder unbinder;
     //endregion
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ex_perform_activity);
-        ButterKnife.bind(this);
+        unbinder = ButterKnife.bind(this);
         if (mPresenter == null) {
             mPresenter = new ExercisePerformancePresenter();
         }
@@ -97,7 +100,7 @@ public class ExercisePerformActivity extends AppCompatActivity implements View.O
         boolean editIconVisible = mModelOfExercisePerformance.getExercise().isCustomExercise();
         menu.getItem(0).setVisible(deleteIconVisibility);
         menu.getItem(1).setVisible(editIconVisible);
-        if (!mModelOfExercisePerformance.getExercise().isActive()){
+        if (!mModelOfExercisePerformance.getExercise().isActive()) {
             menu.getItem(1).setVisible(false);
         }
         return true;
@@ -135,12 +138,6 @@ public class ExercisePerformActivity extends AppCompatActivity implements View.O
                             .getExercise().getType().name()));
             show(mModelOfExercisePerformance);
         }
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        mPresenter.detachView();
     }
 
     private void startFragment() {
@@ -206,5 +203,12 @@ public class ExercisePerformActivity extends AppCompatActivity implements View.O
             mPresenter.saveEditedExPerformance(mModelOfExercisePerformance);
         }
         onBackPressed();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unbinder.unbind();
+        mPresenter.detachView();
     }
 }

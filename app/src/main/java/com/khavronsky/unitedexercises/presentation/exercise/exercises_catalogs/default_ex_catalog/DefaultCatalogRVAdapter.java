@@ -15,14 +15,14 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AdapterToExCatalogRecycler extends RecyclerView.Adapter<RecyclerView.ViewHolder>
+public class DefaultCatalogRVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         implements RecyclerItemClickListener.OnItemClickListener {
 
-    private List<ModelOfItemForExCatalog> exerciseCatalog = new ArrayList<>();
+    private List<DefaultCatalogModel> exerciseCatalog = new ArrayList<>();
 
     private Context mContext;
 
-    public AdapterToExCatalogRecycler setExerciseCatalog(final List<ModelOfItemForExCatalog> exerciseCatalog) {
+    public DefaultCatalogRVAdapter setExerciseCatalog(final List<DefaultCatalogModel> exerciseCatalog) {
         this.exerciseCatalog = exerciseCatalog;
         return this;
     }
@@ -39,7 +39,7 @@ public class AdapterToExCatalogRecycler extends RecyclerView.Adapter<RecyclerVie
             View view = LayoutInflater
                     .from(parent.getContext())
                     .inflate(R.layout.exercise_catalog_recycler_item, parent, false);
-            return new ExerciseCatalogHolder(view);
+            return new DefaultExerciseItem(view);
         }
     }
 
@@ -48,14 +48,14 @@ public class AdapterToExCatalogRecycler extends RecyclerView.Adapter<RecyclerVie
         if (holder instanceof CapitalLetterItem) {
             ((CapitalLetterItem) holder).setText(exerciseCatalog.get(position).getTitle());
         } else {
-            ((ExerciseCatalogHolder) holder).setText(exerciseCatalog.get(position).getTitle());
-            ((ExerciseCatalogHolder) holder).setListener(this);
+            ((DefaultExerciseItem) holder).setText(exerciseCatalog.get(position).getTitle());
+            ((DefaultExerciseItem) holder).setListener(this);
         }
     }
 
     @Override
     public int getItemViewType(final int position) {
-        return exerciseCatalog.get(position).getType() == ModelOfItemForExCatalog.ItemType.CAPITAL_LETTER ? 0 : 1;
+        return exerciseCatalog.get(position).getType() == DefaultCatalogModel.ItemType.CAPITAL_LETTER ? 0 : 1;
     }
 
     @Override
@@ -72,23 +72,23 @@ public class AdapterToExCatalogRecycler extends RecyclerView.Adapter<RecyclerVie
     }
 
     /**
-     * V I E W   H O L D E R
+     * V I E W   H O L D E R S
      */
-    private class ExerciseCatalogHolder extends RecyclerView.ViewHolder {
+    private class DefaultExerciseItem extends RecyclerView.ViewHolder {
 
-        TextView mTextView;
+        TextView mDefExerciseTitle;
 
         RecyclerItemClickListener.OnItemClickListener mListener;
 
-        ExerciseCatalogHolder(final View itemView) {
+        DefaultExerciseItem(final View itemView) {
             super(itemView);
-            mTextView = (TextView) itemView.findViewById(R.id.exercise_name);
-            mTextView.setOnClickListener(
+            mDefExerciseTitle = (TextView) itemView.findViewById(R.id.exercise_name);
+            mDefExerciseTitle.setOnClickListener(
                     v -> mListener.onItemClick(itemView, getAdapterPosition()));
         }
 
         void setText(String text) {
-            mTextView.setText(text);
+            mDefExerciseTitle.setText(text);
         }
 
         void setListener(
@@ -99,15 +99,15 @@ public class AdapterToExCatalogRecycler extends RecyclerView.Adapter<RecyclerVie
 
     private class CapitalLetterItem extends RecyclerView.ViewHolder {
 
-        TextView mTextView;
+        TextView mCapitalLetter;
 
         CapitalLetterItem(final View itemView) {
             super(itemView);
-            mTextView = (TextView) itemView.findViewById(R.id.exercise_catalog_capital_letter);
+            mCapitalLetter = (TextView) itemView.findViewById(R.id.exercise_catalog_capital_letter);
         }
 
         void setText(String text) {
-            mTextView.setText(text);
+            mCapitalLetter.setText(text);
         }
 
     }

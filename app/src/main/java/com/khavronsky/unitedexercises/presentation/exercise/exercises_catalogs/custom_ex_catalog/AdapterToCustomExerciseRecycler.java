@@ -124,6 +124,9 @@ public class AdapterToCustomExerciseRecycler
         @BindView(R.id.anchor)
         View mView;
 
+        @BindView(R.id.custom_exercise_menu_click_area)
+        View mClickArea;
+
         FragmentManager mFragmentManager;
 
         private OnClickDialogItemListener mCatalogListener;
@@ -149,7 +152,7 @@ public class AdapterToCustomExerciseRecycler
         }
 
         public void setCatalogListeners(final OnClickDialogItemListener catalogListener, final
-                RecyclerItemClickListener.OnItemClickListener onItemClickListener) {
+        RecyclerItemClickListener.OnItemClickListener onItemClickListener) {
             mCatalogListener = catalogListener;
             mOnItemClickListener = onItemClickListener;
         }
@@ -159,22 +162,19 @@ public class AdapterToCustomExerciseRecycler
             itemSubtitle.setText(subTitle);
         }
 
-        @OnClick(R.id.custom_exercise_menu)
+        @OnClick(R.id.custom_exercise_menu_click_area)
         void showMenu() {
             PopupMenu popupMenu = new PopupMenu(mView.getContext(), mView, Gravity.END);
             popupMenu.inflate(R.menu.popup_menu);
-
             popupMenu
                     .setOnMenuItemClickListener(item -> {
                         switch (item.getItemId()) {
-
                             case R.id.custom_exercise_item_menu_del:
                                 popupMenu.dismiss();
-
                                 mCatalogListener.pressDel(getAdapterPosition());
                                 return true;
                             case R.id.custom_exercise_item_menu_edit:
-
+                                popupMenu.dismiss();
                                 mCatalogListener.pressEdit(getAdapterPosition());
                                 return true;
                             default:
@@ -183,5 +183,6 @@ public class AdapterToCustomExerciseRecycler
                     });
             popupMenu.show();
         }
+
     }
 }

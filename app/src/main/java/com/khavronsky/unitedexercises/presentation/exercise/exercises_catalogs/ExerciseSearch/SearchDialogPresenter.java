@@ -16,8 +16,6 @@ public class SearchDialogPresenter extends AbstractPresenter<IView> {
 
     private ExercisesInteractor mExercisesInteractor;
 
-    private ArrayList<ExerciseModel> mExerciseModels;
-
     public SearchDialogPresenter(ExerciseModel.ExerciseType type) {
         mExercisesInteractor = new ExerciseRX();
         getExercisesFromDB(type);
@@ -53,7 +51,6 @@ public class SearchDialogPresenter extends AbstractPresenter<IView> {
                         if (getView() != null) {
                             getView().setAllExercises(exerciseModels);
                         }
-                        mExerciseModels = exerciseModels;
                     }
                 });
     }

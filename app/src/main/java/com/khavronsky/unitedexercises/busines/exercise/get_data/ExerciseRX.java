@@ -14,8 +14,6 @@ import rx.Observable;
 
 public class ExerciseRX implements ExercisesInteractor {
 
-    private final static String TAG = "KhS_RX";
-
     @NonNull
     public  Observable<List<ExerciseModel>> getCustomExerciseList() {
         return Observable.just(0)

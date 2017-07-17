@@ -38,7 +38,6 @@ public class AdapterToRecentExerciseRecycler
 
     public AdapterToRecentExerciseRecycler(FragmentManager fragmentManager) {
         mFragmentManager = fragmentManager;
-
     }
 
     public AdapterToRecentExerciseRecycler setCustomExList(final List<ModelOfExercisePerformance> customExList) {
@@ -85,7 +84,6 @@ public class AdapterToRecentExerciseRecycler
 
     @Override
     public void onBindViewHolder(final CustomExerciseHolder holder, final int position) {
-//        holder.setText(customExList.get(position).getExTitle(), customExList.get(position).getExSubTitle());
         if (customExList.size() > 0) {
             holder.setText(customExList.get(position).getExercise().getTitle(), createDescription(customExList.get
                     (position).getExercise()));

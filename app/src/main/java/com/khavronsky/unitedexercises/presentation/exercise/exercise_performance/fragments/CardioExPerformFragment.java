@@ -55,7 +55,7 @@ public class CardioExPerformFragment extends Fragment implements IDialogFragment
     @BindView(R.id.ex_cardio_perform_note_layout)
     View layout;
 
-    Calendar date = Calendar.getInstance();
+    private Calendar date = Calendar.getInstance();
 
     private IntNumPickerFragment mIntNumPickerDialog;
 
@@ -63,7 +63,7 @@ public class CardioExPerformFragment extends Fragment implements IDialogFragment
 
     private Unbinder unbinder;
 
-    ModelOfExercisePerformance mModelOfExercisePerformance;
+    private ModelOfExercisePerformance mModelOfExercisePerformance;
 
     private IExerciseListener mListener;
 
@@ -115,7 +115,6 @@ public class CardioExPerformFragment extends Fragment implements IDialogFragment
         }
         mExCardioPerformNote.setText(mModelOfExercisePerformance.getNote());
         mExCardioPerformNote.addTextChangedListener(this);
-//        mExCardioPerformNote.setSelection(mModelOfExercisePerformance.getNote().length());
         layout.setFocusableInTouchMode(true);
     }
 

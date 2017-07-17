@@ -26,6 +26,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -45,9 +46,10 @@ public class CustomExercisesFragment extends Fragment implements IView, IEditCat
 
     private RecyclerView recyclerView;
 
-    AdapterToCustomExerciseRecycler adapterToCustomExerciseRecycler;
-    //endregion
+    private AdapterToCustomExerciseRecycler adapterToCustomExerciseRecycler;
 
+    private Unbinder unbinder;
+    //endregion
 
     //region C R E A T E
     @Override
@@ -67,7 +69,7 @@ public class CustomExercisesFragment extends Fragment implements IView, IEditCat
     public View onCreateView(final LayoutInflater inflater, @Nullable final ViewGroup container,
             @Nullable final Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.custom_exercises_fragment, container, false);
-        ButterKnife.bind(this, view);
+        unbinder = ButterKnife.bind(this, view);
         recyclerView = (RecyclerView) view.findViewById(R.id.cardio_ex_custom_list);
         emptyCustExList.setVisibility(View.GONE);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
@@ -141,6 +143,7 @@ public class CustomExercisesFragment extends Fragment implements IView, IEditCat
     @Override
     public void onDestroy() {
         super.onDestroy();
+        unbinder.unbind();
         mCustomExPresenter.detachView();
     }
 }

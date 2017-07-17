@@ -3,7 +3,7 @@ package com.khavronsky.unitedexercises.presentation.exercise.exercises_catalogs.
 
 import com.khavronsky.unitedexercises.presentation.exercise.exercises_models.ExerciseModel;
 
-public class ModelOfItemForExCatalog {
+public class DefaultCatalogModel {
 
     public enum ItemType {
         CAPITAL_LETTER,
@@ -16,16 +16,15 @@ public class ModelOfItemForExCatalog {
 
     private ItemType mType;
 
-    public ModelOfItemForExCatalog(final ItemType type) {
+    public DefaultCatalogModel(final ItemType type) {
         mType = type;
-
     }
 
     public ExerciseModel getExercise() {
         return mExercise == null ? null : mExercise;
     }
 
-    public ModelOfItemForExCatalog setExercise(final ExerciseModel exercise) {
+    public DefaultCatalogModel setExercise(final ExerciseModel exercise) {
         mExercise = exercise;
         title = exercise.getTitle();
         return this;
@@ -35,7 +34,7 @@ public class ModelOfItemForExCatalog {
         return title;
     }
 
-    public ModelOfItemForExCatalog setTitle(final String title) {
+    public DefaultCatalogModel setTitle(final String title) {
         this.title = title;
         return this;
     }
@@ -44,7 +43,7 @@ public class ModelOfItemForExCatalog {
         return mType;
     }
 
-    public ModelOfItemForExCatalog setType(final ItemType type) {
+    public DefaultCatalogModel setType(final ItemType type) {
         this.mType = type;
         return this;
     }

@@ -39,7 +39,6 @@ class RVAdapter extends RecyclerView.Adapter<RVAdapter.VHolder> {
         holder.setText(list.get(position).getTitle());
     }
 
-
     @Override
     public int getItemCount() {
         return list == null? 0 : list.size();

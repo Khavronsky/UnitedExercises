@@ -36,8 +36,6 @@ public class SearchDialog extends DialogFragment
         implements View.OnClickListener, TextWatcher, TextView.OnEditorActionListener,
         IView {
 
-    public static final String TAG = "KhS_SearchDialog";
-
     private ExerciseModel.ExerciseType mExerciseType;
 
     private EditText searchEditText;
@@ -51,8 +49,6 @@ public class SearchDialog extends DialogFragment
     private RVAdapter searchRecyclerViewAdapter; //adapter
 
     private RecyclerView.LayoutManager mLayoutManager;
-
-    public static final int REQ_CODE_SPEECH_INPUT = 100;
 
     public static final String SEARCH_DIALOG_TAG = "SearchDialog";
 
@@ -147,6 +143,7 @@ public class SearchDialog extends DialogFragment
 
     /**
      * Google speech input dialog??????
+     * fixme ОЙОЙОЙ
      */
     @Override
     public void beforeTextChanged(CharSequence s, int start, int count, int after) {
