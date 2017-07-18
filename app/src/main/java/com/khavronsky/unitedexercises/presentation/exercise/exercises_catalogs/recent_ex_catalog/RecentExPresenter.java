@@ -24,10 +24,7 @@ public class RecentExPresenter extends AbstractPresenter<IView> {
         mExercisesInteractor = new ExerciseRX();
     }
 
-    private ExerciseModel.ExerciseType type;
-
     public void loadData(ExerciseModel.ExerciseType type) {
-        this.type = type;
         mExercisesInteractor.getRecentExerciseList()
                 .map(modelOfExercisePerformances -> new ArrayList<ModelOfExercisePerformance>() {{
                     for (ModelOfExercisePerformance model :

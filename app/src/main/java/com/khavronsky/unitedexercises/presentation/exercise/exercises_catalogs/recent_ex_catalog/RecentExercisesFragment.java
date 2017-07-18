@@ -32,7 +32,7 @@ public class RecentExercisesFragment extends Fragment implements IView, IRefresh
 
     private RecyclerView recyclerView;
 
-    AdapterToRecentExerciseRecycler adapterToCustomExerciseRecycler;
+    private AdapterToRecentExerciseRecycler adapterToCustomExerciseRecycler;
 
     @Override
     public void onCreate(@Nullable final Bundle savedInstanceState) {
@@ -53,14 +53,10 @@ public class RecentExercisesFragment extends Fragment implements IView, IRefresh
         View view = inflater.inflate(R.layout.recent_exercises_fragment, container, false);
         ButterKnife.bind(this, view);
         recyclerView = (RecyclerView) view.findViewById(R.id.recent_exercise_custom_list);
-
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
-
         recyclerView.setLayoutManager(layoutManager);
-        adapterToCustomExerciseRecycler = new AdapterToRecentExerciseRecycler
-                (getFragmentManager());
+        adapterToCustomExerciseRecycler = new AdapterToRecentExerciseRecycler();
         recyclerView.setAdapter(adapterToCustomExerciseRecycler);
-
         return view;
     }
 

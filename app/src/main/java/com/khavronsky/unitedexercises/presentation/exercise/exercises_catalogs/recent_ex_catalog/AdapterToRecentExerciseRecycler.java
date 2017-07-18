@@ -11,7 +11,6 @@ import com.khavronsky.unitedexercises.utils.import_from_grand_project.RecyclerIt
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,13 +31,7 @@ public class AdapterToRecentExerciseRecycler
 
     private List<ModelOfExercisePerformance> customExList;
 
-    private FragmentManager mFragmentManager;
-
     private Context mContext;
-
-    public AdapterToRecentExerciseRecycler(FragmentManager fragmentManager) {
-        mFragmentManager = fragmentManager;
-    }
 
     public AdapterToRecentExerciseRecycler setCustomExList(final List<ModelOfExercisePerformance> customExList) {
         this.customExList = customExList;
@@ -52,7 +45,7 @@ public class AdapterToRecentExerciseRecycler
                 .from(parent.getContext())
                 .inflate(R.layout.recent_exercise_recycler_item, parent, false);
         mContext = parent.getContext();
-        return new CustomExerciseHolder(view).setFragmentManager(mFragmentManager);
+        return new CustomExerciseHolder(view);
     }
 
     @Override
@@ -100,7 +93,6 @@ public class AdapterToRecentExerciseRecycler
      * V I E W   H O L D E R
      */
 
-
     class CustomExerciseHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         @BindView(R.id.recent_exercise_item_title)
@@ -109,14 +101,7 @@ public class AdapterToRecentExerciseRecycler
         @BindView(R.id.recent_exercise_item_sub_title)
         TextView itemSubtitle;
 
-        private FragmentManager mFragmentManager;
-
         private RecyclerItemClickListener.OnItemClickListener mListener;
-
-        public CustomExerciseHolder setFragmentManager(final FragmentManager fragmentManager) {
-            mFragmentManager = fragmentManager;
-            return this;
-        }
 
         CustomExerciseHolder(final View itemView) {
             super(itemView);

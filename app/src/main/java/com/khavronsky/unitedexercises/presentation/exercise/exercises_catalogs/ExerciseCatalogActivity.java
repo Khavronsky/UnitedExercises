@@ -46,11 +46,9 @@ public class ExerciseCatalogActivity extends AppCompatActivity implements View.O
     @BindView(R.id.ex_cat_anchor)
     View mAnchor;
 
-    ExerciseModel.ExerciseType mExerciseType;
+    private ExerciseModel.ExerciseType mExerciseType;
 
-    ViewPager viewPager;
-
-    VPAdapterOfExCatalogActivity pagerAdapter;
+    private VPAdapterOfExCatalogActivity pagerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,8 +59,7 @@ public class ExerciseCatalogActivity extends AppCompatActivity implements View.O
             mExerciseType = (ExerciseModel.ExerciseType) getIntent().getExtras().getSerializable("type");
         }
         setToolbar();
-
-        viewPager = (ViewPager) findViewById(R.id.pager);
+        ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
         pagerAdapter = new VPAdapterOfExCatalogActivity(getSupportFragmentManager(), mExerciseType);
         viewPager.setAdapter(pagerAdapter);
         viewPager.setOffscreenPageLimit(3);
@@ -96,9 +93,6 @@ public class ExerciseCatalogActivity extends AppCompatActivity implements View.O
         mToolbarTitle.setText(mExerciseType == ExerciseModel.ExerciseType.CARDIO ?
                 TOOLBAR_TITLE_CARDIO
                 : TOOLBAR_TITLE_POWER);
-//        mToolbar.setTitle(mExerciseType == ExerciseModel.ExerciseType.CARDIO ?
-//                "Кардио упражнение"
-//                : "Силовое упражнение");
         setSupportActionBar(mToolbar);
         mToolbar.inflateMenu(R.menu.search_menu);
         mToolbar.setNavigationOnClickListener(this);
@@ -112,7 +106,6 @@ public class ExerciseCatalogActivity extends AppCompatActivity implements View.O
 
     @OnClick(R.id.ex_catalog_toolbar_click_area)
     public void showSelectExCatMenu() {
-        Log.d("KhS", "DROPDOWN_MENU: ");
         PopupMenu popupMenu = new PopupMenu(this, mAnchor, Gravity.END);
         popupMenu.inflate(R.menu.switch_menu);
         popupMenu
