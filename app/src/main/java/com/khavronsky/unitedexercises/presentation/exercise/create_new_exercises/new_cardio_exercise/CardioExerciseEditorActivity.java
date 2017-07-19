@@ -40,6 +40,10 @@ import static com.khavronsky.unitedexercises.utils.import_from_grand_project.Flo
 
 public class CardioExerciseEditorActivity extends AppCompatActivity implements View.OnClickListener,
         IView {
+    
+    //// TODO: 19.07.17  Лучше сделать все в ФРАГМЕНТЕ ПОТОМУ ЧТО НАМ МОЖЕТ ПОНАДОБИТЬСЯ ОТКРЫТЬ ИЗ ДРУГОГО активити
+//    и переключение межде фрагментами быстрее, activity_toolbar_pattern_v2 - разметка activity и в нее вставляем
+// фрагмент
 
     //region FIELDS
     @BindView(R.id.toolbar)

@@ -37,6 +37,7 @@ public class CardioExPerformFragment extends Fragment implements IDialogFragment
 
     public final static String FRAGMENT_TAG = ExerciseModel.ExerciseType.CARDIO.name();
 
+    
     @BindView(R.id.ex_cardio_perform_start_time)
     EditText mExCardioPerformStartTime;
 
@@ -111,6 +112,8 @@ public class CardioExPerformFragment extends Fragment implements IDialogFragment
             mWithoutSpinner.setVisibility(View.VISIBLE);
             mModelOfExercisePerformance.setCurrentKcalPerHour(((CardioExerciseModel)
                     mModelOfExercisePerformance.getExercise()).getDefValue());
+
+            //TODO listener всегда нужна проверять на null
             mListener.updateModel(mModelOfExercisePerformance);
         }
         mExCardioPerformNote.setText(mModelOfExercisePerformance.getNote());
@@ -158,6 +161,13 @@ public class CardioExPerformFragment extends Fragment implements IDialogFragment
         }
     }
 
+
+    //TODO Неправильная работа с диалогом при нажатии на отмена в диалоге мы больше его не увидим,
+    //И вызов dismiss() должен проходить внутри диалога
+    // Я смог открыть два диалога , нам нужно создавать один класс диалог фрагмента и его проверять на null
+    // с помощью этого  мы избавляемся от открытие двух диалогов
+    // нужно сделать по анологии с классом GoalsFrg
+    
     @Override
     public void doButtonClick1(final Object o) {
         if (mTimePickerDialog != null) {
@@ -177,10 +187,12 @@ public class CardioExPerformFragment extends Fragment implements IDialogFragment
 
     @Override
     public void doButtonClick2() {
+
     }
 
     @Override
     public void doByDismissed() {
+
     }
 
     private void setDate() {
@@ -215,6 +227,8 @@ public class CardioExPerformFragment extends Fragment implements IDialogFragment
                         break;
 
                 }
+
+
                 mListener.updateModel(mModelOfExercisePerformance);
             }
 
