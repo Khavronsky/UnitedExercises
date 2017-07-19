@@ -4,6 +4,7 @@ import com.khavronsky.unitedexercises.R;
 import com.khavronsky.unitedexercises.presentation.exercise.exercises_models.ExerciseModel;
 import com.khavronsky.unitedexercises.presentation.exercise.exercises_models.ModelOfExercisePerformance;
 import com.khavronsky.unitedexercises.presentation.exercise.exercises_models.PowerExerciseModel;
+import com.khavronsky.unitedexercises.utils.import_from_grand_project.BaseDialogFragment;
 import com.khavronsky.unitedexercises.utils.import_from_grand_project.IDialogFragment;
 import com.khavronsky.unitedexercises.utils.import_from_grand_project.IntNumPickerFragment;
 import com.khavronsky.unitedexercises.utils.import_from_grand_project.TimePickerDialogFragment;
@@ -27,7 +28,6 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 
 public class PowerExPerformFragment extends Fragment implements IDialogFragment, TextWatcher {
-//// TODO: 19.07.17 правки анологичные CardioExPerformFragment  
     //region fields
     public final static String FRAGMENT_TAG = ExerciseModel.ExerciseType.POWER.name();
 
@@ -59,9 +59,7 @@ public class PowerExPerformFragment extends Fragment implements IDialogFragment,
 
     private Calendar date = Calendar.getInstance();
 
-    private IntNumPickerFragment mIntNumPickerDialog;
-
-    private TimePickerDialogFragment mTimePickerDialog;
+    private BaseDialogFragment mDialog;
 
     private Unbinder unbinder;
 
@@ -90,76 +88,6 @@ public class PowerExPerformFragment extends Fragment implements IDialogFragment,
         return v;
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
-    }
-    //endregion
-
-    //region IDialogFragment implementation
-    @Override
-    public void doButtonClick1(final Object o) {
-        if (mTimePickerDialog != null) {
-            date = (Calendar) o;
-            mTimePickerDialog.dismiss();
-            mTimePickerDialog = null;
-            mModelOfExercisePerformance.setStartTime(date.getTimeInMillis());
-            setDate();
-        }
-        if (mIntNumPickerDialog != null) {
-            mIntNumPickerDialog.dismiss();
-            switch (pickerOnScreen) {
-                case DURATION:
-                    mModelOfExercisePerformance.setDuration((int) o);
-                    mDuration.setText(o + " мин");
-                    break;
-                case SETS:
-                    ((PowerExerciseModel) mModelOfExercisePerformance.getExercise()).setSets((int) o);
-                    mSets.setText(String.valueOf(o));
-                    break;
-                case REPEATS:
-                    ((PowerExerciseModel) mModelOfExercisePerformance.getExercise()).setRepeats((int) o);
-                    mRepeats.setText(String.valueOf(o));
-                    break;
-                case WEIGHT:
-                    ((PowerExerciseModel) mModelOfExercisePerformance.getExercise()).setWeight((int) o);
-                    mWeight.setText(String.valueOf(o));
-                    break;
-            }
-            mIntNumPickerDialog = null;
-        }
-        pickerOnScreen = null;
-    }
-
-    @Override
-    public void doButtonClick2() {
-        mTimePickerDialog = null;
-        mIntNumPickerDialog = null;
-    }
-
-    @Override
-    public void doByDismissed() {
-        mIntNumPickerDialog = null;
-        mTimePickerDialog = null;
-    }
-    //endregion
-
-    //region TextWatcher implementation
-    @Override
-    public void beforeTextChanged(final CharSequence s, final int start, final int count, final int after) {
-
-    }
-
-    @Override
-    public void onTextChanged(final CharSequence s, final int start, final int before, final int count) {
-        mModelOfExercisePerformance.setNote(String.valueOf(s));
-    }
-
-    @Override
-    public void afterTextChanged(final Editable s) {
-    }
-
     private void init(final View v) {
         setDate();
         mDuration.setText(String.valueOf(
@@ -186,18 +114,36 @@ public class PowerExPerformFragment extends Fragment implements IDialogFragment,
                 mModelOfExercisePerformance.getStartTime(), DateUtils.FORMAT_SHOW_TIME);
         mStartTime.setText(dateText);
     }
+    //endregion
 
+    //region TextWatcher implementation
+    @Override
+    public void beforeTextChanged(final CharSequence s, final int start, final int count, final int after) {
+
+    }
+
+    @Override
+    public void onTextChanged(final CharSequence s, final int start, final int before, final int count) {
+        mModelOfExercisePerformance.setNote(String.valueOf(s));
+    }
+
+    @Override
+    public void afterTextChanged(final Editable s) {
+    }
+    //endregion
+
+    //region IDialogFragment
     @OnClick({R.id.ex_power_perform_start_time, R.id.ex_power_perform_duration, R.id.ex_power_perform_sets, R.id
             .ex_power_perform_repeats, R.id.ex_power_perform_weight})
     void showPicker(EditText v) {
         int id = v.getId();
         switch (id) {
             case R.id.ex_power_perform_start_time:
-                if (mTimePickerDialog == null) {
-                    mTimePickerDialog = TimePickerDialogFragment
+                if (mDialog == null) {
+                    mDialog = TimePickerDialogFragment
                             .newInstance(date.get(Calendar.HOUR_OF_DAY), date.get(Calendar.MINUTE));
-                    mTimePickerDialog.setCallback(this);
-                    mTimePickerDialog.show(getActivity().getSupportFragmentManager(), "time_picker_dialog");
+                    mDialog.setCallback(this);
+                    mDialog.show(getActivity().getSupportFragmentManager(), "time_picker_dialog");
                 }
                 break;
             case R.id.ex_power_perform_duration:
@@ -215,20 +161,70 @@ public class PowerExPerformFragment extends Fragment implements IDialogFragment,
                         ((PowerExerciseModel) (mModelOfExercisePerformance.getExercise())).getRepeats(), 1);
                 break;
             case R.id.ex_power_perform_weight:
-                //поменять на floatPicker??????
+                //fixme поменять на floatPicker??????
                 pickerOnScreen = WEIGHT;
                 showIntPicker(1, 500,
                         ((PowerExerciseModel) (mModelOfExercisePerformance.getExercise())).getWeight(), 1);
                 break;
         }
     }
-    //endregion
 
     void showIntPicker(int min, int max, int currentVal, int onePointVal) {
-        if (mIntNumPickerDialog == null) {
-            mIntNumPickerDialog = IntNumPickerFragment.newInstance(min, max, currentVal, onePointVal);
-            mIntNumPickerDialog.setCallback(this);
-            mIntNumPickerDialog.show(getFragmentManager(), "picker");
+        if (mDialog == null) {
+            mDialog = IntNumPickerFragment.newInstance(min, max, currentVal, onePointVal);
+            mDialog.setCallback(this);
+            mDialog.show(getFragmentManager(), "picker");
         }
+    }
+
+    @Override
+    public void doButtonClick1(final Object o) {
+        if (mDialog instanceof TimePickerDialogFragment) {
+            date = (Calendar) o;
+            mDialog.dismiss();
+            mDialog = null;
+            mModelOfExercisePerformance.setStartTime(date.getTimeInMillis());
+            setDate();
+        }
+        if (mDialog instanceof IntNumPickerFragment) {
+            mDialog.dismiss();
+            switch (pickerOnScreen) {
+                case DURATION:
+                    mModelOfExercisePerformance.setDuration((int) o);
+                    mDuration.setText(o + " мин");
+                    break;
+                case SETS:
+                    ((PowerExerciseModel) mModelOfExercisePerformance.getExercise()).setSets((int) o);
+                    mSets.setText(String.valueOf(o));
+                    break;
+                case REPEATS:
+                    ((PowerExerciseModel) mModelOfExercisePerformance.getExercise()).setRepeats((int) o);
+                    mRepeats.setText(String.valueOf(o));
+                    break;
+                case WEIGHT:
+                    ((PowerExerciseModel) mModelOfExercisePerformance.getExercise()).setWeight((int) o);
+                    mWeight.setText(String.valueOf(o));
+                    break;
+            }
+            mDialog = null;
+        }
+        pickerOnScreen = null;
+    }
+
+    @Override
+    public void doButtonClick2() {
+        mDialog = null;
+    }
+    @Override
+    public void doByDismissed() {
+        mDialog = null;
+    }
+    //endregion
+
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
     }
 }

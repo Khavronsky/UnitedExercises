@@ -26,9 +26,6 @@ import static com.khavronsky.unitedexercises.presentation.exercise.exercises_mod
 public class PowerExerciseEditorActivity extends AppCompatActivity implements View.OnClickListener, IView {
 
     //region FIELDS
-    //// TODO: 19.07.17  Лучше сделать все в ФРАГМЕНТЕ ПОТОМУ ЧТО НАМ МОЖЕТ ПОНАДОБИТЬСЯ ОТКРЫТЬ ИЗ ДРУГОГО активити
-//    и переключение межде фрагментами быстрее, activity_toolbar_pattern_v2 - разметка activity и в нее вставляем
-// фрагмент
 
     TextWatcher mTextWatcher;
 

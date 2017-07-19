@@ -4,6 +4,7 @@ import com.khavronsky.unitedexercises.R;
 import com.khavronsky.unitedexercises.presentation.exercise.exercises_models.CardioExerciseModel;
 import com.khavronsky.unitedexercises.presentation.exercise.exercises_models.ExerciseModel;
 import com.khavronsky.unitedexercises.presentation.exercise.exercises_models.ModelOfExercisePerformance;
+import com.khavronsky.unitedexercises.utils.import_from_grand_project.BaseDialogFragment;
 import com.khavronsky.unitedexercises.utils.import_from_grand_project.IDialogFragment;
 import com.khavronsky.unitedexercises.utils.import_from_grand_project.IntNumPickerFragment;
 import com.khavronsky.unitedexercises.utils.import_from_grand_project.TimePickerDialogFragment;
@@ -58,9 +59,7 @@ public class CardioExPerformFragment extends Fragment implements IDialogFragment
 
     private Calendar date = Calendar.getInstance();
 
-    private IntNumPickerFragment mIntNumPickerDialog;
-
-    private TimePickerDialogFragment mTimePickerDialog;
+    private BaseDialogFragment mDialog;
 
     private Unbinder unbinder;
 
@@ -113,8 +112,9 @@ public class CardioExPerformFragment extends Fragment implements IDialogFragment
             mModelOfExercisePerformance.setCurrentKcalPerHour(((CardioExerciseModel)
                     mModelOfExercisePerformance.getExercise()).getDefValue());
 
-            //TODO listener всегда нужна проверять на null
-            mListener.updateModel(mModelOfExercisePerformance);
+            if (mListener != null) {
+                mListener.updateModel(mModelOfExercisePerformance);
+            }
         }
         mExCardioPerformNote.setText(mModelOfExercisePerformance.getNote());
         mExCardioPerformNote.addTextChangedListener(this);
@@ -142,44 +142,38 @@ public class CardioExPerformFragment extends Fragment implements IDialogFragment
         int id = eText.getId();
         switch (id) {
             case R.id.ex_cardio_perform_start_time:
-                if (mTimePickerDialog == null) {
-                    mTimePickerDialog = TimePickerDialogFragment
+                if (mDialog == null) {
+                    mDialog = TimePickerDialogFragment
                             .newInstance(date.get(Calendar.HOUR_OF_DAY), date.get(Calendar.MINUTE));
-                    mTimePickerDialog.setCallback(this);
-                    mTimePickerDialog.show(getActivity().getSupportFragmentManager(), "time_picker_dialog");
+                    mDialog.setCallback(this);
+                    mDialog.show(getActivity().getSupportFragmentManager(), "time_picker_dialog");
                 }
+
                 break;
             case R.id.ex_cardio_perform_duration:
-                if (mIntNumPickerDialog == null) {
-                    mIntNumPickerDialog = IntNumPickerFragment
+                if (mDialog == null) {
+                    mDialog = IntNumPickerFragment
                             .newInstance(0, 1440, mModelOfExercisePerformance.getDuration(),
                                     1);
-                    mIntNumPickerDialog.setCallback(this);
-                    mIntNumPickerDialog.show(getActivity().getSupportFragmentManager(), "int_picker_dialog");
+                    mDialog.setCallback(this);
+                    mDialog.show(getActivity().getSupportFragmentManager(), "int_picker_dialog");
                 }
                 break;
         }
     }
-
-
-    //TODO Неправильная работа с диалогом при нажатии на отмена в диалоге мы больше его не увидим,
-    //И вызов dismiss() должен проходить внутри диалога
-    // Я смог открыть два диалога , нам нужно создавать один класс диалог фрагмента и его проверять на null
-    // с помощью этого  мы избавляемся от открытие двух диалогов
-    // нужно сделать по анологии с классом GoalsFrg
     
     @Override
     public void doButtonClick1(final Object o) {
-        if (mTimePickerDialog != null) {
+        if (mDialog instanceof TimePickerDialogFragment) {
             date = (Calendar) o;
-            mTimePickerDialog.dismiss();
-            mTimePickerDialog = null;
+            mDialog.dismiss();
+            mDialog = null;
             setDate();
         }
-        if (mIntNumPickerDialog != null) {
+        if (mDialog instanceof IntNumPickerFragment) {
             mModelOfExercisePerformance.setDuration((int) o);
-            mIntNumPickerDialog.dismiss();
-            mIntNumPickerDialog = null;
+            mDialog.dismiss();
+            mDialog = null;
             mExCardioPerformDuration.setText(o + " мин");
         }
         mListener.updateModel(mModelOfExercisePerformance);
@@ -187,12 +181,12 @@ public class CardioExPerformFragment extends Fragment implements IDialogFragment
 
     @Override
     public void doButtonClick2() {
-
+        mDialog = null;
     }
 
     @Override
     public void doByDismissed() {
-
+        mDialog = null;
     }
 
     private void setDate() {
