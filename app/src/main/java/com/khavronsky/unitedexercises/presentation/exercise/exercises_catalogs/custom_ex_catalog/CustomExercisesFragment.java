@@ -9,6 +9,7 @@ import com.khavronsky.unitedexercises.presentation.exercise.exercises_models.Exe
 import com.khavronsky.unitedexercises.presentation.exercise.exercises_models.ExerciseModel.ExerciseType;
 import com.khavronsky.unitedexercises.presentation.exercise.exercises_models.IEditCatalog;
 import com.khavronsky.unitedexercises.presentation.exercise.exercises_models.IModel;
+import com.khavronsky.unitedexercises.utils.di.App;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -22,6 +23,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.util.List;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -40,7 +43,8 @@ public class CustomExercisesFragment extends Fragment implements IView, IEditCat
     @BindView(R.id.custom_exercise_not_found)
     TextView emptyCustExList;
 
-    private CustomExPresenter mCustomExPresenter;
+    @Inject
+    CustomExPresenter mCustomExPresenter;
 
     private static ExerciseType currentType;
 
@@ -55,9 +59,8 @@ public class CustomExercisesFragment extends Fragment implements IView, IEditCat
     @Override
     public void onCreate(@Nullable final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (mCustomExPresenter == null) {
-            mCustomExPresenter = new CustomExPresenter();
-        }
+         App.getComponent().getCustomExPresenter(this);
+
         mCustomExPresenter.attachView(this);
         if (getArguments().getSerializable("type") != null) {
             currentType = (ExerciseType) getArguments().getSerializable("type");

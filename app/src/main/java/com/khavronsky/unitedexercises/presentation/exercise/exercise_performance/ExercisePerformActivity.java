@@ -8,6 +8,7 @@ import com.khavronsky.unitedexercises.presentation.exercise.exercise_performance
 import com.khavronsky.unitedexercises.presentation.exercise.exercise_performance.fragments.PowerExPerformFragment;
 import com.khavronsky.unitedexercises.presentation.exercise.exercises_models.ExerciseModel;
 import com.khavronsky.unitedexercises.presentation.exercise.exercises_models.ModelOfExercisePerformance;
+import com.khavronsky.unitedexercises.utils.di.App;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -21,6 +22,8 @@ import android.view.MenuItem;
 import android.view.View;
 
 import java.util.Calendar;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -49,7 +52,8 @@ public class ExercisePerformActivity extends AppCompatActivity implements View.O
 
     private ModelOfExercisePerformance mModelOfExercisePerformance;
 
-    private ExercisePerformancePresenter mPresenter;
+    @Inject
+    ExercisePerformancePresenter mPresenter;
 
     private boolean newPerformance;
 
@@ -61,9 +65,7 @@ public class ExercisePerformActivity extends AppCompatActivity implements View.O
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ex_perform_activity);
         unbinder = ButterKnife.bind(this);
-        if (mPresenter == null) {
-            mPresenter = new ExercisePerformancePresenter();
-        }
+        App.getComponent().getExercisePerformancePresenter(this);
         mPresenter.attachView(this);
         newPerformance = getIntent().getExtras().getBoolean(NEW_PERFORMANCE);
         if (newPerformance) {

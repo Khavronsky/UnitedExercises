@@ -1,6 +1,5 @@
 package com.khavronsky.unitedexercises.presentation.exercise.exercises_catalogs.default_ex_catalog;
 
-import com.khavronsky.unitedexercises.busines.exercise.get_data.ExerciseRX;
 import com.khavronsky.unitedexercises.busines.exercise.get_data.IExercisesInteractor;
 import com.khavronsky.unitedexercises.presentation.exercise.exercises_models.ExerciseModel;
 import com.khavronsky.unitedexercises.utils.import_from_grand_project.AbstractPresenter;
@@ -20,8 +19,8 @@ public class DefaultExPresenter extends AbstractPresenter<IView> {
 
     private IExercisesInteractor mIExercisesInteractor;
 
-    public DefaultExPresenter() {
-        mIExercisesInteractor = new ExerciseRX();
+    public DefaultExPresenter(IExercisesInteractor interactor) {
+        mIExercisesInteractor = interactor;
     }
 
     public void loadData(final ExerciseModel.ExerciseType type) {

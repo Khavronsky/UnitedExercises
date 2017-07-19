@@ -3,6 +3,7 @@ package com.khavronsky.unitedexercises.presentation.exercise.create_new_exercise
 import com.khavronsky.unitedexercises.R;
 import com.khavronsky.unitedexercises.busines.exercise.get_data.FakeData;
 import com.khavronsky.unitedexercises.presentation.exercise.exercises_models.PowerExerciseModel;
+import com.khavronsky.unitedexercises.utils.di.App;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,6 +17,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -43,7 +46,8 @@ public class PowerExerciseEditorActivity extends AppCompatActivity implements Vi
 
     private PowerExerciseModel mPowerExerciseModel;
 
-    private PowerExerciseEditorPresenter mPresenter;
+    @Inject
+    PowerExerciseEditorPresenter mPresenter;
 
     private boolean newExercise = true;
 
@@ -58,9 +62,8 @@ public class PowerExerciseEditorActivity extends AppCompatActivity implements Vi
 
         setContentView(R.layout.create_power_ex_activity);
         unbinder = ButterKnife.bind(this);
-        if (mPresenter == null) {
-            mPresenter = new PowerExerciseEditorPresenter();
-        }
+
+        App.getComponent().getPowerExerciseEditorPresenter(this);
         mPresenter.attachView(this);
         if (getIntent().getExtras() != null) {
             mPowerExerciseModel = (PowerExerciseModel) getIntent().getExtras().getSerializable(

@@ -1,6 +1,5 @@
 package com.khavronsky.unitedexercises.presentation.exercise.exercises_catalogs.recent_ex_catalog;
 
-import com.khavronsky.unitedexercises.busines.exercise.get_data.ExerciseRX;
 import com.khavronsky.unitedexercises.busines.exercise.get_data.IExercisesInteractor;
 import com.khavronsky.unitedexercises.presentation.exercise.exercises_models.ExerciseModel;
 import com.khavronsky.unitedexercises.presentation.exercise.exercises_models.ModelOfExercisePerformance;
@@ -20,8 +19,8 @@ public class RecentExPresenter extends AbstractPresenter<IView> {
 
     private IExercisesInteractor mIExercisesInteractor;
 
-    public RecentExPresenter() {
-        mIExercisesInteractor = new ExerciseRX();
+    public RecentExPresenter(IExercisesInteractor interactor) {
+        mIExercisesInteractor = interactor;
     }
 
     public void loadData(ExerciseModel.ExerciseType type) {

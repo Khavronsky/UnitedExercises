@@ -3,6 +3,7 @@ package com.khavronsky.unitedexercises.presentation.exercise.exercises_catalogs.
 import com.khavronsky.unitedexercises.R;
 import com.khavronsky.unitedexercises.presentation.exercise.exercises_catalogs.IRefreshableFragment;
 import com.khavronsky.unitedexercises.presentation.exercise.exercises_models.ExerciseModel.ExerciseType;
+import com.khavronsky.unitedexercises.utils.di.App;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -15,9 +16,12 @@ import android.view.ViewGroup;
 
 import java.util.ArrayList;
 
+import javax.inject.Inject;
+
 public class DefaultExerciseFragment extends Fragment implements IView, IRefreshableFragment {
 
-    private DefaultExPresenter presenter;
+    @Inject
+    DefaultExPresenter mDefaultExPresenter;
 
     private RecyclerView recyclerView;
 
@@ -29,10 +33,8 @@ public class DefaultExerciseFragment extends Fragment implements IView, IRefresh
     @Override
     public void onCreate(@Nullable final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (presenter == null) {
-            presenter = new DefaultExPresenter();
-        }
-        presenter.attachView(this);
+        App.getComponent().getDefaultExPresenter(this);
+        mDefaultExPresenter.attachView(this);
         if (getArguments().getSerializable("type") != null) {
             currentType = (ExerciseType) getArguments().getSerializable("type");
         }
@@ -41,7 +43,7 @@ public class DefaultExerciseFragment extends Fragment implements IView, IRefresh
     @Override
     public void refresh(ExerciseType type) {
         currentType = type;
-        presenter.loadData(currentType);
+        mDefaultExPresenter.loadData(currentType);
     }
 
     @Nullable
@@ -53,7 +55,7 @@ public class DefaultExerciseFragment extends Fragment implements IView, IRefresh
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         mDefaultCatalogRVAdapter = new DefaultCatalogRVAdapter();
         recyclerView.setLayoutManager(layoutManager);
-        presenter.loadData(currentType);
+        mDefaultExPresenter.loadData(currentType);
         return view;
     }
 
@@ -67,6 +69,6 @@ public class DefaultExerciseFragment extends Fragment implements IView, IRefresh
     @Override
     public void onDestroy() {
         super.onDestroy();
-        presenter.detachView();
+        mDefaultExPresenter.detachView();
     }
 }

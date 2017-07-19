@@ -3,6 +3,7 @@ package com.khavronsky.unitedexercises.presentation.exercise.exercises_catalogs.
 import com.khavronsky.unitedexercises.R;
 import com.khavronsky.unitedexercises.presentation.exercise.exercises_catalogs.IRefreshableFragment;
 import com.khavronsky.unitedexercises.presentation.exercise.exercises_models.ModelOfExercisePerformance;
+import com.khavronsky.unitedexercises.utils.di.App;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -16,6 +17,8 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -26,7 +29,8 @@ public class RecentExercisesFragment extends Fragment implements IView, IRefresh
     @BindView(R.id.recent_exercise_not_found)
     TextView emptyCustExList;
 
-    private RecentExPresenter mRecentExPresenter;
+    @Inject
+    RecentExPresenter mRecentExPresenter;
 
     private static ExerciseType currentType;
 
@@ -37,9 +41,7 @@ public class RecentExercisesFragment extends Fragment implements IView, IRefresh
     @Override
     public void onCreate(@Nullable final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (mRecentExPresenter == null) {
-            mRecentExPresenter = new RecentExPresenter();
-        }
+        App.getComponent().getRecentExPresenter(this);
         mRecentExPresenter.attachView(this);
         if (getArguments().getSerializable("type") != null) {
             currentType = (ExerciseType) getArguments().getSerializable("type");

@@ -1,9 +1,8 @@
 package com.khavronsky.unitedexercises.presentation.exercise.exercise_performance;
 
 
-import com.khavronsky.unitedexercises.busines.exercise.get_data.ExerciseRX;
-import com.khavronsky.unitedexercises.busines.exercise.get_data.IExercisesInteractor;
 import com.khavronsky.unitedexercises.busines.exercise.get_data.FakeData;
+import com.khavronsky.unitedexercises.busines.exercise.get_data.IExercisesInteractor;
 import com.khavronsky.unitedexercises.presentation.exercise.exercises_models.CardioExerciseModel;
 import com.khavronsky.unitedexercises.presentation.exercise.exercises_models.ExerciseModel;
 import com.khavronsky.unitedexercises.presentation.exercise.exercises_models.ModelOfExercisePerformance;
@@ -21,10 +20,8 @@ public class ExercisePerformancePresenter extends AbstractPresenter<IView> {
 
     private IExercisesInteractor mIExercisesInteractor;
 
-    private ModelOfExercisePerformance modelOfExercisePerformance;
-
-    public ExercisePerformancePresenter() {
-        mIExercisesInteractor = new ExerciseRX();
+    public ExercisePerformancePresenter(IExercisesInteractor interactor) {
+        mIExercisesInteractor = interactor;
     }
 
     public void editExPerformance(final ModelOfExercisePerformance exercisePerformance) {
@@ -55,7 +52,6 @@ public class ExercisePerformancePresenter extends AbstractPresenter<IView> {
     }
 
     public void addExPerformance(ModelOfExercisePerformance modelOfExercisePerformance) {
-        this.modelOfExercisePerformance = modelOfExercisePerformance;
         mIExercisesInteractor.addExercisePerformance(modelOfExercisePerformance)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -78,7 +74,6 @@ public class ExercisePerformancePresenter extends AbstractPresenter<IView> {
     }
 
     public void saveEditedExPerformance(ModelOfExercisePerformance modelOfExercisePerformance) {
-        this.modelOfExercisePerformance = modelOfExercisePerformance;
         mIExercisesInteractor.editExercisePerformance(modelOfExercisePerformance)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -123,7 +118,8 @@ public class ExercisePerformancePresenter extends AbstractPresenter<IView> {
     }
 
     int getFakeWeight() {
-        //STUB
+        //FIXME ОЙОЙОЙ
+        // STUB
         return 80;
     }
 }

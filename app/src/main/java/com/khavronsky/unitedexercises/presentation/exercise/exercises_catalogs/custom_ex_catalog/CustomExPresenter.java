@@ -1,6 +1,5 @@
 package com.khavronsky.unitedexercises.presentation.exercise.exercises_catalogs.custom_ex_catalog;
 
-import com.khavronsky.unitedexercises.busines.exercise.get_data.ExerciseRX;
 import com.khavronsky.unitedexercises.busines.exercise.get_data.IExercisesInteractor;
 import com.khavronsky.unitedexercises.presentation.exercise.exercises_models.ExerciseModel;
 import com.khavronsky.unitedexercises.utils.import_from_grand_project.AbstractPresenter;
@@ -18,9 +17,9 @@ public class CustomExPresenter extends AbstractPresenter<IView> {
 
     private IExercisesInteractor mIExercisesInteractor;
 
-    public CustomExPresenter() {
-        mIExercisesInteractor = new ExerciseRX();
-    }
+//    public CustomExPresenter() {
+//        mIExercisesInteractor = new ExerciseRX();
+//    }
 
     public CustomExPresenter(IExercisesInteractor interactor) {
         mIExercisesInteractor = interactor;

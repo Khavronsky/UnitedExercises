@@ -3,6 +3,7 @@ package com.khavronsky.unitedexercises.presentation.exercise.create_new_exercise
 import com.khavronsky.unitedexercises.R;
 import com.khavronsky.unitedexercises.busines.exercise.get_data.FakeData;
 import com.khavronsky.unitedexercises.presentation.exercise.exercises_models.CardioExerciseModel;
+import com.khavronsky.unitedexercises.utils.di.App;
 import com.khavronsky.unitedexercises.utils.import_from_grand_project.FloatNumPickerFragment;
 import com.khavronsky.unitedexercises.utils.import_from_grand_project.IDialogFragment;
 
@@ -21,6 +22,8 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -82,7 +85,8 @@ public class CardioExerciseEditorActivity extends AppCompatActivity implements V
 
     private TextWatcher mTextWatcher;
 
-    private CardioExerciseEditorPresenter mPresenter;
+    @Inject
+    CardioExerciseEditorPresenter mPresenter;
 
     private CardioExerciseModel mCardioExerciseModel;
 
@@ -103,9 +107,8 @@ public class CardioExerciseEditorActivity extends AppCompatActivity implements V
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_cardio_ex_activity);
         unbinder = ButterKnife.bind(this);
-        if (mPresenter == null) {
-            mPresenter = new CardioExerciseEditorPresenter();
-        }
+
+        App.getComponent().getCardioExerciseEditorPresenter(this);
         mPresenter.attachView(this);
         if (getIntent().getExtras() != null) {
             mCardioExerciseModel = (CardioExerciseModel) getIntent().getExtras().getSerializable(
