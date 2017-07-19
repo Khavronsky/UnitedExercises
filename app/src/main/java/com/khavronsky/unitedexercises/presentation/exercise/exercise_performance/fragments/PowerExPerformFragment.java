@@ -27,7 +27,7 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 
 public class PowerExPerformFragment extends Fragment implements IDialogFragment, TextWatcher {
-
+//// TODO: 19.07.17 правки анологичные CardioExPerformFragment  
     //region fields
     public final static String FRAGMENT_TAG = ExerciseModel.ExerciseType.POWER.name();
 
