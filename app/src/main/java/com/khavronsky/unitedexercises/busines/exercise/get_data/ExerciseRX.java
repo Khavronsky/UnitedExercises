@@ -12,7 +12,7 @@ import java.util.List;
 import rx.Observable;
 
 
-public class ExerciseRX implements ExercisesInteractor {
+public class ExerciseRX implements IExercisesInteractor {
 
     @NonNull
     public  Observable<List<ExerciseModel>> getCustomExerciseList() {

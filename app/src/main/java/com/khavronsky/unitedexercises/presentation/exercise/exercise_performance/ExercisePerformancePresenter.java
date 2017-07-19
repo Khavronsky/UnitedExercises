@@ -2,7 +2,7 @@ package com.khavronsky.unitedexercises.presentation.exercise.exercise_performanc
 
 
 import com.khavronsky.unitedexercises.busines.exercise.get_data.ExerciseRX;
-import com.khavronsky.unitedexercises.busines.exercise.get_data.ExercisesInteractor;
+import com.khavronsky.unitedexercises.busines.exercise.get_data.IExercisesInteractor;
 import com.khavronsky.unitedexercises.busines.exercise.get_data.FakeData;
 import com.khavronsky.unitedexercises.presentation.exercise.exercises_models.CardioExerciseModel;
 import com.khavronsky.unitedexercises.presentation.exercise.exercises_models.ExerciseModel;
@@ -19,12 +19,12 @@ public class ExercisePerformancePresenter extends AbstractPresenter<IView> {
 
     private static final int DEFAULT_EXERCISE_DURATION = 60;
 
-    private ExercisesInteractor mExercisesInteractor;
+    private IExercisesInteractor mIExercisesInteractor;
 
     private ModelOfExercisePerformance modelOfExercisePerformance;
 
     public ExercisePerformancePresenter() {
-        mExercisesInteractor = new ExerciseRX();
+        mIExercisesInteractor = new ExerciseRX();
     }
 
     public void editExPerformance(final ModelOfExercisePerformance exercisePerformance) {
@@ -56,7 +56,7 @@ public class ExercisePerformancePresenter extends AbstractPresenter<IView> {
 
     public void addExPerformance(ModelOfExercisePerformance modelOfExercisePerformance) {
         this.modelOfExercisePerformance = modelOfExercisePerformance;
-        mExercisesInteractor.addExercisePerformance(modelOfExercisePerformance)
+        mIExercisesInteractor.addExercisePerformance(modelOfExercisePerformance)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<Boolean>() {
@@ -79,7 +79,7 @@ public class ExercisePerformancePresenter extends AbstractPresenter<IView> {
 
     public void saveEditedExPerformance(ModelOfExercisePerformance modelOfExercisePerformance) {
         this.modelOfExercisePerformance = modelOfExercisePerformance;
-        mExercisesInteractor.editExercisePerformance(modelOfExercisePerformance)
+        mIExercisesInteractor.editExercisePerformance(modelOfExercisePerformance)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<Boolean>() {
@@ -101,7 +101,7 @@ public class ExercisePerformancePresenter extends AbstractPresenter<IView> {
     }
 
     public void delExPerformance(ModelOfExercisePerformance modelOfExercisePerformance) {
-        mExercisesInteractor.delExercisePerformance(modelOfExercisePerformance.getId())
+        mIExercisesInteractor.delExercisePerformance(modelOfExercisePerformance.getId())
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<Boolean>() {

@@ -11,7 +11,7 @@ import java.util.List;
 
 import rx.Observable;
 
-public interface ExercisesInteractor {
+public interface IExercisesInteractor {
 
     /**
      * @return Список упражнений, созданных пользователем

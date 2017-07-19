@@ -1,7 +1,7 @@
 package com.khavronsky.unitedexercises.presentation.exercise.exercises_catalogs.default_ex_catalog;
 
 import com.khavronsky.unitedexercises.busines.exercise.get_data.ExerciseRX;
-import com.khavronsky.unitedexercises.busines.exercise.get_data.ExercisesInteractor;
+import com.khavronsky.unitedexercises.busines.exercise.get_data.IExercisesInteractor;
 import com.khavronsky.unitedexercises.presentation.exercise.exercises_models.ExerciseModel;
 import com.khavronsky.unitedexercises.utils.import_from_grand_project.AbstractPresenter;
 
@@ -18,14 +18,14 @@ import static com.khavronsky.unitedexercises.presentation.exercise.exercises_cat
 
 public class DefaultExPresenter extends AbstractPresenter<IView> {
 
-    private ExercisesInteractor mExercisesInteractor;
+    private IExercisesInteractor mIExercisesInteractor;
 
     public DefaultExPresenter() {
-        mExercisesInteractor = new ExerciseRX();
+        mIExercisesInteractor = new ExerciseRX();
     }
 
     public void loadData(final ExerciseModel.ExerciseType type) {
-        mExercisesInteractor.getDefaultExerciseList()
+        mIExercisesInteractor.getDefaultExerciseList()
                 .map(defExModels -> new ArrayList<ExerciseModel>() {{
                     for (ExerciseModel model :
                             defExModels) {
