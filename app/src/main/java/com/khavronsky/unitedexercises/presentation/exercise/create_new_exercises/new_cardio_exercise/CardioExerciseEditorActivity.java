@@ -40,10 +40,6 @@ import static com.khavronsky.unitedexercises.utils.import_from_grand_project.Flo
 
 public class CardioExerciseEditorActivity extends AppCompatActivity implements View.OnClickListener,
         IView {
-    
-    //// TODO: 19.07.17  Лучше сделать все в ФРАГМЕНТЕ ПОТОМУ ЧТО НАМ МОЖЕТ ПОНАДОБИТЬСЯ ОТКРЫТЬ ИЗ ДРУГОГО активити
-//    и переключение межде фрагментами быстрее, activity_toolbar_pattern_v2 - разметка activity и в нее вставляем
-// фрагмент
 
     //region FIELDS
     @BindView(R.id.toolbar)
@@ -144,7 +140,7 @@ public class CardioExerciseEditorActivity extends AppCompatActivity implements V
         dialog = new FloatNumPickerFragment();
         Bundle bundle = new Bundle();
         bundle.putInt("min_value", 0);
-        bundle.putInt("max_value", 2);
+        bundle.putInt("max_value", 200);
         float curVal = 1;
         if (editText.getText().length() != 0) {
             curVal = Float.parseFloat(String.valueOf(editText.getText()));
@@ -170,7 +166,6 @@ public class CardioExerciseEditorActivity extends AppCompatActivity implements V
 
         dialog.show(getSupportFragmentManager(), mPickerTag);
     }
-
 
     private void setTextWatcher() {
         mExerciseTitle.addTextChangedListener(mTextWatcher);
