@@ -5,16 +5,19 @@ import android.app.Application;
 
 public class App extends Application {
 
-    public static AppComponent getComponent() {
-        return mComponent;
-    }
+    private static AppComponent sAppComponent;
 
-    private static AppComponent mComponent;
+    private static ExComponent sExComponent;
 
     @Override
     public void onCreate() {
         super.onCreate();
 
-        mComponent = DaggerAppComponent.create();
+        sAppComponent = DaggerAppComponent.create();
+        sExComponent = sAppComponent.createExComponent();
+    }
+
+    public static ExComponent getComponent() {
+        return sExComponent;
     }
 }

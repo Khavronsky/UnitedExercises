@@ -9,7 +9,7 @@ import dagger.Module;
 import dagger.Provides;
 
 @Module
-public class ExerciseCatalogModule {
+public class ExCatModule {
 
     @Provides
     CustomExPresenter provideCustomExPresenter (IExercisesInteractor interactor){

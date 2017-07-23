@@ -8,7 +8,7 @@ import dagger.Module;
 import dagger.Provides;
 
 @Module
-public class ExerciseEditorModule {
+public class ExEditorModule {
 
     @Provides
     CardioExerciseEditorPresenter provideCardioExerciseEditorPresenter(IExercisesInteractor interactor) {

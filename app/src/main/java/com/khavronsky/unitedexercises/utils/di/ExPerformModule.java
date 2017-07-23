@@ -7,7 +7,7 @@ import dagger.Module;
 import dagger.Provides;
 
 @Module
-public class ExercisePerformanceModule {
+public class ExPerformModule {
 
     @Provides
     ExercisePerformancePresenter provideExercisePerformancePresenter (IExercisesInteractor interactor){
