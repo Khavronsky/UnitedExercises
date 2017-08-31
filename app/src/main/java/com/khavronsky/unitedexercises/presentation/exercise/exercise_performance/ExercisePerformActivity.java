@@ -153,13 +153,14 @@ public class ExercisePerformActivity extends AppCompatActivity implements View.O
             fragment = CardioExPerformFragment.newInstance(mModelOfExercisePerformance);
 
 
-            //TODO с фрагиентами общаться через листене очень не правильно
+            //TODO с фрагментами общаться через листенер очень не правильно
             //Нужно работать в обратную сторону во фрагменте взять getActivity во фрагменте посмотреть кастуеться
             // ли к нужному интерфейсу и все ок
             // тоже самое когда делали переключение кардио силовые мне тоже очень непонравилось ваще решение
             // да оно будет работать в наших условиях но нужно писать правильный код, а правильный код
             // это не использовать getter setter constructor у фрагментов!!!!!! мы подвержены багам
-            // при повороте/пересодании мы упадем на нуллпоинтере. Если у нас есть листенер нам нужно проверять на нуллл!!!
+            // при повороте/пересоздании мы упадем на нуллпоинтере. Если у нас есть листенер нам нужно проверять
+            // на нуллл!!!
             ((CardioExPerformFragment) fragment).setListener(this);
         } else {
             fragment = PowerExPerformFragment.newInstance(mModelOfExercisePerformance);

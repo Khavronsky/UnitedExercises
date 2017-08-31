@@ -26,9 +26,9 @@
                 android:id="@+id/ex_power_perform_start_time"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Время начала"
                 android:cursorVisible="false"
                 android:focusable="false"
+                android:hint="Время начала"
                 android:maxLines="1"
                 android:textColor="@color/gray5"
                 android:textSize="16sp" />
@@ -52,15 +52,16 @@
                 android:id="@+id/ex_power_perform_duration"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Продолжительность"
                 android:cursorVisible="false"
                 android:focusable="false"
+                android:hint="Продолжительность"
                 android:maxLines="1"
                 android:textColor="@color/gray5"
                 android:textSize="16sp" />
         </android.support.design.widget.TextInputLayout>
 
     </LinearLayout>
+
     <android.support.design.widget.TextInputLayout
         android:id="@+id/ex_power_perform_sets_layout"
         android:layout_width="match_parent"
@@ -117,6 +118,7 @@
             android:hint="Вес за подход (кг)"
             android:textSize="16sp" />
     </android.support.design.widget.TextInputLayout>
+
     <android.support.design.widget.TextInputLayout
         android:id="@+id/ex_power_perform_note_layout"
         android:layout_width="match_parent"
@@ -132,6 +134,30 @@
             android:layout_height="wrap_content"
             android:hint="Заметка"
             android:textSize="16sp" />
-    </android.support.design.widget.TextInputLayout>
 
+        <LinearLayout
+            android:id="@+id/cardio_ex_perform_letters_counter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/cardio_ex_number_of_letters"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="110" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="/" />
+
+            <TextView
+                android:id="@+id/cardio_ex_letters_limit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="120" />
+        </LinearLayout>
+    </android.support.design.widget.TextInputLayout>
 </LinearLayout>
