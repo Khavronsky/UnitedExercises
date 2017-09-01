@@ -161,7 +161,7 @@ public class ExercisePerformActivity extends AppCompatActivity implements View.O
             // это не использовать getter setter constructor у фрагментов!!!!!! мы подвержены багам
             // при повороте/пересоздании мы упадем на нуллпоинтере. Если у нас есть листенер нам нужно проверять
             // на нуллл!!!
-            ((CardioExPerformFragment) fragment).setListener(this);
+//            ((CardioExPerformFragment) fragment).setListener(this);
         } else {
             fragment = PowerExPerformFragment.newInstance(mModelOfExercisePerformance);
         }

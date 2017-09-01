@@ -1,21 +1,22 @@
 package com.khavronsky.unitedexercises.presentation.exercise.exercise_performance.fragments;
 
 import com.khavronsky.unitedexercises.R;
+import com.khavronsky.unitedexercises.presentation.exercise.exercise_performance.ExercisePerformActivity;
 import com.khavronsky.unitedexercises.presentation.exercise.exercises_models.CardioExerciseModel;
 import com.khavronsky.unitedexercises.presentation.exercise.exercises_models.ExerciseModel;
 import com.khavronsky.unitedexercises.presentation.exercise.exercises_models.ModelOfExercisePerformance;
+import com.khavronsky.unitedexercises.utils.TextWatcherWithPostfix;
 import com.khavronsky.unitedexercises.utils.import_from_grand_project.BaseDialogFragment;
 import com.khavronsky.unitedexercises.utils.import_from_grand_project.IDialogFragment;
-import com.khavronsky.unitedexercises.utils.import_from_grand_project.IntNumPickerFragment;
 import com.khavronsky.unitedexercises.utils.import_from_grand_project.TimePickerDialogFragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
-import android.text.InputFilter;
 import android.text.TextWatcher;
 import android.text.format.DateUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,7 +24,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 
 import java.util.Calendar;
 
@@ -33,8 +33,6 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 
 import static android.view.View.GONE;
-import static android.view.View.INVISIBLE;
-import static android.view.View.VISIBLE;
 
 
 public class CardioExPerformFragment extends Fragment implements IDialogFragment, TextWatcher {
@@ -43,8 +41,7 @@ public class CardioExPerformFragment extends Fragment implements IDialogFragment
 
     public final static String FRAGMENT_TAG = ExerciseModel.ExerciseType.CARDIO.name();
 
-    public static final int LETTERS_LIMIT = 10;
-
+    private final static String POSTFIX_FOR_DURATION_FIELD = " мин";
 
     @BindView(R.id.ex_cardio_perform_start_time)
     EditText mExCardioPerformStartTime;
@@ -58,22 +55,11 @@ public class CardioExPerformFragment extends Fragment implements IDialogFragment
     @BindView(R.id.ex_cardio_perform_note)
     EditText mExCardioPerformNote;
 
-    @BindView(R.id.ex_cardio_perform_note_layout)
-    View layout;
-
     @BindView(R.id.ex_cardio_perform_intensity_area)
     View intensityArea;
 
-    @BindView(R.id.cardio_ex_perform_letters_counter)
-    View lettersCounter;
-
-    @BindView(R.id.cardio_ex_number_of_letters)
-    TextView numberOfLettersTV;
-
-    @BindView(R.id.cardio_ex_letters_limit)
-    TextView lettersLimitTV;
-
-    private int numberOfLetters;
+    @BindView(R.id.ex_cardio_perform_frg)
+    View rootLayout;
 
     private Calendar date = Calendar.getInstance();
 
@@ -83,7 +69,7 @@ public class CardioExPerformFragment extends Fragment implements IDialogFragment
 
     private ModelOfExercisePerformance mModelOfExercisePerformance;
 
-    private IExerciseListener mListener;
+//    private IExerciseListener mListener;
 
     //endregion
 
@@ -96,9 +82,9 @@ public class CardioExPerformFragment extends Fragment implements IDialogFragment
         return fragment;
     }
 
-    public void setListener(final IExerciseListener listener) {
-        mListener = listener;
-    }
+//    public void setListener(final IExerciseListener listener) {
+//        mListener = listener;
+//    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -118,7 +104,18 @@ public class CardioExPerformFragment extends Fragment implements IDialogFragment
 
     private void init(final View v) {
         setDate();
-        mExCardioPerformDuration.setText(String.valueOf(mModelOfExercisePerformance.getDuration()));
+        mExCardioPerformDuration
+                .setText(String.valueOf(mModelOfExercisePerformance.getDuration()) + POSTFIX_FOR_DURATION_FIELD);
+        TextWatcherWithPostfix textWatcherWithPostfix = new TextWatcherWithPostfix(" мин", mExCardioPerformDuration);
+        textWatcherWithPostfix.setListener((value, textWithPostfix) -> {
+            Log.d("WTF", "value: " + value + " textWithPostfix " + textWithPostfix);
+            mModelOfExercisePerformance.setDuration(value);
+            mExCardioPerformDuration.setText(textWithPostfix);
+            ((IExerciseListener) getActivity()).updateModel(mModelOfExercisePerformance);
+            if (getActivity() instanceof IExerciseListener) {
+            }
+        });
+        mExCardioPerformDuration.addTextChangedListener(textWatcherWithPostfix);
         if (((CardioExerciseModel) mModelOfExercisePerformance.getExercise()).getIntensityType()
                 == CardioExerciseModel.TYPE_SPECIFY) {
             setSpinners();
@@ -127,25 +124,16 @@ public class CardioExPerformFragment extends Fragment implements IDialogFragment
             mModelOfExercisePerformance.setCurrentKcalPerHour(((CardioExerciseModel)
                     mModelOfExercisePerformance.getExercise()).getDefValue());
 
-            if (mListener != null) {
-                mListener.updateModel(mModelOfExercisePerformance);
+//            if (mListener != null) {
+//                mListener.updateModel(mModelOfExercisePerformance);
+//            }
+            if (getActivity() instanceof IExerciseListener) {
+                ((IExerciseListener) getActivity()).updateModel(mModelOfExercisePerformance);
             }
         }
-        InputFilter[] filterArray = new InputFilter[1];
-        filterArray[0] = new InputFilter.LengthFilter(LETTERS_LIMIT);
         mExCardioPerformNote.setText(mModelOfExercisePerformance.getNote());
         mExCardioPerformNote.addTextChangedListener(this);
-        mExCardioPerformNote.setFilters(filterArray);
-        lettersLimitTV.setText(String.valueOf(LETTERS_LIMIT));
-//        layout.setFocusableInTouchMode(true);
-
-        mExCardioPerformNote.setOnFocusChangeListener((v1, hasFocus) -> {
-            int visibility = INVISIBLE;
-            if (hasFocus) {
-                visibility = VISIBLE;
-            }
-            lettersCounter.setVisibility(visibility);
-        });
+        rootLayout.setFocusableInTouchMode(true);
     }
 
     @Override
@@ -155,19 +143,13 @@ public class CardioExPerformFragment extends Fragment implements IDialogFragment
 
     @Override
     public void onTextChanged(CharSequence s, final int start, final int before, final int count) {
-        numberOfLetters = s.length();
-//        numberOfLetters = count;
         mModelOfExercisePerformance.setNote(String.valueOf(s));
-        numberOfLettersTV.setText(String.valueOf(numberOfLetters));
 
     }
 
     @Override
-    public void afterTextChanged(final Editable s) {
-//        if (s.length() > LETTERS_LIMIT) {
-//
-//            s.delete(s.length() - 1, s.length());
-//        }
+    public void afterTextChanged(Editable s) {
+
     }
 
     @OnClick({R.id.ex_cardio_perform_start_time, R.id.ex_cardio_perform_duration})
@@ -181,16 +163,9 @@ public class CardioExPerformFragment extends Fragment implements IDialogFragment
                     mDialog.setCallback(this);
                     mDialog.show(getActivity().getSupportFragmentManager(), "time_picker_dialog");
                 }
-                //TODO
 
                 break;
             case R.id.ex_cardio_perform_duration:
-//                if (mDialog == null) {
-//                    mDialog = IntNumPickerFragment
-//                            .newInstance(0, 1440, mModelOfExercisePerformance.getDuration(), 1);
-//                    mDialog.setCallback(this);
-//                    mDialog.show(getActivity().getSupportFragmentManager(), "int_picker_dialog");
-//                }
                 break;
         }
     }
@@ -203,13 +178,8 @@ public class CardioExPerformFragment extends Fragment implements IDialogFragment
             mDialog = null;
             setDate();
         }
-        if (mDialog instanceof IntNumPickerFragment) {
-            mModelOfExercisePerformance.setDuration((int) o);
-            mDialog.dismiss();
-            mDialog = null;
-            mExCardioPerformDuration.setText(o + " мин");
-        }
-        mListener.updateModel(mModelOfExercisePerformance);
+//        mListener.updateModel(mModelOfExercisePerformance);
+        ((ExercisePerformActivity)getActivity()).updateModel(mModelOfExercisePerformance);
     }
 
     @Override
@@ -253,7 +223,9 @@ public class CardioExPerformFragment extends Fragment implements IDialogFragment
                                 mModelOfExercisePerformance.getExercise()).getHigh());
                         break;
                 }
-                mListener.updateModel(mModelOfExercisePerformance);
+                if (getActivity() instanceof IExerciseListener) {
+                    ((IExerciseListener) getActivity()).updateModel(mModelOfExercisePerformance);
+                }
             }
 
             @Override

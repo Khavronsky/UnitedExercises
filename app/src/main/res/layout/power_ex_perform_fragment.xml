@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout android:id="@+id/ex_power_perform_frg"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -63,68 +64,13 @@
     </LinearLayout>
 
     <android.support.design.widget.TextInputLayout
-        android:id="@+id/ex_power_perform_sets_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:focusable="false"
-        app:errorEnabled="false"
-        app:errorTextAppearance="@style/HintTextStyle">
-
-        <EditText
-            android:id="@+id/ex_power_perform_sets"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:cursorVisible="false"
-            android:focusable="false"
-            android:hint="Число подходов"
-            android:textSize="16sp" />
-    </android.support.design.widget.TextInputLayout>
-
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/ex_power_perform_repeats_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:focusable="false"
-        app:errorEnabled="false"
-        app:errorTextAppearance="@style/HintTextStyle">
-
-        <EditText
-            android:id="@+id/ex_power_perform_repeats"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:cursorVisible="false"
-            android:focusable="false"
-            android:hint="Повторений в подходе"
-            android:textSize="16sp" />
-    </android.support.design.widget.TextInputLayout>
-
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/ex_power_perform_weight_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:focusable="false"
-        app:errorEnabled="false"
-        app:errorTextAppearance="@style/HintTextStyle">
-
-        <EditText
-            android:id="@+id/ex_power_perform_weight"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:cursorVisible="false"
-            android:focusable="false"
-            android:hint="Вес за подход (кг)"
-            android:textSize="16sp" />
-    </android.support.design.widget.TextInputLayout>
-
-    <android.support.design.widget.TextInputLayout
         android:id="@+id/ex_power_perform_note_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:focusable="false"
+        app:counterEnabled="true"
+        app:counterMaxLength="120"
         app:errorEnabled="false"
         app:errorTextAppearance="@style/HintTextStyle">
 
@@ -133,31 +79,63 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Заметка"
+            android:maxLength="120"
             android:textSize="16sp" />
+    </android.support.design.widget.TextInputLayout>
 
-        <LinearLayout
-            android:id="@+id/cardio_ex_perform_letters_counter"
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:orientation="horizontal"
+        android:paddingBottom="8dp"
+        android:paddingEnd="5dp"
+        android:paddingStart="5dp"
+        android:paddingTop="8dp">
+
+        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/cardio_ex_number_of_letters"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="110" />
+            android:src="@drawable/ic_add_copy" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="/" />
+        <TextView
+            android:id="@+id/ex_power_perform_add_sets_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginStart="10dp"
+            android:fontFamily="sans-serif-medium"
+            android:lineSpacingExtra="6sp"
+            android:text="ДОБАВИТЬ ПОДХОДЫ"
+            android:textColor="@color/gold3"
+            android:textSize="14sp"
+            android:textStyle="normal" />
 
-            <TextView
-                android:id="@+id/cardio_ex_letters_limit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="120" />
-        </LinearLayout>
-    </android.support.design.widget.TextInputLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ex_power_perform_sets"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/ex_power_perform_sets_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif"
+            android:text="Подходы в упражнении"
+            android:textColor="@color/gray2"
+            android:textSize="12sp"
+            android:textStyle="normal" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/ex_power_perform_sets_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+        </android.support.v7.widget.RecyclerView>
+    </LinearLayout>
 </LinearLayout>

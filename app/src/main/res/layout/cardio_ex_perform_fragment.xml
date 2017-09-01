@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout android:id="@+id/ex_cardio_perform_frg"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center"
     android:background="@color/bg"
+    android:focusable="true"
     android:orientation="vertical"
     android:padding="16dp"
     android:theme="@style/EditTextStyle">
@@ -18,6 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:focusable="false"
             app:errorEnabled="false"
             app:errorTextAppearance="@style/HintTextStyle">
 
@@ -25,8 +28,9 @@
                 android:id="@+id/ex_cardio_perform_start_time"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:cursorVisible="false"
+                android:focusable="false"
                 android:hint="Время начала"
-                android:inputType="datetime"
                 android:maxLines="1"
                 android:textColor="@color/gray5"
                 android:textSize="16sp" />
@@ -51,6 +55,7 @@
                 android:layout_height="wrap_content"
                 android:hint="Продолжительность"
                 android:inputType="number"
+                android:maxLength="9"
                 android:maxLines="1"
                 android:textColor="@color/gray5"
                 android:textSize="16sp" />
@@ -97,6 +102,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        app:counterEnabled="true"
+        app:counterMaxLength="120"
         app:errorEnabled="false"
         app:errorTextAppearance="@style/HintTextStyle">
 
@@ -105,34 +112,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Заметка"
-            android:textSize="16sp"
-            />
-
-        <LinearLayout
-            android:id="@+id/cardio_ex_perform_letters_counter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:visibility="invisible"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/cardio_ex_number_of_letters"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="0" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="/" />
-
-            <TextView
-                android:id="@+id/cardio_ex_letters_limit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="0" />
-        </LinearLayout>
+            android:maxLength="120"
+            android:textSize="16sp" />
 
     </android.support.design.widget.TextInputLayout>
 
