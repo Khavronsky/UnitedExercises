@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:background="@color/bg"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/layout_toolbar" />
+
+    <View
+        android:id="@+id/actionBaShadowView"
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:layout_below="@+id/toolbar"
+        android:layout_marginTop="-1dp"
+        android:background="@drawable/bottom_shadow_dark" />
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/toolbar">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_cardio_ex" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="14dp"
+                android:layout_marginTop="14dp"
+                android:fontFamily="sans-serif"
+                android:gravity="center_horizontal"
+                android:lineSpacingExtra="6sp"
+                android:textColor="@color/gray5"
+                android:textSize="14sp"
+                android:textStyle="normal"
+                android:text="Расчет калорий для силовых упражнений" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                android:layout_marginTop="16dp"
+                android:fontFamily="sans-serif-light"
+                android:lineSpacingExtra="6sp"
+                android:textColor="@color/gray3"
+                android:textSize="14sp"
+                android:textStyle="normal"
+                android:text="ONETRAK считает калории только для упражнений из раздела «Кардио», так как оценка сожженных калорий от выполнения силовых упражнений зависит от ряда факторов: насколько энергично вы выполняли упражнение, сколько отдыхали между подходами и тд." />
+
+            <View
+                android:layout_width="48dp"
+                android:layout_height="1dp"
+                android:background="@color/gray2" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                android:layout_marginTop="24dp"
+                android:fontFamily="sans-serif-light"
+                android:lineSpacingExtra="6sp"
+                android:textColor="@color/gray3"
+                android:textSize="14sp"
+                android:textStyle="normal"
+                android:text="Вы можете найти «Силовые тренировки» в разделе «кардио», но следует помнить,что эта оценка может иметь погрешности. " />
+
+            <View
+                android:layout_width="48dp"
+                android:layout_height="1dp"
+                android:background="@color/gray2" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                android:layout_marginTop="24dp"
+                android:fontFamily="sans-serif-light"
+                android:lineSpacingExtra="6sp"
+                android:textColor="@color/gray3"
+                android:textSize="14sp"
+                android:textStyle="normal"
+                android:text="Если у вас есть данные о количестве сожженных калорий для того или иного вида активности (например,  с ЧСС-датчика), вы можете добавить их как новую тренировку в раздел «Мои упражнения» и далее использовать в своем дневнике." />
+
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+</RelativeLayout>

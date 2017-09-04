@@ -20,6 +20,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import java.util.Calendar;
 
@@ -151,17 +152,6 @@ public class ExercisePerformActivity extends AppCompatActivity implements View.O
         FragmentManager fragmentManager = getSupportFragmentManager();
         if (tag == CARDIO.name()) {
             fragment = CardioExPerformFragment.newInstance(mModelOfExercisePerformance);
-
-
-            //TODO с фрагментами общаться через листенер очень не правильно
-            //Нужно работать в обратную сторону во фрагменте взять getActivity во фрагменте посмотреть кастуеться
-            // ли к нужному интерфейсу и все ок
-            // тоже самое когда делали переключение кардио силовые мне тоже очень непонравилось ваще решение
-            // да оно будет работать в наших условиях но нужно писать правильный код, а правильный код
-            // это не использовать getter setter constructor у фрагментов!!!!!! мы подвержены багам
-            // при повороте/пересоздании мы упадем на нуллпоинтере. Если у нас есть листенер нам нужно проверять
-            // на нуллл!!!
-//            ((CardioExPerformFragment) fragment).setListener(this);
         } else {
             fragment = PowerExPerformFragment.newInstance(mModelOfExercisePerformance);
         }
@@ -208,13 +198,17 @@ public class ExercisePerformActivity extends AppCompatActivity implements View.O
 
     @OnClick(R.id.ex_performance_add_btn)
     void addExercise() {
-        mModelOfExercisePerformance.setLastChangedTime(Calendar.getInstance().getTimeInMillis());
-        if (newPerformance) {
-            mPresenter.addExPerformance(mModelOfExercisePerformance);
+        if(mModelOfExercisePerformance.getDuration() > 0) {
+            mModelOfExercisePerformance.setLastChangedTime(Calendar.getInstance().getTimeInMillis());
+            if (newPerformance) {
+                mPresenter.addExPerformance(mModelOfExercisePerformance);
+            } else {
+                mPresenter.saveEditedExPerformance(mModelOfExercisePerformance);
+            }
+            onBackPressed();
         } else {
-            mPresenter.saveEditedExPerformance(mModelOfExercisePerformance);
+            Toast.makeText(this, "Введите продолжительность упражнения", Toast.LENGTH_SHORT).show();
         }
-        onBackPressed();
     }
 
     @Override

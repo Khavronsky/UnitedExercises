@@ -42,8 +42,8 @@ public class TextWatcherWithPostfix implements TextWatcher {
             if (Integer.parseInt(arr[0]) == 0) {
                 s.clear();
             }
-            Log.d("WTF", "TextChanged1: " + Integer.parseInt(arr[0]) + "  " + arr[0] + arr[1]);
-            listener.textChanged(Integer.parseInt(arr[0]), arr[0] + " " + arr[1]);
+            Log.d("WTF", "TextChanged1: " + Integer.parseInt(arr[0]) + "  " + arr[0] + " " + arr[1]);
+            listener.valueChanged(Integer.parseInt(arr[0]));
 
         } else if (arr.length == 2 && "".equals(arr[0]) && postfix.equals(" " + arr[1])) {
 
@@ -59,8 +59,8 @@ public class TextWatcherWithPostfix implements TextWatcher {
                 }
             }
 //            mEditText.setText(sb.toString() + postfix);
-            Log.d("WTF", "TextChanged2: " + Integer.parseInt(sb.toString()) + " " + sb.toString() + postfix);
-            listener.textChanged(Integer.parseInt(sb.toString()), sb.toString() + postfix);
+//            Log.d("WTF", "TextChanged2: " + Integer.parseInt(sb.toString()) + " " + sb.toString() + postfix);
+            listener.textChanged(sb.toString() + postfix);
         }
     }
 
@@ -78,6 +78,8 @@ public class TextWatcherWithPostfix implements TextWatcher {
 
     public interface ITextWatcherListener {
 
-        void textChanged(int value, String textWithPostfix);
+        void valueChanged(int value);
+
+        void textChanged(String textWithPostfix);
     }
 }

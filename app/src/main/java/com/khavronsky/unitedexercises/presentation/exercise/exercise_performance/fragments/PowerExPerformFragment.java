@@ -27,6 +27,7 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 
 public class PowerExPerformFragment extends Fragment implements IDialogFragment, TextWatcher {
+
     //region fields
     public final static String FRAGMENT_TAG = ExerciseModel.ExerciseType.POWER.name();
 
@@ -77,9 +78,17 @@ public class PowerExPerformFragment extends Fragment implements IDialogFragment,
         setDate();
         mDuration.setText(String.valueOf(mModelOfExercisePerformance.getDuration()) + POSTFIX_FOR_DURATION_FIELD);
         TextWatcherWithPostfix textWatcherWithPostfix = new TextWatcherWithPostfix(" мин", mDuration);
-        textWatcherWithPostfix.setListener((value, textWithPostfix) -> {
-            mModelOfExercisePerformance.setDuration(value);
-            mDuration.setText(textWithPostfix);
+        textWatcherWithPostfix.setListener(new TextWatcherWithPostfix.ITextWatcherListener() {
+            @Override
+            public void valueChanged(final int value) {
+                mModelOfExercisePerformance.setDuration(value);
+
+            }
+
+            @Override
+            public void textChanged(final String textWithPostfix) {
+                mDuration.setText(textWithPostfix);
+            }
         });
         mDuration.addTextChangedListener(textWatcherWithPostfix);
         mNote.setText(mModelOfExercisePerformance.getNote());
@@ -143,6 +152,7 @@ public class PowerExPerformFragment extends Fragment implements IDialogFragment,
     public void doButtonClick2() {
         mDialog = null;
     }
+
     @Override
     public void doByDismissed() {
         mDialog = null;

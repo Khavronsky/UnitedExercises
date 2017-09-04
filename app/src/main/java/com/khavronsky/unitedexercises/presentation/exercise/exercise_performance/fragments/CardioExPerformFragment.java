@@ -16,7 +16,6 @@ import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.text.format.DateUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -106,13 +105,20 @@ public class CardioExPerformFragment extends Fragment implements IDialogFragment
         setDate();
         mExCardioPerformDuration
                 .setText(String.valueOf(mModelOfExercisePerformance.getDuration()) + POSTFIX_FOR_DURATION_FIELD);
-        TextWatcherWithPostfix textWatcherWithPostfix = new TextWatcherWithPostfix(" мин", mExCardioPerformDuration);
-        textWatcherWithPostfix.setListener((value, textWithPostfix) -> {
-            Log.d("WTF", "value: " + value + " textWithPostfix " + textWithPostfix);
-            mModelOfExercisePerformance.setDuration(value);
-            mExCardioPerformDuration.setText(textWithPostfix);
-            ((IExerciseListener) getActivity()).updateModel(mModelOfExercisePerformance);
-            if (getActivity() instanceof IExerciseListener) {
+        TextWatcherWithPostfix textWatcherWithPostfix = new TextWatcherWithPostfix(" мин",
+                mExCardioPerformDuration);
+        textWatcherWithPostfix.setListener(new TextWatcherWithPostfix.ITextWatcherListener() {
+            @Override
+            public void valueChanged(final int value) {
+                mModelOfExercisePerformance.setDuration(value);
+                if (getActivity() instanceof IExerciseListener) {
+                    ((IExerciseListener) getActivity()).updateModel(mModelOfExercisePerformance);
+                }
+            }
+
+            @Override
+            public void textChanged(final String textWithPostfix) {
+                mExCardioPerformDuration.setText(textWithPostfix);
             }
         });
         mExCardioPerformDuration.addTextChangedListener(textWatcherWithPostfix);
@@ -179,7 +185,7 @@ public class CardioExPerformFragment extends Fragment implements IDialogFragment
             setDate();
         }
 //        mListener.updateModel(mModelOfExercisePerformance);
-        ((ExercisePerformActivity)getActivity()).updateModel(mModelOfExercisePerformance);
+        ((ExercisePerformActivity) getActivity()).updateModel(mModelOfExercisePerformance);
     }
 
     @Override
