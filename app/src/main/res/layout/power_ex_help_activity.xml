@@ -33,7 +33,7 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_lift_ex" />
+                android:src="@drawable/ic_cardio_ex" />
 
             <TextView
                 android:layout_width="wrap_content"
