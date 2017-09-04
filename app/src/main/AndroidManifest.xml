@@ -22,12 +22,16 @@
         <activity
             android:name=".presentation.exercise.exercise_performance.ExercisePerformActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".presentation.exercise.create_new_exercises.new_cardio_exercise.CardioExerciseEditorActivity"
+        <activity
+            android:name=".presentation.exercise.create_new_exercises.new_cardio_exercise.CardioExerciseEditorActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".presentation.exercise.create_new_exercises.new_power_exercise.PowerExerciseEditorActivity"
+        <activity
+            android:name=".presentation.exercise.create_new_exercises.new_power_exercise.PowerExerciseEditorActivity"
             android:screenOrientation="portrait" />
-        <activity android:name= ".presentation.exercise.exercises_catalogs.ExerciseCatalogActivity"
+        <activity
+            android:name=".presentation.exercise.exercises_catalogs.ExerciseCatalogActivity"
             android:screenOrientation="portrait" />
+        <activity android:name=".presentation.exercise.PowerExHelp"></activity>
     </application>
 
 </manifest>

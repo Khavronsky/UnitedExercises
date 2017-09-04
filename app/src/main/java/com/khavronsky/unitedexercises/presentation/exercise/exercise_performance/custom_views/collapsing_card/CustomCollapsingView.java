@@ -2,8 +2,10 @@ package com.khavronsky.unitedexercises.presentation.exercise.exercise_performanc
 
 
 import com.khavronsky.unitedexercises.R;
+import com.khavronsky.unitedexercises.presentation.exercise.PowerExHelp;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
@@ -110,9 +112,10 @@ public class CustomCollapsingView extends CoordinatorLayout implements Collapsed
         mInnerCollapsedCard.setImageID(mImageID);
         if (mShowAlertView) {
             mInnerCollapsedCard.getAlertView().setVisibility(VISIBLE);
+            mInnerCollapsedCard.setOnClickListener(
+                    v -> getContext().startActivity(new Intent(getContext(), PowerExHelp.class)));
             mInnerCollapsedCard.getValueLayout().setVisibility(GONE);
         }
-
     }
 
     public CustomCollapsingView showAlertView(boolean show){

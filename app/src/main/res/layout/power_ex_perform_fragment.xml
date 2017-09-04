@@ -45,7 +45,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:focusable="false"
             app:errorEnabled="false"
             app:errorTextAppearance="@style/HintTextStyle">
 
@@ -53,8 +52,6 @@
                 android:id="@+id/ex_power_perform_duration"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:cursorVisible="false"
-                android:focusable="false"
                 android:hint="Продолжительность"
                 android:maxLines="1"
                 android:textColor="@color/gray5"
