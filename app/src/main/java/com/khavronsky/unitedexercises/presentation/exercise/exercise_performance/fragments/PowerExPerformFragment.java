@@ -1,23 +1,31 @@
 package com.khavronsky.unitedexercises.presentation.exercise.exercise_performance.fragments;
 
 import com.khavronsky.unitedexercises.R;
+import com.khavronsky.unitedexercises.presentation.exercise.exercise_performance.PowerExSetsRVAdapter;
+import com.khavronsky.unitedexercises.presentation.exercise.exercise_performance.dialogs.AddApproachDialog;
 import com.khavronsky.unitedexercises.presentation.exercise.exercises_models.ExerciseModel;
 import com.khavronsky.unitedexercises.presentation.exercise.exercises_models.ModelOfExercisePerformance;
+import com.khavronsky.unitedexercises.presentation.exercise.exercises_models.PowerExerciseModel;
 import com.khavronsky.unitedexercises.utils.TextWatcherWithPostfix;
 import com.khavronsky.unitedexercises.utils.import_from_grand_project.BaseDialogFragment;
 import com.khavronsky.unitedexercises.utils.import_from_grand_project.IDialogFragment;
+import com.khavronsky.unitedexercises.utils.import_from_grand_project.ItemClickSupport;
 import com.khavronsky.unitedexercises.utils.import_from_grand_project.TimePickerDialogFragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.text.format.DateUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import java.util.Calendar;
 
@@ -26,7 +34,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 
-public class PowerExPerformFragment extends Fragment implements IDialogFragment, TextWatcher {
+public class PowerExPerformFragment extends Fragment implements IDialogFragment, TextWatcher,
+        View.OnClickListener {
 
     //region fields
     public final static String FRAGMENT_TAG = ExerciseModel.ExerciseType.POWER.name();
@@ -45,6 +54,12 @@ public class PowerExPerformFragment extends Fragment implements IDialogFragment,
     @BindView(R.id.ex_power_perform_frg)
     View rootLayout;
 
+    @BindView(R.id.ex_power_perform_add_approach_btn)
+    TextView addApproachBtn;
+
+    @BindView(R.id.ex_power_perform_sets_list)
+    RecyclerView mRecyclerView;
+
     private Calendar date = Calendar.getInstance();
 
     private BaseDialogFragment mDialog;
@@ -52,6 +67,13 @@ public class PowerExPerformFragment extends Fragment implements IDialogFragment,
     private Unbinder unbinder;
 
     private ModelOfExercisePerformance mModelOfExercisePerformance;
+
+    private PowerExSetsRVAdapter mRVAdapter;
+
+    private AddApproachDialog approachDialog;
+
+    private AddApproachDialog.IApproachAdded mApproachAddedListener;
+
     //endregion
 
     //region creation&initialization
@@ -74,6 +96,12 @@ public class PowerExPerformFragment extends Fragment implements IDialogFragment,
         return v;
     }
 
+    @Override
+    public void onClick(final View v) {
+        showAddApproachDlg(true, ((PowerExerciseModel) mModelOfExercisePerformance.getExercise())
+                .getApproachList().size(), 0, 0);
+    }
+
     private void init(final View v) {
         setDate();
         mDuration.setText(String.valueOf(mModelOfExercisePerformance.getDuration()) + POSTFIX_FOR_DURATION_FIELD);
@@ -82,7 +110,6 @@ public class PowerExPerformFragment extends Fragment implements IDialogFragment,
             @Override
             public void valueChanged(final int value) {
                 mModelOfExercisePerformance.setDuration(value);
-
             }
 
             @Override
@@ -90,10 +117,65 @@ public class PowerExPerformFragment extends Fragment implements IDialogFragment,
                 mDuration.setText(textWithPostfix);
             }
         });
+        addApproachBtn.setOnClickListener(this);
         mDuration.addTextChangedListener(textWatcherWithPostfix);
         mNote.setText(mModelOfExercisePerformance.getNote());
         mNote.addTextChangedListener(this);
         rootLayout.setFocusableInTouchMode(true);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
+        mRecyclerView.setLayoutManager(layoutManager);
+        mRVAdapter = new PowerExSetsRVAdapter();
+        mRVAdapter.setExercise((PowerExerciseModel) mModelOfExercisePerformance.getExercise());
+        mRecyclerView.setAdapter(mRVAdapter);
+
+        ItemClickSupport.addTo(mRecyclerView).setOnItemLongClickListener(
+                (recyclerView, position, v1) -> {
+                    showAddApproachDlg(false, position,
+                            ((PowerExerciseModel) mModelOfExercisePerformance
+                                    .getExercise())
+                                    .getApproach(position)
+                                    .getRepeats(),
+                            ((PowerExerciseModel) mModelOfExercisePerformance
+                                    .getExercise())
+                                    .getApproach(position)
+                                    .getWeight());
+                    return true;
+                });
+    }
+
+    void showAddApproachDlg(boolean newApproach, int index, int repeats, int weight) {
+        if (approachDialog == null) {
+            approachDialog = AddApproachDialog.newInstance(newApproach, index, repeats, weight);
+            approachDialog.setListener(new AddApproachDialog.IApproachAdded() {
+                @Override
+                public void deleteEvent(int index) {
+                    if (index < ((PowerExerciseModel) mModelOfExercisePerformance.getExercise()).getApproachList
+                            ().size()) {
+                        ((PowerExerciseModel) mModelOfExercisePerformance.getExercise()).delApproach(index);
+                    }
+                    approachDialog = null;
+                }
+
+                @Override
+                public void saveEvent(boolean newApproach, int index, int repeats, int weight) {
+                    if (newApproach) {
+                        ((PowerExerciseModel) mModelOfExercisePerformance.getExercise()).addApproach(0, 0);
+                    }
+                    Log.d("WTF", "saveEvent: ");
+                    ((PowerExerciseModel) mModelOfExercisePerformance.getExercise()).getApproach(index)
+                            .setRepeats(repeats);
+                    ((PowerExerciseModel) mModelOfExercisePerformance.getExercise()).getApproach(index)
+                            .setWeight(weight);
+                    approachDialog = null;
+                }
+
+                @Override
+                public void dismiss() {
+                    approachDialog = null;
+                }
+            });
+            approachDialog.show(getFragmentManager(), "ApproachDlg");
+        }
     }
 
     private void setDate() {

@@ -97,7 +97,7 @@
             android:src="@drawable/ic_add_copy" />
 
         <TextView
-            android:id="@+id/ex_power_perform_add_sets_btn"
+            android:id="@+id/ex_power_perform_add_approach_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"

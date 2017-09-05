@@ -36,6 +36,19 @@
         <item name="android:windowContentOverlay">@null</item>
     </style>
 
+    <style name="CardViewBase">
+        <item name="cardCornerRadius">4dp</item>
+        <item name="cardElevation">3dp</item>
+        <item name="cardUseCompatPadding">true</item>
+    </style>
+
+    <style name="FullScreenDialog">
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowBackground">@color/transparent</item>
+    </style>
+
     <style name="PopupTheme" parent="ThemeOverlay.AppCompat.ActionBar">
         <item name="android:colorBackground">@color/app_bar</item>
         <item name="android:textColorPrimary">@color/gray5</item>

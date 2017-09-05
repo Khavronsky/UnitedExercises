@@ -4,6 +4,30 @@
     <string name="cancel">cancel</string>
 
     <string-array name="intensity_types">
+        <item>Первый</item>
+        <item>Второй</item>
+        <item>Третий</item>
+        <item>Четвертый</item>
+        <item>Пятый</item>
+        <item>Шестой</item>
+        <item>Седьмой</item>
+        <item>Восьмой</item>
+        <item>Девятый</item>
+        <item>Десятый</item>
+        <item>Одиннадцатый</item>
+        <item>Двенадцатый</item>
+        <item>Тринадцатый</item>
+        <item>Четырнадцатый</item>
+        <item>Пятнадцатый</item>
+        <item>Шестнадцатый</item>
+        <item>Семнадцатый</item>
+        <item>Восемнадцатый</item>
+        <item>Девятнадцатый</item>
+        <item>Двадцатый</item>
+        <item>Хреннадцатый</item>
+    </string-array>
+
+    <string-array name="approach_items">
         <item>Низкая</item>
         <item>Средняя</item>
         <item>Высокая</item>
@@ -17,5 +41,11 @@
         <item>Не указывать</item>
         <item>Указывать тип интенсивности</item>
     </string-array>
+    <plurals name="approaches">
+        <item quantity="one">%1$d кот</item>
+        <item quantity="few">%1$d кота</item>
+        <item quantity="many">%1$d котов</item>
+        <item quantity="other">%1$d котов</item>
+    </plurals>
 </resources>
 

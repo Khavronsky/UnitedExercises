@@ -56,17 +56,17 @@ public class FakeData {
         }
         for (int i = 0; i < 10; i++) {
             sDefaultCatalog.add(new PowerExerciseModel()
-                    .setSets(random.nextInt(5))
-                    .setRepeats(random.nextInt(5) + 10)
-                    .setWeight((random.nextInt(10) + 10) * i)
+//                    .setSets(random.nextInt(5))
+//                    .setRepeats(random.nextInt(5) + 10)
+//                    .setWeight((random.nextInt(10) + 10) * i)
                     .setCustomExercise(false)
                     .setTitle("Default power exercise " + (i + 10))
             );
         }
         sDefaultCatalog.add(new PowerExerciseModel()
-                .setSets(random.nextInt(5))
-                .setRepeats(random.nextInt(5) + 10)
-                .setWeight((random.nextInt(10) + 10) * 7)
+//                .setSets(random.nextInt(5))
+//                .setRepeats(random.nextInt(5) + 10)
+//                .setWeight((random.nextInt(10) + 10) * 7)
                 .setCustomExercise(false)
                 .setTitle("Power exercise ")
         );
@@ -95,9 +95,9 @@ public class FakeData {
         }
         for (int i = 0; i < 10; i++) {
             sCustomCatalog.add(new PowerExerciseModel()
-                    .setSets(random.nextInt(5))
-                    .setRepeats(random.nextInt(5) + 10)
-                    .setWeight((random.nextInt(10) + 10) * i)
+//                    .setSets(random.nextInt(5))
+//                    .setRepeats(random.nextInt(5) + 10)
+//                    .setWeight((random.nextInt(10) + 10) * i)
                     .setCustomExercise(true)
                     .setTitle("Custom power exercise " + (i + 10))
             );
