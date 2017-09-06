@@ -169,11 +169,11 @@ public class AdapterToCustomExerciseRecycler
             popupMenu
                     .setOnMenuItemClickListener(item -> {
                         switch (item.getItemId()) {
-                            case R.id.custom_exercise_item_menu_del:
+                            case R.id.item_menu_del:
                                 popupMenu.dismiss();
                                 mCatalogListener.pressDel(getAdapterPosition());
                                 return true;
-                            case R.id.custom_exercise_item_menu_edit:
+                            case R.id.item_menu_edit:
                                 popupMenu.dismiss();
                                 mCatalogListener.pressEdit(getAdapterPosition());
                                 return true;

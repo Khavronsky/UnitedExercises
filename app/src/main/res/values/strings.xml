@@ -43,10 +43,10 @@
         <item>Указывать тип интенсивности</item>
     </string-array>
     <plurals name="approaches">
-        <item quantity="one">%1$d повтор</item>
-        <item quantity="few">%1$d повтора</item>
-        <item quantity="many">%1$d повторов</item>
-        <item quantity="other">%1$d повторов</item>
+        <item quantity="one">%1$d повторение</item>
+        <item quantity="few">%1$d повторения</item>
+        <item quantity="many">%1$d повторений</item>
+        <item quantity="other">%1$d повторений</item>
     </plurals>
 </resources>
 
