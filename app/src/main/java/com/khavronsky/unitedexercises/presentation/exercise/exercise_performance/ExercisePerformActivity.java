@@ -1,9 +1,8 @@
 package com.khavronsky.unitedexercises.presentation.exercise.exercise_performance;
 
 import com.khavronsky.unitedexercises.R;
-import com.khavronsky.unitedexercises.presentation.exercise.create_new_exercises.new_cardio_exercise.CardioExerciseEditorActivity;
-import com.khavronsky.unitedexercises.presentation.exercise.create_new_exercises.new_power_exercise.PowerExerciseEditorActivity;
 import com.khavronsky.unitedexercises.presentation.exercise.exercise_performance.custom_views.collapsing_card.CustomCollapsingView;
+import com.khavronsky.unitedexercises.presentation.exercise.exercise_performance.dialogs.ExerciseDescriptionDialog;
 import com.khavronsky.unitedexercises.presentation.exercise.exercise_performance.fragments.CardioExPerformFragment;
 import com.khavronsky.unitedexercises.presentation.exercise.exercise_performance.fragments.PowerExPerformFragment;
 import com.khavronsky.unitedexercises.presentation.exercise.exercises_models.ExerciseModel;
@@ -51,10 +50,12 @@ public class ExercisePerformActivity extends AppCompatActivity implements View.O
     @BindView(R.id.ex_performance_add_btn)
     AppCompatButton addExButton;
 
-    private ModelOfExercisePerformance mModelOfExercisePerformance;
-
     @Inject
     ExercisePerformancePresenter mPresenter;
+
+    private ModelOfExercisePerformance mModelOfExercisePerformance;
+
+    private ExerciseDescriptionDialog mDescriptionDialog;
 
     private boolean newPerformance;
 
@@ -99,13 +100,10 @@ public class ExercisePerformActivity extends AppCompatActivity implements View.O
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_scrolling, menu);
+        boolean infoIconVisibility = mModelOfExercisePerformance.getExercise().getDescription() != null;
         boolean deleteIconVisibility = !newPerformance;
-        boolean editIconVisible = mModelOfExercisePerformance.getExercise().isCustomExercise();
-        menu.getItem(0).setVisible(deleteIconVisibility);
-        menu.getItem(1).setVisible(editIconVisible);
-        if (!mModelOfExercisePerformance.getExercise().isActive()) {
-            menu.getItem(1).setVisible(false);
-        }
+        menu.getItem(0).setVisible(infoIconVisibility);
+        menu.getItem(1).setVisible(deleteIconVisibility);
         return true;
     }
 
@@ -117,16 +115,13 @@ public class ExercisePerformActivity extends AppCompatActivity implements View.O
             onBackPressed();
             return true;
         }
-        if (id == R.id.edit) {
-            Intent intent;
-            if (mModelOfExercisePerformance.getExercise().getType() == ExerciseModel.ExerciseType.CARDIO) {
-                intent = new Intent(this, CardioExerciseEditorActivity.class);
-            } else {
-                intent = new Intent(this, PowerExerciseEditorActivity.class);
+        if (id == R.id.info) {
+            if (mDescriptionDialog == null) {
+                mDescriptionDialog = ExerciseDescriptionDialog.newInstance(
+                        mModelOfExercisePerformance.getExercise().getDescription());
+                mDescriptionDialog.setOnDismissListener(() -> mDescriptionDialog = null);
+                mDescriptionDialog.show(getSupportFragmentManager(),"description_dialog");
             }
-            intent.putExtra(mModelOfExercisePerformance.getExercise().getType().name(), mModelOfExercisePerformance
-                    .getExercise());
-            startActivityForResult(intent, 0);
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -200,7 +195,7 @@ public class ExercisePerformActivity extends AppCompatActivity implements View.O
 
     @OnClick(R.id.ex_performance_add_btn)
     void addExercise() {
-        if(mModelOfExercisePerformance.getDuration() > 0) {
+        if (mModelOfExercisePerformance.getDuration() > 0) {
             mModelOfExercisePerformance.setLastChangedTime(Calendar.getInstance().getTimeInMillis());
             if (newPerformance) {
                 mPresenter.addExPerformance(mModelOfExercisePerformance);

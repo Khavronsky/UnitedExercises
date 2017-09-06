@@ -13,7 +13,6 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -114,13 +113,13 @@ public class ExerciseCatalogActivity extends AppCompatActivity implements View.O
                         case R.id.select_catalog_by_type_cardio:
                             mExerciseType = ExerciseModel.ExerciseType.CARDIO;
                             mToolbarTitle.setText(TOOLBAR_TITLE_CARDIO);
-                            pagerAdapter.refreshPager(mExerciseType);
+                            refreshVPager();
                             popupMenu.dismiss();
                             return true;
                         case R.id.select_catalog_by_type_power:
                             mExerciseType = ExerciseModel.ExerciseType.POWER;
                             mToolbarTitle.setText(TOOLBAR_TITLE_POWER);
-                            pagerAdapter.refreshPager(mExerciseType);
+                            refreshVPager();
                             popupMenu.dismiss();
                             return true;
                         default:
@@ -128,6 +127,11 @@ public class ExerciseCatalogActivity extends AppCompatActivity implements View.O
                     }
                 });
         popupMenu.show();
+    }
+
+    public void refreshVPager(){
+        pagerAdapter.refreshPager(mExerciseType);
+
     }
 
     @Override

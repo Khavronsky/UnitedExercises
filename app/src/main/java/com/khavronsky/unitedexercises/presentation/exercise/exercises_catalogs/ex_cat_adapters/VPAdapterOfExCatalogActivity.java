@@ -48,7 +48,7 @@ public class VPAdapterOfExCatalogActivity extends FragmentPagerAdapter {
         mType = type;
 
 
-        // я бы баялся так делать я понимаю что лимит 3 и вроде бы должно быть все ок, но лучше
+        // todo я бы баялся так делать я понимаю что лимит 3 и вроде бы должно быть все ок, но лучше
         // бы не иметь таких сетеров
         recreateFragment((IRefreshableFragment) mFragment1);
         recreateFragment((IRefreshableFragment) mFragment2);
