@@ -33,7 +33,7 @@ public class PowerExerciseModel extends ExerciseModel implements Serializable {
         return mApproachList;
     }
 
-    public class Approach {
+    public class Approach implements Serializable{
 
         private int repeats;
 

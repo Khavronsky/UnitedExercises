@@ -58,10 +58,12 @@
                     android:id="@+id/add_approach_dialog_repeats"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
+                    android:layout_gravity="center_vertical"
                     android:layout_marginEnd="16dp"
+                    android:layout_marginStart="16dp"
+                    android:inputType="number"
                     android:maxLength="4"
-                    android:layout_gravity="center_vertical" />
+                    android:maxLines="1" />
             </LinearLayout>
 
             <LinearLayout
@@ -86,10 +88,12 @@
                     android:id="@+id/add_approach_dialog_weight"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
+                    android:layout_gravity="center_vertical"
                     android:layout_marginEnd="16dp"
+                    android:layout_marginStart="16dp"
+                    android:inputType="number"
                     android:maxLength="4"
-                    android:layout_gravity="center_vertical" />
+                    android:maxLines="1" />
             </LinearLayout>
 
             <FrameLayout

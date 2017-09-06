@@ -154,6 +154,8 @@ public class PowerExPerformFragment extends Fragment implements IDialogFragment,
                         ((PowerExerciseModel) mModelOfExercisePerformance.getExercise()).delApproach(index);
                     }
                     approachDialog = null;
+                    mRVAdapter.notifyDataSetChanged();
+                    ((CardioExPerformFragment.IExerciseListener)getActivity()).updateModel(mModelOfExercisePerformance);
                 }
 
                 @Override
@@ -167,6 +169,8 @@ public class PowerExPerformFragment extends Fragment implements IDialogFragment,
                     ((PowerExerciseModel) mModelOfExercisePerformance.getExercise()).getApproach(index)
                             .setWeight(weight);
                     approachDialog = null;
+                    mRVAdapter.notifyDataSetChanged();
+                    ((CardioExPerformFragment.IExerciseListener)getActivity()).updateModel(mModelOfExercisePerformance);
                 }
 
                 @Override

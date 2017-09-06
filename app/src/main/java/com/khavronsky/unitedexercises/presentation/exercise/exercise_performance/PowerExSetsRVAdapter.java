@@ -60,10 +60,11 @@ public class PowerExSetsRVAdapter extends RecyclerView.Adapter<PowerExSetsRVAdap
             mRepeats = (TextView) itemView.findViewById(R.id.approach_item_repeats);
             mWeight = (TextView) itemView.findViewById(R.id.approach_item_weight);
             mWeightArea = itemView.findViewById(R.id.approach_item_weight_area);
-            mIndex.setText(String.valueOf(getAdapterPosition()));
+
         }
 
         void setApproach(String repeats, int weight) {
+            mIndex.setText(String.valueOf(getAdapterPosition()+1));
             mRepeats.setText(repeats);
             if (weight > 0) {
                 mWeight.setText(String.valueOf(weight));

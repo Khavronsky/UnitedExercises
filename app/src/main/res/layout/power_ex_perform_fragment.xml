@@ -131,7 +131,9 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/ex_power_perform_sets_list"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:nestedScrollingEnabled="false"
+            android:overScrollMode="never">
 
         </android.support.v7.widget.RecyclerView>
     </LinearLayout>

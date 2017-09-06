@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 public class AddApproachDialog extends DialogFragment implements View.OnClickListener {
@@ -89,7 +90,7 @@ public class AddApproachDialog extends DialogFragment implements View.OnClickLis
 
         if (getArguments() != null) {
             String title = " подход";
-            if (getArguments().getInt(INDEX) > 0 && getArguments().getInt(INDEX) < 21) {
+            if (getArguments().getInt(INDEX) >= 0 && getArguments().getInt(INDEX) < 20) {
                 String[] approachArr = getResources().getStringArray(R.array.approach_items);
                 title = approachArr[getArguments().getInt(INDEX)] + title;
 
@@ -107,7 +108,7 @@ public class AddApproachDialog extends DialogFragment implements View.OnClickLis
         mSaveBtn.setOnClickListener(this);
         mDelBtn.setOnClickListener(this);
         mCancelBtn.setOnClickListener(this);
-        if (newApproach){
+        if (newApproach) {
             mDelBtn.setVisibility(View.INVISIBLE);
         }
     }
@@ -117,20 +118,33 @@ public class AddApproachDialog extends DialogFragment implements View.OnClickLis
         int id = v.getId();
         switch (id) {
             case R.id.add_approach_dialog_save_btn:
-                int repeats = 0;
-                int weight = 0;
-                if(Integer.parseInt(String.valueOf(mRepeats.getText())) > 0){
+                int repeats;
+                int weight;
+                try {
                     repeats = Integer.parseInt(String.valueOf(mRepeats.getText()));
-                    if(Integer.parseInt(String.valueOf(mWeight.getText())) > 0){
-                        weight = Integer.parseInt(String.valueOf(mWeight.getText()));
-                    }
+
+                } catch (Exception e) {
+                    repeats = 0;
+                }
+                try {
+                    weight = Integer.parseInt(String.valueOf(mWeight.getText()));
+                } catch (Exception e){
+                    weight = 0;
+                }
+
+                if (repeats > 0) {
                     listener.saveEvent(newApproach, index, repeats, weight);
+                    dismiss();
+                } else {
+                    Toast.makeText(getContext(), "Повторов должно быть больше 0", Toast.LENGTH_SHORT).show();
                 }
                 break;
             case R.id.add_approach_dialog_delete_btn:
+                dismiss();
                 listener.deleteEvent(index);
                 break;
             case R.id.add_approach_dialog_cancel_btn:
+                dismiss();
                 listener.dismiss();
                 break;
         }

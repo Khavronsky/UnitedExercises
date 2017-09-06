@@ -4,6 +4,12 @@
     <string name="cancel">cancel</string>
 
     <string-array name="intensity_types">
+        <item>Низкая</item>
+        <item>Средняя</item>
+        <item>Высокая</item>
+    </string-array>
+
+    <string-array name="approach_items">
         <item>Первый</item>
         <item>Второй</item>
         <item>Третий</item>
@@ -25,12 +31,7 @@
         <item>Девятнадцатый</item>
         <item>Двадцатый</item>
         <item>Хреннадцатый</item>
-    </string-array>
 
-    <string-array name="approach_items">
-        <item>Низкая</item>
-        <item>Средняя</item>
-        <item>Высокая</item>
     </string-array>
 
     <string-array name="calc_calories">
@@ -42,10 +43,10 @@
         <item>Указывать тип интенсивности</item>
     </string-array>
     <plurals name="approaches">
-        <item quantity="one">%1$d кот</item>
-        <item quantity="few">%1$d кота</item>
-        <item quantity="many">%1$d котов</item>
-        <item quantity="other">%1$d котов</item>
+        <item quantity="one">%1$d повтор</item>
+        <item quantity="few">%1$d повтора</item>
+        <item quantity="many">%1$d повторов</item>
+        <item quantity="other">%1$d повторов</item>
     </plurals>
 </resources>
 
