@@ -42,11 +42,18 @@
         <item>Не указывать</item>
         <item>Указывать тип интенсивности</item>
     </string-array>
-    <plurals name="approaches">
+    <plurals name="approach_repeat">
         <item quantity="one">%1$d повторение</item>
         <item quantity="few">%1$d повторения</item>
         <item quantity="many">%1$d повторений</item>
         <item quantity="other">%1$d повторений</item>
+    </plurals>
+
+    <plurals name="approaches">
+        <item quantity="one">%1$d подход</item>
+        <item quantity="few">%1$d подхода</item>
+        <item quantity="many">%1$d подходов</item>
+        <item quantity="other">%1$d подходов</item>
     </plurals>
 </resources>
 

@@ -5,7 +5,6 @@ import com.khavronsky.unitedexercises.presentation.exercise.exercise_performance
 import com.khavronsky.unitedexercises.presentation.exercise.exercise_performance.dialogs.AddApproachDialog;
 import com.khavronsky.unitedexercises.presentation.exercise.exercises_models.ExerciseModel;
 import com.khavronsky.unitedexercises.presentation.exercise.exercises_models.ModelOfExercisePerformance;
-import com.khavronsky.unitedexercises.presentation.exercise.exercises_models.PowerExerciseModel;
 import com.khavronsky.unitedexercises.utils.TextWatcherWithPostfix;
 import com.khavronsky.unitedexercises.utils.import_from_grand_project.BaseDialogFragment;
 import com.khavronsky.unitedexercises.utils.import_from_grand_project.IDialogFragment;
@@ -98,8 +97,7 @@ public class PowerExPerformFragment extends Fragment implements IDialogFragment,
 
     @Override
     public void onClick(final View v) {
-        showAddApproachDlg(true, ((PowerExerciseModel) mModelOfExercisePerformance.getExercise())
-                .getApproachList().size(), 0, 0);
+        showAddApproachDlg(true, mModelOfExercisePerformance.getApproachList().size(), 0, 0);
     }
 
     private void init(final View v) {
@@ -125,18 +123,16 @@ public class PowerExPerformFragment extends Fragment implements IDialogFragment,
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(layoutManager);
         mRVAdapter = new PowerExSetsRVAdapter();
-        mRVAdapter.setExercise((PowerExerciseModel) mModelOfExercisePerformance.getExercise());
+        mRVAdapter.setExercise(mModelOfExercisePerformance);
         mRecyclerView.setAdapter(mRVAdapter);
 
         ItemClickSupport.addTo(mRecyclerView).setOnItemLongClickListener(
                 (recyclerView, position, v1) -> {
                     showAddApproachDlg(false, position,
-                            ((PowerExerciseModel) mModelOfExercisePerformance
-                                    .getExercise())
+                            mModelOfExercisePerformance
                                     .getApproach(position)
                                     .getRepeats(),
-                            ((PowerExerciseModel) mModelOfExercisePerformance
-                                    .getExercise())
+                            mModelOfExercisePerformance
                                     .getApproach(position)
                                     .getWeight());
                     return true;
@@ -149,9 +145,9 @@ public class PowerExPerformFragment extends Fragment implements IDialogFragment,
             approachDialog.setListener(new AddApproachDialog.IApproachAdded() {
                 @Override
                 public void deleteEvent(int index) {
-                    if (index < ((PowerExerciseModel) mModelOfExercisePerformance.getExercise()).getApproachList
+                    if (index < mModelOfExercisePerformance.getApproachList
                             ().size()) {
-                        ((PowerExerciseModel) mModelOfExercisePerformance.getExercise()).delApproach(index);
+                        mModelOfExercisePerformance.delApproach(index);
                     }
                     approachDialog = null;
                     mRVAdapter.notifyDataSetChanged();
@@ -161,12 +157,12 @@ public class PowerExPerformFragment extends Fragment implements IDialogFragment,
                 @Override
                 public void saveEvent(boolean newApproach, int index, int repeats, int weight) {
                     if (newApproach) {
-                        ((PowerExerciseModel) mModelOfExercisePerformance.getExercise()).addApproach(0, 0);
+                        mModelOfExercisePerformance.addApproach(0, 0);
                     }
                     Log.d("WTF", "saveEvent: ");
-                    ((PowerExerciseModel) mModelOfExercisePerformance.getExercise()).getApproach(index)
+                    mModelOfExercisePerformance.getApproach(index)
                             .setRepeats(repeats);
-                    ((PowerExerciseModel) mModelOfExercisePerformance.getExercise()).getApproach(index)
+                    mModelOfExercisePerformance.getApproach(index)
                             .setWeight(weight);
                     approachDialog = null;
                     mRVAdapter.notifyDataSetChanged();

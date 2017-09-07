@@ -215,20 +215,9 @@ public class CardioExPerformFragment extends Fragment implements IDialogFragment
             @Override
             public void onItemSelected(final AdapterView<?> parent, final View view, final int position,
                     final long id) {
-                switch (position) {
-                    case 0:
-                        mModelOfExercisePerformance.setCurrentKcalPerHour(((CardioExerciseModel)
-                                mModelOfExercisePerformance.getExercise()).getLow());
-                        break;
-                    case 1:
-                        mModelOfExercisePerformance.setCurrentKcalPerHour(((CardioExerciseModel)
-                                mModelOfExercisePerformance.getExercise()).getMiddle());
-                        break;
-                    case 2:
-                        mModelOfExercisePerformance.setCurrentKcalPerHour(((CardioExerciseModel)
-                                mModelOfExercisePerformance.getExercise()).getHigh());
-                        break;
-                }
+
+                mModelOfExercisePerformance.setCurrentIntensity(position);
+
                 if (getActivity() instanceof IExerciseListener) {
                     ((IExerciseListener) getActivity()).updateModel(mModelOfExercisePerformance);
                 }

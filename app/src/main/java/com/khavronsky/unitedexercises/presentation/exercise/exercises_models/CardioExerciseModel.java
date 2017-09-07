@@ -19,17 +19,29 @@ public class CardioExerciseModel extends ExerciseModel implements Serializable {
 
     @IntDef(
             flag = true,
+            value = {TYPE_SPECIFY_LOW, TYPE_SPECIFY_MIDDLE, TYPE_SPECIFY_HIGH})
+    public @interface IntensityTypeIsSpecify{}
+
+    public static final int TYPE_SPECIFY_LOW = 0;
+    public static final int TYPE_SPECIFY_MIDDLE = 1;
+    public static final int TYPE_SPECIFY_HIGH = 2;
+
+    @IntDef(
+            flag = true,
             value = {METHOD_MET_VALUES, METHOD_CAL_PER_HOUR})
     public @interface CountingCaloriesMethod{}
 
     public static final int METHOD_MET_VALUES = 0;
     public static final int METHOD_CAL_PER_HOUR = 1;
 
-    @CountingCaloriesMethod
-    private int mCountCalMethod;
-
     @IntensityType
     private int mIntensityType;
+
+    @IntensityTypeIsSpecify
+    private int mIntensityTypeIsSpecify;
+
+    @CountingCaloriesMethod
+    private int mCountCalMethod;
 
     private float high;
 
@@ -46,6 +58,16 @@ public class CardioExerciseModel extends ExerciseModel implements Serializable {
 
     public CardioExerciseModel setIntensityType(@IntensityType final int intensityType) {
         mIntensityType = intensityType;
+        return this;
+    }
+
+    @IntensityTypeIsSpecify
+    public int getIntensityTypeIsSpecify() {
+        return mIntensityTypeIsSpecify;
+    }
+
+    public CardioExerciseModel setIntensityTypeIsSpecify(@IntensityTypeIsSpecify final int intensityTypeIsSpecify) {
+        mIntensityTypeIsSpecify = intensityTypeIsSpecify;
         return this;
     }
 
@@ -97,5 +119,17 @@ public class CardioExerciseModel extends ExerciseModel implements Serializable {
     public CardioExerciseModel setDefValue(final float defValue) {
         this.defValue = defValue;
         return this;
+    }
+
+    public float getBurningCalByIntensityType(@IntensityTypeIsSpecify int intensityTypeIsSpecify){
+        switch (intensityTypeIsSpecify){
+            case TYPE_SPECIFY_LOW:
+                return low;
+            case TYPE_SPECIFY_MIDDLE:
+                return middle;
+            case TYPE_SPECIFY_HIGH:
+                return high;
+        }
+        return -1;
     }
 }

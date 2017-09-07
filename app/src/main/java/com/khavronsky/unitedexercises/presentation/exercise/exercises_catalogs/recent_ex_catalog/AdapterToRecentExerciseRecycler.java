@@ -22,7 +22,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-import static com.khavronsky.unitedexercises.presentation.exercise.exercises_models.CardioExerciseModel.METHOD_MET_VALUES;
+import static com.khavronsky.unitedexercises.presentation.exercise.exercises_models.CardioExerciseModel.TYPE_SPECIFY_HIGH;
+import static com.khavronsky.unitedexercises.presentation.exercise.exercises_models.CardioExerciseModel.TYPE_SPECIFY_LOW;
+import static com.khavronsky.unitedexercises.presentation.exercise.exercises_models.CardioExerciseModel.TYPE_SPECIFY_MIDDLE;
 
 public class AdapterToRecentExerciseRecycler
         extends RecyclerView.Adapter<AdapterToRecentExerciseRecycler.CustomExerciseHolder>
@@ -56,30 +58,39 @@ public class AdapterToRecentExerciseRecycler
     }
 
 
-    private String createDescription(final ExerciseModel exerciseModel) {
-        if (exerciseModel.getType() == ExerciseModel.ExerciseType.CARDIO) {
-            return ((CardioExerciseModel) exerciseModel).getIntensityType() == CardioExerciseModel.TYPE_SPECIFY ?
-                    "Расчет по типу интенсивности"
-                    : String.valueOf(((CardioExerciseModel) exerciseModel).getDefValue())
-                            + (((CardioExerciseModel) exerciseModel).getCountCalMethod() == METHOD_MET_VALUES ?
-                            " MET"
-                            : " ккал/час")
-                    ;
+    private String createDescription(final ModelOfExercisePerformance exerciseModel) {
+        if (exerciseModel.getExercise().getType() == ExerciseModel.ExerciseType.CARDIO) {
+            if (((CardioExerciseModel) exerciseModel.getExercise()).getIntensityType() == CardioExerciseModel
+                    .TYPE_NOT_SPECIFY) {
+                return "Интенсивность по умолчанию";
+            } else {
+                switch (exerciseModel.getCurrentIntensityType()) {
+                    case TYPE_SPECIFY_LOW:
+                        return "Низкая интенсивность";
+                    case TYPE_SPECIFY_MIDDLE:
+                        return "Средняя интенсивность";
+                    case TYPE_SPECIFY_HIGH:
+                        return "Высокая интенсивность";
+                }
+            }
         }
-        if (exerciseModel.getType() == ExerciseModel.ExerciseType.POWER) {
-//            return ((PowerExerciseModel) exerciseModel).getSets() + " подходов, "
-//                    + ((PowerExerciseModel) exerciseModel).getRepeats() + " повторов, "
-//                    + ((PowerExerciseModel) exerciseModel).getWeight() + " кг";
-            return "________";
+        if (exerciseModel.getExercise().getType() == ExerciseModel.ExerciseType.POWER) {
+            int currentApproaches = exerciseModel.getApproachList().size();
+            return mContext.getResources().getQuantityString(R.plurals.approaches,
+                    currentApproaches,
+                    currentApproaches);
         }
-        return "Упс, не нашли...";
+        return "___";
     }
 
     @Override
     public void onBindViewHolder(final CustomExerciseHolder holder, final int position) {
         if (customExList.size() > 0) {
-            holder.setText(customExList.get(position).getExercise().getTitle(), createDescription(customExList.get
-                    (position).getExercise()));
+            holder.setText(customExList.get(position).getExercise().getTitle(),
+                    createDescription(customExList.get(position)),
+                    customExList.get(position).getDuration() + " мин",
+                    customExList.get(position).getExercise().getType() == ExerciseModel.ExerciseType.CARDIO ?
+                            String.valueOf(customExList.get(position).getCurrentKcalPerHour()) : null);
             holder.setListener(this);
         }
     }
@@ -98,8 +109,17 @@ public class AdapterToRecentExerciseRecycler
         @BindView(R.id.recent_exercise_item_title)
         TextView itemTitle;
 
-        @BindView(R.id.recent_exercise_item_sub_title)
-        TextView itemSubtitle;
+        @BindView(R.id.recent_exercise_item_show_perform_description)
+        TextView mPerformDescription;
+
+        @BindView(R.id.recent_exercise_item_show_duration)
+        TextView mExerciseDuration;
+
+        @BindView(R.id.recent_exercise_item_show_intensity_value)
+        TextView mIntensity;
+
+        @BindView(R.id.recent_exercise_item_click_area)
+        View clickArea;
 
         private RecyclerItemClickListener.OnItemClickListener mListener;
 
@@ -108,15 +128,29 @@ public class AdapterToRecentExerciseRecycler
             ButterKnife.bind(this, itemView);
         }
 
-        @OnClick({R.id.recent_exercise_item_title, R.id.recent_exercise_item_sub_title})
+        @OnClick(R.id.recent_exercise_item_click_area)
         @Override
         public void onClick(final View v) {
             mListener.onItemClick(v, getAdapterPosition());
         }
 
-        void setText(String title, String subTitle) {
+        void setText(String title,
+                String description,
+                String duration,
+                String intensity) {
+
             itemTitle.setText(title);
-            itemSubtitle.setText(subTitle);
+            mExerciseDuration.setText(duration);
+            if (description == null) {
+                mPerformDescription.setVisibility(View.GONE);
+            } else {
+                mPerformDescription.setText(description);
+            }
+            if (intensity == null) {
+                mIntensity.setVisibility(View.GONE);
+            } else {
+                mIntensity.setText(intensity);
+            }
         }
 
         public void setListener(final RecyclerItemClickListener.OnItemClickListener listener) {

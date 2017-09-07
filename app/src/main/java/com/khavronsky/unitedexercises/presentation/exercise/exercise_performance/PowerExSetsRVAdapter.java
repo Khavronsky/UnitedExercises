@@ -2,7 +2,7 @@ package com.khavronsky.unitedexercises.presentation.exercise.exercise_performanc
 
 
 import com.khavronsky.unitedexercises.R;
-import com.khavronsky.unitedexercises.presentation.exercise.exercises_models.PowerExerciseModel;
+import com.khavronsky.unitedexercises.presentation.exercise.exercises_models.ModelOfExercisePerformance;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,9 +12,9 @@ import android.widget.TextView;
 
 public class PowerExSetsRVAdapter extends RecyclerView.Adapter<PowerExSetsRVAdapter.PowerExSetsHolder> {
 
-    private PowerExerciseModel mExercise;
+    private ModelOfExercisePerformance mExercise;
 
-    public void setExercise(PowerExerciseModel exercise) {
+    public void setExercise(ModelOfExercisePerformance exercise) {
         mExercise = exercise;
     }
 
@@ -29,7 +29,7 @@ public class PowerExSetsRVAdapter extends RecyclerView.Adapter<PowerExSetsRVAdap
     @Override
     public void onBindViewHolder(final PowerExSetsHolder holder, final int position) {
 
-        String repeatPlural = holder.itemView.getResources().getQuantityString(R.plurals.approaches,
+        String repeatPlural = holder.itemView.getResources().getQuantityString(R.plurals.approach_repeat,
                 mExercise.getApproach(position).getRepeats(),
                 mExercise.getApproach(position).getRepeats());
         holder.setApproach(repeatPlural, mExercise.getApproach(position).getWeight());
