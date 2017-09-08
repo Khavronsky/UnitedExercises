@@ -4,12 +4,14 @@ package com.khavronsky.unitedexercises.presentation.exercise.exercises_catalogs.
 import com.khavronsky.unitedexercises.R;
 import com.khavronsky.unitedexercises.presentation.exercise.create_new_exercises.new_cardio_exercise.CardioExerciseEditorActivity;
 import com.khavronsky.unitedexercises.presentation.exercise.create_new_exercises.new_power_exercise.PowerExerciseEditorActivity;
+import com.khavronsky.unitedexercises.presentation.exercise.exercise_performance.ExercisePerformActivity;
 import com.khavronsky.unitedexercises.presentation.exercise.exercises_catalogs.IRefreshableFragment;
 import com.khavronsky.unitedexercises.presentation.exercise.exercises_models.ExerciseModel;
 import com.khavronsky.unitedexercises.presentation.exercise.exercises_models.ExerciseModel.ExerciseType;
 import com.khavronsky.unitedexercises.presentation.exercise.exercises_models.IEditCatalog;
 import com.khavronsky.unitedexercises.presentation.exercise.exercises_models.IModel;
 import com.khavronsky.unitedexercises.utils.di.App;
+import com.khavronsky.unitedexercises.utils.import_from_grand_project.IDialogFragment;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -53,6 +55,8 @@ public class CustomExercisesFragment extends Fragment implements IView, IEditCat
     private AdapterToCustomExerciseRecycler adapterToCustomExerciseRecycler;
 
     private Unbinder unbinder;
+
+    private AddExerciseToExecuteDialog mExerciseToExecuteDialog;
     //endregion
 
     //region C R E A T E
@@ -90,6 +94,33 @@ public class CustomExercisesFragment extends Fragment implements IView, IEditCat
         if (resultCode == RESULT_OK) {
             mCustomExPresenter.loadData(currentType);
             adapterToCustomExerciseRecycler.notifyDataSetChanged();
+
+            if (mExerciseToExecuteDialog == null) {
+                mExerciseToExecuteDialog = new AddExerciseToExecuteDialog();
+                mExerciseToExecuteDialog.setCallback(new IDialogFragment() {
+                    @Override
+                    public void doButtonClick1(final Object o) {
+
+                        mExerciseToExecuteDialog =null;
+                        Intent intent = new Intent(getContext(), ExercisePerformActivity.class);
+                        intent.putExtra(ExercisePerformActivity.NEW_PERFORMANCE, true);
+                        intent.putExtra(ExercisePerformActivity.MODEL_OF_EXERCISE, data.getSerializableExtra
+                                (ExercisePerformActivity.MODEL_OF_EXERCISE));
+                        startActivity(intent);
+                    }
+
+                    @Override
+                    public void doButtonClick2() {
+                        mExerciseToExecuteDialog =null;
+                    }
+
+                    @Override
+                    public void doByDismissed() {
+                        mExerciseToExecuteDialog =null;
+                    }
+                });
+                mExerciseToExecuteDialog.show(getActivity().getSupportFragmentManager(), "Add_exe_to_exe_dialog");
+            }
         }
     }
     //endregion

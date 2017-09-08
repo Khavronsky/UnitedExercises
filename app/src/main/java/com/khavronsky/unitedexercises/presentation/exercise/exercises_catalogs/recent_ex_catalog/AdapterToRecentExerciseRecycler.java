@@ -11,6 +11,7 @@ import com.khavronsky.unitedexercises.utils.import_from_grand_project.RecyclerIt
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -76,6 +77,9 @@ public class AdapterToRecentExerciseRecycler
         }
         if (exerciseModel.getExercise().getType() == ExerciseModel.ExerciseType.POWER) {
             int currentApproaches = exerciseModel.getApproachList().size();
+            if (currentApproaches == 0){
+                return null;
+            }
             return mContext.getResources().getQuantityString(R.plurals.approaches,
                     currentApproaches,
                     currentApproaches);
@@ -86,6 +90,7 @@ public class AdapterToRecentExerciseRecycler
     @Override
     public void onBindViewHolder(final CustomExerciseHolder holder, final int position) {
         if (customExList.size() > 0) {
+            Log.d("WTF", "pos " + position + "; type " + customExList.get(position).getExercise().getType());
             holder.setText(customExList.get(position).getExercise().getTitle(),
                     createDescription(customExList.get(position)),
                     customExList.get(position).getDuration() + " мин",
@@ -145,11 +150,13 @@ public class AdapterToRecentExerciseRecycler
                 mPerformDescription.setVisibility(View.GONE);
             } else {
                 mPerformDescription.setText(description);
+                mPerformDescription.setVisibility(View.VISIBLE);
             }
             if (intensity == null) {
                 mIntensity.setVisibility(View.GONE);
             } else {
                 mIntensity.setText(intensity);
+                mIntensity.setVisibility(View.VISIBLE);
             }
         }
 

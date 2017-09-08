@@ -31,6 +31,7 @@ import butterknife.Unbinder;
 
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
+import static com.khavronsky.unitedexercises.presentation.exercise.exercise_performance.ExercisePerformActivity.MODEL_OF_EXERCISE;
 import static com.khavronsky.unitedexercises.presentation.exercise.exercises_models.CardioExerciseModel.METHOD_CAL_PER_HOUR;
 import static com.khavronsky.unitedexercises.presentation.exercise.exercises_models.CardioExerciseModel.METHOD_MET_VALUES;
 import static com.khavronsky.unitedexercises.presentation.exercise.exercises_models.CardioExerciseModel.TYPE_NOT_SPECIFY;
@@ -336,7 +337,7 @@ public class CardioExerciseEditorActivity extends AppCompatActivity implements V
             mPresenter.editData(mCardioExerciseModel);
         }
         Intent intent = new Intent();
-        intent.putExtra(CARDIO.name(), mCardioExerciseModel);
+        intent.putExtra(MODEL_OF_EXERCISE, mCardioExerciseModel);
         setResult(RESULT_OK, intent);
         finish();
 

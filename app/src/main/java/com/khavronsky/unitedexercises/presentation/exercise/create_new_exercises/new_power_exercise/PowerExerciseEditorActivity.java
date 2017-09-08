@@ -24,6 +24,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
+import static com.khavronsky.unitedexercises.presentation.exercise.exercise_performance.ExercisePerformActivity.MODEL_OF_EXERCISE;
 import static com.khavronsky.unitedexercises.presentation.exercise.exercises_models.ExerciseModel.ExerciseType.POWER;
 
 public class PowerExerciseEditorActivity extends AppCompatActivity implements View.OnClickListener, IView {
@@ -142,7 +143,7 @@ public class PowerExerciseEditorActivity extends AppCompatActivity implements Vi
         }
 
         Intent intent = new Intent();
-        intent.putExtra(POWER.name(), mPowerExerciseModel);
+        intent.putExtra(MODEL_OF_EXERCISE, mPowerExerciseModel);
         setResult(RESULT_OK, intent);
         finish();
         return true;

@@ -159,7 +159,13 @@ public class AdapterToCustomExerciseRecycler
 
         void setText(String title, String subTitle) {
             itemTitle.setText(title);
-            itemSubtitle.setText(subTitle);
+            if (subTitle.equals("")) {
+                itemSubtitle.setVisibility(View.GONE);
+            } else {
+                itemSubtitle.setVisibility(View.VISIBLE);
+                itemSubtitle.setText(subTitle);
+
+            }
         }
 
         @OnClick(R.id.custom_exercise_menu_click_area)
