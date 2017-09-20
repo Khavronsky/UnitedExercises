@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.khavronsky.appbartest.ScrollingActivity">
     <item
-        android:id="@+id/save"
+        android:id="@+id/menu_save"
         android:orderInCategory="100"
         android:title="save"
         android:icon="@drawable/ic_check"

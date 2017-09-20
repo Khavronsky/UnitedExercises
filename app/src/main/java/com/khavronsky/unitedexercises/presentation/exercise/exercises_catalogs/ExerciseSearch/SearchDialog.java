@@ -64,7 +64,7 @@ public class SearchDialog extends DialogFragment
         final Dialog dialog = new Dialog(getActivity());
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
 
-        dialog.setContentView(R.layout.search_dialog);
+        dialog.setContentView(R.layout.ex_search_dialog);
 
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         dialog.getWindow()

@@ -45,7 +45,7 @@ public class AdapterToRecentExerciseRecycler
             final int viewType) {
         View view = LayoutInflater
                 .from(parent.getContext())
-                .inflate(R.layout.recent_exercise_recycler_item, parent, false);
+                .inflate(R.layout.ex_recent_recycler_item, parent, false);
         mContext = parent.getContext();
         return new CustomExerciseHolder(view);
     }

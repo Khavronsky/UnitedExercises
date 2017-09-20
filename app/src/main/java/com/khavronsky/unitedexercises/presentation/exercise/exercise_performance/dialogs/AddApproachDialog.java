@@ -26,17 +26,9 @@ public class AddApproachDialog extends DialogFragment implements View.OnClickLis
 
     private static final String WEIGHT = "weight";
 
-    private TextView mTitle;
-
     private EditText mRepeats;
 
     private EditText mWeight;
-
-    private TextView mSaveBtn;
-
-    private TextView mDelBtn;
-
-    private TextView mCancelBtn;
 
     private IApproachAdded listener;
 
@@ -75,18 +67,18 @@ public class AddApproachDialog extends DialogFragment implements View.OnClickLis
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.add_approach_dlg, null);
+        View view = inflater.inflate(R.layout.ex_add_approach_dlg, null);
         init(view);
         return view;
     }
 
     private void init(final View view) {
-        mTitle = (TextView) view.findViewById(R.id.add_approach_dialog_title);
+        TextView title1 = (TextView) view.findViewById(R.id.add_approach_dialog_title);
+        TextView saveBtn = (TextView) view.findViewById(R.id.add_approach_dialog_save_btn);
+        TextView delBtn = (TextView) view.findViewById(R.id.add_approach_dialog_delete_btn);
+        TextView cancelBtn = (TextView) view.findViewById(R.id.add_approach_dialog_cancel_btn);
         mRepeats = (EditText) view.findViewById(R.id.add_approach_dialog_repeats);
         mWeight = (EditText) view.findViewById(R.id.add_approach_dialog_weight);
-        mSaveBtn = (TextView) view.findViewById(R.id.add_approach_dialog_save_btn);
-        mDelBtn = (TextView) view.findViewById(R.id.add_approach_dialog_delete_btn);
-        mCancelBtn = (TextView) view.findViewById(R.id.add_approach_dialog_cancel_btn);
 
         if (getArguments() != null) {
             String title = " подход";
@@ -97,7 +89,7 @@ public class AddApproachDialog extends DialogFragment implements View.OnClickLis
             } else {
                 title = getArguments().getInt(INDEX) + "-й" + title;
             }
-            mTitle.setText(title);
+            title1.setText(title);
             if (getArguments().getInt(REPEATS) > 0) {
                 mRepeats.setText(String.valueOf(getArguments().getInt(REPEATS)));
                 if (getArguments().getInt(WEIGHT) > 0) {
@@ -105,11 +97,11 @@ public class AddApproachDialog extends DialogFragment implements View.OnClickLis
                 }
             }
         }
-        mSaveBtn.setOnClickListener(this);
-        mDelBtn.setOnClickListener(this);
-        mCancelBtn.setOnClickListener(this);
+        saveBtn.setOnClickListener(this);
+        delBtn.setOnClickListener(this);
+        cancelBtn.setOnClickListener(this);
         if (newApproach) {
-            mDelBtn.setVisibility(View.INVISIBLE);
+            delBtn.setVisibility(View.INVISIBLE);
         }
     }
 

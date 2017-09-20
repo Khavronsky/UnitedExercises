@@ -106,7 +106,7 @@ public class CardioExerciseEditorActivity extends AppCompatActivity implements V
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.create_cardio_ex_activity);
+        setContentView(R.layout.ex_create_cardio_activity);
         unbinder = ButterKnife.bind(this);
 
         App.getComponent().getCardioExerciseEditorPresenter(this);
@@ -280,7 +280,7 @@ public class CardioExerciseEditorActivity extends AppCompatActivity implements V
 
     private void setToolbar() {
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        mToolbar.inflateMenu(R.menu.menu);
+        mToolbar.inflateMenu(R.menu.exercises_toolbar_menu);
         setSupportActionBar(mToolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setTitle(mTitle);
@@ -351,7 +351,7 @@ public class CardioExerciseEditorActivity extends AppCompatActivity implements V
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu, menu);
+        getMenuInflater().inflate(R.menu.exercises_toolbar_menu, menu);
         return true;
     }
 
@@ -359,7 +359,7 @@ public class CardioExerciseEditorActivity extends AppCompatActivity implements V
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.save) {
+        if (id == R.id.menu_save) {
             saveExercise(mIntensityType.getSelectedItemPosition());
         }
         return super.onOptionsItemSelected(item);

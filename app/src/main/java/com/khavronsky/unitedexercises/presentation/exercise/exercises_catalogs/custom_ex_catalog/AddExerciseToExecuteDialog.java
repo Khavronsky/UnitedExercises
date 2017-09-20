@@ -19,10 +19,6 @@ public class AddExerciseToExecuteDialog extends BaseDialogFragment {
     private TextView mPositiveBtn;
     private TextView mNegativeBtn;
 
-
-
-
-
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -37,10 +33,9 @@ public class AddExerciseToExecuteDialog extends BaseDialogFragment {
     @Override
     public View onCreateView(final LayoutInflater inflater, @Nullable final ViewGroup container,
             @Nullable final Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.add_exercise_to_execute_dialog, container, false);
+        View v = inflater.inflate(R.layout.ex_add_to_execute_dialog, container, false);
         mPositiveBtn = (TextView) v.findViewById(R.id.add_ex_to_exe_ok_btn);
         mNegativeBtn = (TextView) v.findViewById(R.id.add_ex_to_exe_cancel_btn);
-
         mPositiveBtn.setOnClickListener(this);
         mNegativeBtn.setOnClickListener(this);
         return v;

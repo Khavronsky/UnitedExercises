@@ -75,7 +75,7 @@ public class CustomExercisesFragment extends Fragment implements IView, IEditCat
     @Override
     public View onCreateView(final LayoutInflater inflater, @Nullable final ViewGroup container,
             @Nullable final Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.custom_exercises_fragment, container, false);
+        View view = inflater.inflate(R.layout.ex_custom_fragment, container, false);
         unbinder = ButterKnife.bind(this, view);
         recyclerView = (RecyclerView) view.findViewById(R.id.cardio_ex_custom_list);
         emptyCustExList.setVisibility(View.GONE);

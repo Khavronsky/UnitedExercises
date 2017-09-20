@@ -93,7 +93,7 @@ public class ExerciseCatalogActivity extends AppCompatActivity implements View.O
                 TOOLBAR_TITLE_CARDIO
                 : TOOLBAR_TITLE_POWER);
         setSupportActionBar(mToolbar);
-        mToolbar.inflateMenu(R.menu.search_menu);
+        mToolbar.inflateMenu(R.menu.exercises_search_menu);
         mToolbar.setNavigationOnClickListener(this);
         mToolbar.setNavigationIcon(R.drawable.arrow_back);
     }
@@ -106,7 +106,7 @@ public class ExerciseCatalogActivity extends AppCompatActivity implements View.O
     @OnClick(R.id.ex_catalog_toolbar_click_area)
     public void showSelectExCatMenu() {
         PopupMenu popupMenu = new PopupMenu(this, mAnchor, Gravity.END);
-        popupMenu.inflate(R.menu.switch_menu);
+        popupMenu.inflate(R.menu.execrises_switch_menu);
         popupMenu
                 .setOnMenuItemClickListener(item -> {
                     switch (item.getItemId()) {
@@ -136,7 +136,7 @@ public class ExerciseCatalogActivity extends AppCompatActivity implements View.O
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.search_menu, menu);
+        getMenuInflater().inflate(R.menu.exercises_search_menu, menu);
         return true;
     }
 

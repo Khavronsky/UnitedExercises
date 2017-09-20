@@ -52,7 +52,7 @@ public class AdapterToCustomExerciseRecycler
             final int viewType) {
         View view = LayoutInflater
                 .from(parent.getContext())
-                .inflate(R.layout.custom_exercise_recycler_item, parent, false);
+                .inflate(R.layout.ex_custom_recycler_item, parent, false);
         mContext = parent.getContext();
         return new CustomExerciseHolder(view).setFragmentManager(mFragmentManager);
     }
@@ -164,14 +164,13 @@ public class AdapterToCustomExerciseRecycler
             } else {
                 itemSubtitle.setVisibility(View.VISIBLE);
                 itemSubtitle.setText(subTitle);
-
             }
         }
 
         @OnClick(R.id.custom_exercise_menu_click_area)
         void showMenu() {
             PopupMenu popupMenu = new PopupMenu(mView.getContext(), mView, Gravity.END);
-            popupMenu.inflate(R.menu.popup_menu);
+            popupMenu.inflate(R.menu.exercises_popup_menu);
             popupMenu
                     .setOnMenuItemClickListener(item -> {
                         switch (item.getItemId()) {
@@ -189,6 +188,5 @@ public class AdapterToCustomExerciseRecycler
                     });
             popupMenu.show();
         }
-
     }
 }

@@ -88,7 +88,7 @@ public class PowerExPerformFragment extends Fragment implements IDialogFragment,
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
             @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.power_ex_perform_fragment, container, false);
+        View v = inflater.inflate(R.layout.ex_power_perform_fragment, container, false);
         mModelOfExercisePerformance = (ModelOfExercisePerformance) getArguments().getSerializable("model");
         unbinder = ButterKnife.bind(this, v);
         init(v);

@@ -10,6 +10,7 @@ import com.khavronsky.unitedexercises.utils.import_from_grand_project.BaseDialog
 import com.khavronsky.unitedexercises.utils.import_from_grand_project.IDialogFragment;
 import com.khavronsky.unitedexercises.utils.import_from_grand_project.TimePickerDialogFragment;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -68,7 +69,6 @@ public class CardioExPerformFragment extends Fragment implements IDialogFragment
 
     private ModelOfExercisePerformance mModelOfExercisePerformance;
 
-//    private IExerciseListener mListener;
 
     //endregion
 
@@ -81,10 +81,6 @@ public class CardioExPerformFragment extends Fragment implements IDialogFragment
         return fragment;
     }
 
-//    public void setListener(final IExerciseListener listener) {
-//        mListener = listener;
-//    }
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,7 +90,7 @@ public class CardioExPerformFragment extends Fragment implements IDialogFragment
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
             @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.cardio_ex_perform_fragment, container, false);
+        View v = inflater.inflate(R.layout.ex_cardio_perform_fragment, container, false);
         mModelOfExercisePerformance = (ModelOfExercisePerformance) getArguments().getSerializable("model");
         unbinder = ButterKnife.bind(this, v);
         init(v);
@@ -111,9 +107,7 @@ public class CardioExPerformFragment extends Fragment implements IDialogFragment
             @Override
             public void valueChanged(final int value) {
                 mModelOfExercisePerformance.setDuration(value);
-                if (getActivity() instanceof IExerciseListener) {
-                    ((IExerciseListener) getActivity()).updateModel(mModelOfExercisePerformance);
-                }
+                ((IExerciseListener) getActivity()).updateModel(mModelOfExercisePerformance);
             }
 
             @Override
@@ -130,12 +124,8 @@ public class CardioExPerformFragment extends Fragment implements IDialogFragment
             mModelOfExercisePerformance.setCurrentKcalPerHour(((CardioExerciseModel)
                     mModelOfExercisePerformance.getExercise()).getDefValue());
 
-//            if (mListener != null) {
-//                mListener.updateModel(mModelOfExercisePerformance);
-//            }
-            if (getActivity() instanceof IExerciseListener) {
-                ((IExerciseListener) getActivity()).updateModel(mModelOfExercisePerformance);
-            }
+            ((IExerciseListener) getActivity()).updateModel(mModelOfExercisePerformance);
+
         }
         mExCardioPerformNote.setText(mModelOfExercisePerformance.getNote());
         mExCardioPerformNote.addTextChangedListener(this);
@@ -184,8 +174,15 @@ public class CardioExPerformFragment extends Fragment implements IDialogFragment
             mDialog = null;
             setDate();
         }
-//        mListener.updateModel(mModelOfExercisePerformance);
         ((ExercisePerformActivity) getActivity()).updateModel(mModelOfExercisePerformance);
+    }
+
+    @Override
+    public void onAttach(final Context context) {
+        super.onAttach(context);
+        if (!(getActivity() instanceof IExerciseListener)) {
+            throw new RuntimeException("___");
+        }
     }
 
     @Override
@@ -215,12 +212,8 @@ public class CardioExPerformFragment extends Fragment implements IDialogFragment
             @Override
             public void onItemSelected(final AdapterView<?> parent, final View view, final int position,
                     final long id) {
-
                 mModelOfExercisePerformance.setCurrentIntensity(position);
-
-                if (getActivity() instanceof IExerciseListener) {
-                    ((IExerciseListener) getActivity()).updateModel(mModelOfExercisePerformance);
-                }
+                ((IExerciseListener) getActivity()).updateModel(mModelOfExercisePerformance);
             }
 
             @Override

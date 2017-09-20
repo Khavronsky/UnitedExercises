@@ -12,7 +12,6 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
-
         >
 
         <TextView
@@ -24,8 +23,7 @@
             android:fontFamily="sans-serif-light"
             android:gravity="center_horizontal"
             android:lineSpacingExtra="6sp"
-            android:text="У вас пока нет выполненных упражнений
-            Вы - ЛЕНТЯЙ!"
+            android:text="Здесь будут показаны недавно добавленные в вашу активность упражнения."
             android:textColor="@color/gray3"
             android:textSize="14sp"
             android:textStyle="normal" />
@@ -35,7 +33,6 @@
             android:id="@+id/recent_exercise_custom_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-
             android:visibility="gone">
 
 

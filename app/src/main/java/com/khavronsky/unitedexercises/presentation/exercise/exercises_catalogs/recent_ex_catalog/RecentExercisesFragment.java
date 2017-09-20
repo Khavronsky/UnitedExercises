@@ -52,7 +52,7 @@ public class RecentExercisesFragment extends Fragment implements IView, IRefresh
     @Override
     public View onCreateView(final LayoutInflater inflater, @Nullable final ViewGroup container,
             @Nullable final Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.recent_exercises_fragment, container, false);
+        View view = inflater.inflate(R.layout.ex_recent_fragment, container, false);
         ButterKnife.bind(this, view);
         recyclerView = (RecyclerView) view.findViewById(R.id.recent_exercise_custom_list);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());

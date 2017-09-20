@@ -3,6 +3,16 @@
     <string name="save">save</string>
     <string name="cancel">cancel</string>
 
+    <string-array name="calc_calories">
+        <item>Калорий в час на 1 кг веса</item>
+        <item>Значение MET</item>
+    </string-array>
+
+    <string-array name="type_of_intensity">
+        <item>Не указывать</item>
+        <item>Указывать тип интенсивности</item>
+    </string-array>
+
     <string-array name="intensity_types">
         <item>Низкая</item>
         <item>Средняя</item>
@@ -31,17 +41,8 @@
         <item>Девятнадцатый</item>
         <item>Двадцатый</item>
         <item>Хреннадцатый</item>
-
     </string-array>
 
-    <string-array name="calc_calories">
-        <item>Калорий в час на 1 кг веса</item>
-        <item>Значение MET</item>
-    </string-array>
-    <string-array name="type_of_intensity">
-        <item>Не указывать</item>
-        <item>Указывать тип интенсивности</item>
-    </string-array>
     <plurals name="approach_repeat">
         <item quantity="one">%1$d повторение</item>
         <item quantity="few">%1$d повторения</item>

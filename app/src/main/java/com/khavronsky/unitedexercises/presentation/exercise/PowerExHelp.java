@@ -15,7 +15,7 @@ public class PowerExHelp extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.power_ex_help_activity);
+        setContentView(R.layout.ex_power_help_activity);
         setToolbar();
     }
 

@@ -62,7 +62,7 @@ public class InnerCollapsedCard extends FrameLayout {
 
     void init() {
         LayoutInflater inflater = LayoutInflater.from(getContext());
-        inflater.inflate(R.layout.inner_collapsed_card_layout, this);
+        inflater.inflate(R.layout.ex_inner_collapsed_card_layout, this);
         mTitle = (TextView) findViewById(R.id.collapsed_card_title);
         mSubTitle = (TextView) findViewById(R.id.collapsed_card_sub_title);
         mValue = (TextView) findViewById(R.id.collapsed_card_value);

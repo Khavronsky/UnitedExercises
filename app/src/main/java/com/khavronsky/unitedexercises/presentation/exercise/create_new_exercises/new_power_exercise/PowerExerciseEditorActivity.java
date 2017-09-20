@@ -61,7 +61,7 @@ public class PowerExerciseEditorActivity extends AppCompatActivity implements Vi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.create_power_ex_activity);
+        setContentView(R.layout.ex_create_power_activity);
         unbinder = ButterKnife.bind(this);
 
         App.getComponent().getPowerExerciseEditorPresenter(this);
@@ -118,7 +118,7 @@ public class PowerExerciseEditorActivity extends AppCompatActivity implements Vi
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mToolbar.setTitle(mTitle);
         setSupportActionBar(mToolbar);
-        mToolbar.inflateMenu(R.menu.menu);
+        mToolbar.inflateMenu(R.menu.exercises_toolbar_menu);
         mToolbar.setNavigationOnClickListener(this);
         mToolbar.setNavigationIcon(R.drawable.arrow_back);
     }
@@ -157,14 +157,14 @@ public class PowerExerciseEditorActivity extends AppCompatActivity implements Vi
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu, menu);
+        getMenuInflater().inflate(R.menu.exercises_toolbar_menu, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.save) {
+        if (id == R.id.menu_save) {
             if (saveExercise()) {
                 onBackPressed();
             }

@@ -22,7 +22,7 @@ public class PowerExSetsRVAdapter extends RecyclerView.Adapter<PowerExSetsRVAdap
     public PowerExSetsHolder onCreateViewHolder(final ViewGroup parent, final int viewType) {
         View view = LayoutInflater
                 .from(parent.getContext())
-                .inflate(R.layout.power_ex_approach_item, parent, false);
+                .inflate(R.layout.ex_power_approach_item, parent, false);
         return new PowerExSetsHolder(view);
     }
 

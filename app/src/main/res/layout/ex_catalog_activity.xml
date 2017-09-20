@@ -41,7 +41,7 @@
         app:contentInsetStart="72dp"
         app:popupTheme="@style/PopupTheme"
         app:theme="@style/ToolbarTheme"
-        tools:showIn="@layout/create_cardio_ex_activity">
+        tools:showIn="@layout/ex_create_cardio_activity">
 
         <LinearLayout
             android:id="@+id/ex_catalog_toolbar_click_area"

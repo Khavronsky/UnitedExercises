@@ -99,7 +99,7 @@ public class ExercisePerformActivity extends AppCompatActivity implements View.O
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_scrolling, menu);
+        getMenuInflater().inflate(R.menu.exercises_collapsing_menu, menu);
         boolean infoIconVisibility = mModelOfExercisePerformance.getExercise().getDescription() != null;
         boolean deleteIconVisibility = !newPerformance;
         menu.getItem(0).setVisible(infoIconVisibility);

@@ -7,7 +7,7 @@
     android:paddingStart="16dp">
 
     <FrameLayout
-        android:id="@+id/select_catalog_by_type_cardio__"
+        android:id="@+id/select_catalog_by_type_cardio"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
@@ -26,7 +26,7 @@
     </FrameLayout>
 
     <FrameLayout
-        android:id="@+id/select_catalog_by_type_power__"
+        android:id="@+id/select_catalog_by_type_power"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"

@@ -30,7 +30,7 @@ class RVAdapter extends RecyclerView.Adapter<RVAdapter.VHolder> {
     public VHolder onCreateViewHolder(final ViewGroup parent, final int viewType) {
         View view = LayoutInflater
                 .from(parent.getContext())
-                .inflate(R.layout.item, parent, false);
+                .inflate(R.layout.ex_rv_adapter_search_item, parent, false);
         return new VHolder(view);
     }
 

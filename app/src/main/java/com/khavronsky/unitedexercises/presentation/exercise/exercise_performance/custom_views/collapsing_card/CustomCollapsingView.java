@@ -59,7 +59,7 @@ public class CustomCollapsingView extends CoordinatorLayout implements Collapsed
 
     private void init() {
         LayoutInflater inflater = LayoutInflater.from(getContext());
-        inflater.inflate(R.layout.custom_collapsing_view_layout, this);
+        inflater.inflate(R.layout.ex_custom_collapsing_view_layout, this);
         AppBarLayout appBarLayout = (AppBarLayout) findViewById(R.id.collapsing_view_app_bar);
         CollapsingToolbarLayout collapsingLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_view_toolbar_layout);
         mToolbar = (Toolbar) findViewById(R.id.collapsing_view_toolbar);

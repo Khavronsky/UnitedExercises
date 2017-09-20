@@ -10,7 +10,7 @@
 
     <include
         android:id="@+id/toolbar"
-        layout="@layout/layout_toolbar" />
+        layout="@layout/ex_layout_toolbar" />
 
     <View
         android:id="@+id/actionBaShadowView"
